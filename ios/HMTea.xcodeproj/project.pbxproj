@@ -14,6 +14,56 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-HMTea-HMTeaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-HMTea-HMTeaTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		77DB96DBFA934E5598F0C579 /* app_icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78E3C750D1A7413586620CED /* app_icons.ttf */; };
+		31D9064D86DD4C1785E2269A /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10298201B16E4147962104D8 /* Poppins-Black.ttf */; };
+		269482390CEA4EBE96F395F0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E71378488C2460EAF8820B6 /* Poppins-Bold.ttf */; };
+		4953C68536DD44F4A417CE0D /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40F6211326A1444EBA36717A /* Poppins-ExtraBold.ttf */; };
+		E330C17F84A44E8EA112B2C2 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E8B9B2B077D453CAADB7492 /* Poppins-ExtraLight.ttf */; };
+		1368EB70CB094E2A83C6483C /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E02B4197B84F4DAE82FEE961 /* Poppins-Light.ttf */; };
+		382D758C70104451A751F635 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D93FFE5B0314B079B749374 /* Poppins-Medium.ttf */; };
+		80AF7CCBFBBA42F3983ED396 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7931F06C1244755BE9B236B /* Poppins-Regular.ttf */; };
+		8B805AF6328B430892F9C359 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E391D13ABF854B33B299D132 /* Poppins-SemiBold.ttf */; };
+		ADF50825E4B14092999E4FC7 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 755846781D5D442EB563FC24 /* Poppins-Thin.ttf */; };
+		A8474AD94FD744E7A7C949FC /* amazonpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BEC7D75E54441DCAC4A911A /* amazonpay.png */; };
+		1C414A53E0FF499383B8692E /* applepay.png in Resources */ = {isa = PBXBuildFile; fileRef = 0716155D48374CB5A08649D4 /* applepay.png */; };
+		B5896CBD6E1943C5931FCC34 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F5031E8D6245678FECDC4D /* avatar.png */; };
+		CBEEE0C084B443998934DC11 /* avt (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 328A1BC304D74E9D9A911810 /* avt (1).png */; };
+		3D22D345A73C40FEA7A4047B /* gpay.png in Resources */ = {isa = PBXBuildFile; fileRef = D4135718620747D8929471B6 /* gpay.png */; };
+		980684150B134B49A394DB83 /* iconApp.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E80AC4E0144F209BEE2E1A /* iconApp.png */; };
+		A70081188D6C4A89A67E6CC9 /* icon_app.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9EE04592AD4F04847EAE54 /* icon_app.jpg */; };
+		8254948529994AE9B6375F15 /* icon_app_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 57BF733E544541AB8502960C /* icon_app_2.jpg */; };
+		753403A3207043B4BF4D593F /* Screenshot 2024-03-14 200800.png in Resources */ = {isa = PBXBuildFile; fileRef = 638F76D0CCFF4F3B889E5B92 /* Screenshot 2024-03-14 200800.png */; };
+		4B114449E679436799428127 /* green-tea-cinnamon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F41AD293128401D834B68CC /* green-tea-cinnamon.jpg */; };
+		C43996D4F45C474A9F8BBDC8 /* green-tea-origin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 945C2BB757B54B35B629AB23 /* green-tea-origin.jpg */; };
+		CE87CC690B074F24BCAFEBE1 /* greentea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7DBF4E25F5994213BA1D387A /* greentea.jpg */; };
+		6990DB3A89954881B8555FFC /* greentea1_detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA366A5B43A64618BBE6C2B3 /* greentea1_detail.jpg */; };
+		1AE99A5DC3B94629A5F3D328 /* greentea2_detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B53018277DD4FC8B172FEBA /* greentea2_detail.jpg */; };
+		15129B29D60C43FAB9C18386 /* Pomegranate-Green-Tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0F197B7C87346F486B8EA92 /* Pomegranate-Green-Tea.jpg */; };
+		3EB0816068564636BBEACA3E /* iced-jasmine-tea.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 0220F4CDF2B2435487BCC65B /* iced-jasmine-tea.jpeg */; };
+		6966CDFCC611499FBDF3205A /* jasmine-tea.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6AD50BDFE3F340799E9203CA /* jasmine-tea.jpeg */; };
+		5088BE4B60C641D49456FBEE /* lychee-jasmine-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7F9748E81C14310B9755F50 /* lychee-jasmine-tea.jpg */; };
+		D5D409104E7C4C928401C7B0 /* strawberry-jasmine-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0BC2CAA6FCBB4CE58F14AC7C /* strawberry-jasmine-tea.jpg */; };
+		B32A862CF0364515AC745049 /* aloeveralemontea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64B7BD2C66464E1C958FCDF3 /* aloeveralemontea.jpg */; };
+		94FA164F39E64D0AB4103C56 /* iced_lemon_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 233D5C8266714B6285774A25 /* iced_lemon_tea.jpg */; };
+		BA3D6833B39A4FEBA99042AB /* lemon-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8EBBFA42DF9041F3817BD7B3 /* lemon-tea.jpg */; };
+		FB505E2685454BE4B866218A /* lemontea1_detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0C4056C100BD480EBBCA8E3B /* lemontea1_detail.jpg */; };
+		35320458378A4C0083A2714D /* lemontea2_detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68103CCF753D412EBBA3AB0E /* lemontea2_detail.jpg */; };
+		772D580F3FD24BF3A60B08B4 /* rose_lemon_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 140BCB783A8942CA994711BF /* rose_lemon_tea.jpg */; };
+		E4C3B7564CBD4EE88D78F995 /* aloeveralemontea_home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639E1148451F4A69AEE60C01 /* aloeveralemontea_home.jpg */; };
+		5E53AA0925534E4CB8B7D12E /* lemonteaice_home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4830F7A98C044EA99D84F0DB /* lemonteaice_home.jpg */; };
+		DD469389BA3D417BBC8FB707 /* blue_lotus_tea.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EACDDF883BF479FAAB2AD71 /* blue_lotus_tea.png */; };
+		E43F2ABB63CB44BB8B56DC2D /* lotus-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7756D150AEFE41679135F93C /* lotus-tea.jpg */; };
+		CA08AF4EA99E4D4CB688C418 /* lychee-lotus-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E4851D1C6A014C748E362966 /* lychee-lotus-tea.jpg */; };
+		43AF672BB5A4451296F21774 /* pink_lotus_tea.png in Resources */ = {isa = PBXBuildFile; fileRef = 72CBE6F2C63E43A3BC55A0DC /* pink_lotus_tea.png */; };
+		B68DFA4FAD314CFC8A5BE83B /* Masala-Chai-Ice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2A31856FEAF4A409ABD429F /* Masala-Chai-Ice.jpg */; };
+		332ADD744A984A25A917F09A /* Masala-Chai.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B73CA20080444978B65FF4B /* Masala-Chai.jpg */; };
+		BDF3643801B14087842B3114 /* masala-tea-cheese.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 26850F1B5DF043DABDDC871D /* masala-tea-cheese.jpg */; };
+		778611C941DB4D59A6B5D793 /* masala-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2B25569FF5D49D7B2F43E6A /* masala-tea.jpg */; };
+		F45F911E58214970B36DE1FC /* masalatea1_detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E3B76DC522084B728DBB69E3 /* masalatea1_detail.jpg */; };
+		CC292A92D96048EEB9F7E5E8 /* iced-oolong-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7C4A93F811F439D83C40A84 /* iced-oolong-tea.jpg */; };
+		E77A002F4F4B40CE83CF9834 /* olong-tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 59A123C2F01640E0A6433BF4 /* olong-tea.jpg */; };
+		90633180B25C4EB3A9DE462A /* Oolong-fresh-Tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 79B9A1104D5C4DF8BAC8272A /* Oolong-fresh-Tea.jpg */; };
+		D7214A58C52849F0A6FE915C /* oolong_peach_tea.png in Resources */ = {isa = PBXBuildFile; fileRef = A378AA63F952416EAA2897E5 /* oolong_peach_tea.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +94,56 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HMTea/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-HMTea-HMTeaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HMTea-HMTeaTests.release.xcconfig"; path = "Target Support Files/Pods-HMTea-HMTeaTests/Pods-HMTea-HMTeaTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		78E3C750D1A7413586620CED /* app_icons.ttf */ = {isa = PBXFileReference; name = "app_icons.ttf"; path = "../src/assets/fonts/app_icons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		10298201B16E4147962104D8 /* Poppins-Black.ttf */ = {isa = PBXFileReference; name = "Poppins-Black.ttf"; path = "../src/assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7E71378488C2460EAF8820B6 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		40F6211326A1444EBA36717A /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBold.ttf"; path = "../src/assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5E8B9B2B077D453CAADB7492 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraLight.ttf"; path = "../src/assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E02B4197B84F4DAE82FEE961 /* Poppins-Light.ttf */ = {isa = PBXFileReference; name = "Poppins-Light.ttf"; path = "../src/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9D93FFE5B0314B079B749374 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../src/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A7931F06C1244755BE9B236B /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E391D13ABF854B33B299D132 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		755846781D5D442EB563FC24 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; name = "Poppins-Thin.ttf"; path = "../src/assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0BEC7D75E54441DCAC4A911A /* amazonpay.png */ = {isa = PBXFileReference; name = "amazonpay.png"; path = "../src/assets/app_images/amazonpay.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0716155D48374CB5A08649D4 /* applepay.png */ = {isa = PBXFileReference; name = "applepay.png"; path = "../src/assets/app_images/applepay.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E3F5031E8D6245678FECDC4D /* avatar.png */ = {isa = PBXFileReference; name = "avatar.png"; path = "../src/assets/app_images/avatar.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		328A1BC304D74E9D9A911810 /* avt (1).png */ = {isa = PBXFileReference; name = "avt (1).png"; path = "../src/assets/app_images/avt (1).png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D4135718620747D8929471B6 /* gpay.png */ = {isa = PBXFileReference; name = "gpay.png"; path = "../src/assets/app_images/gpay.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D3E80AC4E0144F209BEE2E1A /* iconApp.png */ = {isa = PBXFileReference; name = "iconApp.png"; path = "../src/assets/app_images/iconApp.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8E9EE04592AD4F04847EAE54 /* icon_app.jpg */ = {isa = PBXFileReference; name = "icon_app.jpg"; path = "../src/assets/app_images/icon_app.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		57BF733E544541AB8502960C /* icon_app_2.jpg */ = {isa = PBXFileReference; name = "icon_app_2.jpg"; path = "../src/assets/app_images/icon_app_2.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		638F76D0CCFF4F3B889E5B92 /* Screenshot 2024-03-14 200800.png */ = {isa = PBXFileReference; name = "Screenshot 2024-03-14 200800.png"; path = "../src/assets/app_images/Screenshot 2024-03-14 200800.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0F41AD293128401D834B68CC /* green-tea-cinnamon.jpg */ = {isa = PBXFileReference; name = "green-tea-cinnamon.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/green-tea-cinnamon.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		945C2BB757B54B35B629AB23 /* green-tea-origin.jpg */ = {isa = PBXFileReference; name = "green-tea-origin.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/green-tea-origin.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7DBF4E25F5994213BA1D387A /* greentea.jpg */ = {isa = PBXFileReference; name = "greentea.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/greentea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA366A5B43A64618BBE6C2B3 /* greentea1_detail.jpg */ = {isa = PBXFileReference; name = "greentea1_detail.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/greentea1_detail.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3B53018277DD4FC8B172FEBA /* greentea2_detail.jpg */ = {isa = PBXFileReference; name = "greentea2_detail.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/greentea2_detail.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D0F197B7C87346F486B8EA92 /* Pomegranate-Green-Tea.jpg */ = {isa = PBXFileReference; name = "Pomegranate-Green-Tea.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/Pomegranate-Green-Tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0220F4CDF2B2435487BCC65B /* iced-jasmine-tea.jpeg */ = {isa = PBXFileReference; name = "iced-jasmine-tea.jpeg"; path = "../src/assets/tea_assets/jasmine_tea/portrait/iced-jasmine-tea.jpeg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6AD50BDFE3F340799E9203CA /* jasmine-tea.jpeg */ = {isa = PBXFileReference; name = "jasmine-tea.jpeg"; path = "../src/assets/tea_assets/jasmine_tea/portrait/jasmine-tea.jpeg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C7F9748E81C14310B9755F50 /* lychee-jasmine-tea.jpg */ = {isa = PBXFileReference; name = "lychee-jasmine-tea.jpg"; path = "../src/assets/tea_assets/jasmine_tea/portrait/lychee-jasmine-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0BC2CAA6FCBB4CE58F14AC7C /* strawberry-jasmine-tea.jpg */ = {isa = PBXFileReference; name = "strawberry-jasmine-tea.jpg"; path = "../src/assets/tea_assets/jasmine_tea/portrait/strawberry-jasmine-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		64B7BD2C66464E1C958FCDF3 /* aloeveralemontea.jpg */ = {isa = PBXFileReference; name = "aloeveralemontea.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/aloeveralemontea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		233D5C8266714B6285774A25 /* iced_lemon_tea.jpg */ = {isa = PBXFileReference; name = "iced_lemon_tea.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/iced_lemon_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8EBBFA42DF9041F3817BD7B3 /* lemon-tea.jpg */ = {isa = PBXFileReference; name = "lemon-tea.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/lemon-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0C4056C100BD480EBBCA8E3B /* lemontea1_detail.jpg */ = {isa = PBXFileReference; name = "lemontea1_detail.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/lemontea1_detail.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		68103CCF753D412EBBA3AB0E /* lemontea2_detail.jpg */ = {isa = PBXFileReference; name = "lemontea2_detail.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/lemontea2_detail.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		140BCB783A8942CA994711BF /* rose_lemon_tea.jpg */ = {isa = PBXFileReference; name = "rose_lemon_tea.jpg"; path = "../src/assets/tea_assets/lemon_tea/portrait/rose_lemon_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		639E1148451F4A69AEE60C01 /* aloeveralemontea_home.jpg */ = {isa = PBXFileReference; name = "aloeveralemontea_home.jpg"; path = "../src/assets/tea_assets/lemon_tea/square/aloeveralemontea_home.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4830F7A98C044EA99D84F0DB /* lemonteaice_home.jpg */ = {isa = PBXFileReference; name = "lemonteaice_home.jpg"; path = "../src/assets/tea_assets/lemon_tea/square/lemonteaice_home.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8EACDDF883BF479FAAB2AD71 /* blue_lotus_tea.png */ = {isa = PBXFileReference; name = "blue_lotus_tea.png"; path = "../src/assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7756D150AEFE41679135F93C /* lotus-tea.jpg */ = {isa = PBXFileReference; name = "lotus-tea.jpg"; path = "../src/assets/tea_assets/lotus_tea/portrait/lotus-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4851D1C6A014C748E362966 /* lychee-lotus-tea.jpg */ = {isa = PBXFileReference; name = "lychee-lotus-tea.jpg"; path = "../src/assets/tea_assets/lotus_tea/portrait/lychee-lotus-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		72CBE6F2C63E43A3BC55A0DC /* pink_lotus_tea.png */ = {isa = PBXFileReference; name = "pink_lotus_tea.png"; path = "../src/assets/tea_assets/lotus_tea/portrait/pink_lotus_tea.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B2A31856FEAF4A409ABD429F /* Masala-Chai-Ice.jpg */ = {isa = PBXFileReference; name = "Masala-Chai-Ice.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/Masala-Chai-Ice.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3B73CA20080444978B65FF4B /* Masala-Chai.jpg */ = {isa = PBXFileReference; name = "Masala-Chai.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/Masala-Chai.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		26850F1B5DF043DABDDC871D /* masala-tea-cheese.jpg */ = {isa = PBXFileReference; name = "masala-tea-cheese.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala-tea-cheese.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D2B25569FF5D49D7B2F43E6A /* masala-tea.jpg */ = {isa = PBXFileReference; name = "masala-tea.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E3B76DC522084B728DBB69E3 /* masalatea1_detail.jpg */ = {isa = PBXFileReference; name = "masalatea1_detail.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masalatea1_detail.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7C4A93F811F439D83C40A84 /* iced-oolong-tea.jpg */ = {isa = PBXFileReference; name = "iced-oolong-tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/iced-oolong-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		59A123C2F01640E0A6433BF4 /* olong-tea.jpg */ = {isa = PBXFileReference; name = "olong-tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/olong-tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79B9A1104D5C4DF8BAC8272A /* Oolong-fresh-Tea.jpg */ = {isa = PBXFileReference; name = "Oolong-fresh-Tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/Oolong-fresh-Tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A378AA63F952416EAA2897E5 /* oolong_peach_tea.png */ = {isa = PBXFileReference; name = "oolong_peach_tea.png"; path = "../src/assets/tea_assets/oolong_tea/portrait/oolong_peach_tea.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +222,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				77813885E84F40E1A546BFC2 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +248,64 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		77813885E84F40E1A546BFC2 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				78E3C750D1A7413586620CED /* app_icons.ttf */,
+				10298201B16E4147962104D8 /* Poppins-Black.ttf */,
+				7E71378488C2460EAF8820B6 /* Poppins-Bold.ttf */,
+				40F6211326A1444EBA36717A /* Poppins-ExtraBold.ttf */,
+				5E8B9B2B077D453CAADB7492 /* Poppins-ExtraLight.ttf */,
+				E02B4197B84F4DAE82FEE961 /* Poppins-Light.ttf */,
+				9D93FFE5B0314B079B749374 /* Poppins-Medium.ttf */,
+				A7931F06C1244755BE9B236B /* Poppins-Regular.ttf */,
+				E391D13ABF854B33B299D132 /* Poppins-SemiBold.ttf */,
+				755846781D5D442EB563FC24 /* Poppins-Thin.ttf */,
+				0BEC7D75E54441DCAC4A911A /* amazonpay.png */,
+				0716155D48374CB5A08649D4 /* applepay.png */,
+				E3F5031E8D6245678FECDC4D /* avatar.png */,
+				328A1BC304D74E9D9A911810 /* avt (1).png */,
+				D4135718620747D8929471B6 /* gpay.png */,
+				D3E80AC4E0144F209BEE2E1A /* iconApp.png */,
+				8E9EE04592AD4F04847EAE54 /* icon_app.jpg */,
+				57BF733E544541AB8502960C /* icon_app_2.jpg */,
+				638F76D0CCFF4F3B889E5B92 /* Screenshot 2024-03-14 200800.png */,
+				0F41AD293128401D834B68CC /* green-tea-cinnamon.jpg */,
+				945C2BB757B54B35B629AB23 /* green-tea-origin.jpg */,
+				7DBF4E25F5994213BA1D387A /* greentea.jpg */,
+				FA366A5B43A64618BBE6C2B3 /* greentea1_detail.jpg */,
+				3B53018277DD4FC8B172FEBA /* greentea2_detail.jpg */,
+				D0F197B7C87346F486B8EA92 /* Pomegranate-Green-Tea.jpg */,
+				0220F4CDF2B2435487BCC65B /* iced-jasmine-tea.jpeg */,
+				6AD50BDFE3F340799E9203CA /* jasmine-tea.jpeg */,
+				C7F9748E81C14310B9755F50 /* lychee-jasmine-tea.jpg */,
+				0BC2CAA6FCBB4CE58F14AC7C /* strawberry-jasmine-tea.jpg */,
+				64B7BD2C66464E1C958FCDF3 /* aloeveralemontea.jpg */,
+				233D5C8266714B6285774A25 /* iced_lemon_tea.jpg */,
+				8EBBFA42DF9041F3817BD7B3 /* lemon-tea.jpg */,
+				0C4056C100BD480EBBCA8E3B /* lemontea1_detail.jpg */,
+				68103CCF753D412EBBA3AB0E /* lemontea2_detail.jpg */,
+				140BCB783A8942CA994711BF /* rose_lemon_tea.jpg */,
+				639E1148451F4A69AEE60C01 /* aloeveralemontea_home.jpg */,
+				4830F7A98C044EA99D84F0DB /* lemonteaice_home.jpg */,
+				8EACDDF883BF479FAAB2AD71 /* blue_lotus_tea.png */,
+				7756D150AEFE41679135F93C /* lotus-tea.jpg */,
+				E4851D1C6A014C748E362966 /* lychee-lotus-tea.jpg */,
+				72CBE6F2C63E43A3BC55A0DC /* pink_lotus_tea.png */,
+				B2A31856FEAF4A409ABD429F /* Masala-Chai-Ice.jpg */,
+				3B73CA20080444978B65FF4B /* Masala-Chai.jpg */,
+				26850F1B5DF043DABDDC871D /* masala-tea-cheese.jpg */,
+				D2B25569FF5D49D7B2F43E6A /* masala-tea.jpg */,
+				E3B76DC522084B728DBB69E3 /* masalatea1_detail.jpg */,
+				D7C4A93F811F439D83C40A84 /* iced-oolong-tea.jpg */,
+				59A123C2F01640E0A6433BF4 /* olong-tea.jpg */,
+				79B9A1104D5C4DF8BAC8272A /* Oolong-fresh-Tea.jpg */,
+				A378AA63F952416EAA2897E5 /* oolong_peach_tea.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -243,6 +402,56 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				77DB96DBFA934E5598F0C579 /* app_icons.ttf in Resources */,
+				31D9064D86DD4C1785E2269A /* Poppins-Black.ttf in Resources */,
+				269482390CEA4EBE96F395F0 /* Poppins-Bold.ttf in Resources */,
+				4953C68536DD44F4A417CE0D /* Poppins-ExtraBold.ttf in Resources */,
+				E330C17F84A44E8EA112B2C2 /* Poppins-ExtraLight.ttf in Resources */,
+				1368EB70CB094E2A83C6483C /* Poppins-Light.ttf in Resources */,
+				382D758C70104451A751F635 /* Poppins-Medium.ttf in Resources */,
+				80AF7CCBFBBA42F3983ED396 /* Poppins-Regular.ttf in Resources */,
+				8B805AF6328B430892F9C359 /* Poppins-SemiBold.ttf in Resources */,
+				ADF50825E4B14092999E4FC7 /* Poppins-Thin.ttf in Resources */,
+				A8474AD94FD744E7A7C949FC /* amazonpay.png in Resources */,
+				1C414A53E0FF499383B8692E /* applepay.png in Resources */,
+				B5896CBD6E1943C5931FCC34 /* avatar.png in Resources */,
+				CBEEE0C084B443998934DC11 /* avt (1).png in Resources */,
+				3D22D345A73C40FEA7A4047B /* gpay.png in Resources */,
+				980684150B134B49A394DB83 /* iconApp.png in Resources */,
+				A70081188D6C4A89A67E6CC9 /* icon_app.jpg in Resources */,
+				8254948529994AE9B6375F15 /* icon_app_2.jpg in Resources */,
+				753403A3207043B4BF4D593F /* Screenshot 2024-03-14 200800.png in Resources */,
+				4B114449E679436799428127 /* green-tea-cinnamon.jpg in Resources */,
+				C43996D4F45C474A9F8BBDC8 /* green-tea-origin.jpg in Resources */,
+				CE87CC690B074F24BCAFEBE1 /* greentea.jpg in Resources */,
+				6990DB3A89954881B8555FFC /* greentea1_detail.jpg in Resources */,
+				1AE99A5DC3B94629A5F3D328 /* greentea2_detail.jpg in Resources */,
+				15129B29D60C43FAB9C18386 /* Pomegranate-Green-Tea.jpg in Resources */,
+				3EB0816068564636BBEACA3E /* iced-jasmine-tea.jpeg in Resources */,
+				6966CDFCC611499FBDF3205A /* jasmine-tea.jpeg in Resources */,
+				5088BE4B60C641D49456FBEE /* lychee-jasmine-tea.jpg in Resources */,
+				D5D409104E7C4C928401C7B0 /* strawberry-jasmine-tea.jpg in Resources */,
+				B32A862CF0364515AC745049 /* aloeveralemontea.jpg in Resources */,
+				94FA164F39E64D0AB4103C56 /* iced_lemon_tea.jpg in Resources */,
+				BA3D6833B39A4FEBA99042AB /* lemon-tea.jpg in Resources */,
+				FB505E2685454BE4B866218A /* lemontea1_detail.jpg in Resources */,
+				35320458378A4C0083A2714D /* lemontea2_detail.jpg in Resources */,
+				772D580F3FD24BF3A60B08B4 /* rose_lemon_tea.jpg in Resources */,
+				E4C3B7564CBD4EE88D78F995 /* aloeveralemontea_home.jpg in Resources */,
+				5E53AA0925534E4CB8B7D12E /* lemonteaice_home.jpg in Resources */,
+				DD469389BA3D417BBC8FB707 /* blue_lotus_tea.png in Resources */,
+				E43F2ABB63CB44BB8B56DC2D /* lotus-tea.jpg in Resources */,
+				CA08AF4EA99E4D4CB688C418 /* lychee-lotus-tea.jpg in Resources */,
+				43AF672BB5A4451296F21774 /* pink_lotus_tea.png in Resources */,
+				B68DFA4FAD314CFC8A5BE83B /* Masala-Chai-Ice.jpg in Resources */,
+				332ADD744A984A25A917F09A /* Masala-Chai.jpg in Resources */,
+				BDF3643801B14087842B3114 /* masala-tea-cheese.jpg in Resources */,
+				778611C941DB4D59A6B5D793 /* masala-tea.jpg in Resources */,
+				F45F911E58214970B36DE1FC /* masalatea1_detail.jpg in Resources */,
+				CC292A92D96048EEB9F7E5E8 /* iced-oolong-tea.jpg in Resources */,
+				E77A002F4F4B40CE83CF9834 /* olong-tea.jpg in Resources */,
+				90633180B25C4EB3A9DE462A /* Oolong-fresh-Tea.jpg in Resources */,
+				D7214A58C52849F0A6FE915C /* oolong_peach_tea.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
