@@ -60,7 +60,7 @@ interface Spacing {
     primaryLightHex: '#FFFFFF',
     secondaryLightHex: '#000000',
     primaryGray: '#989898',
-    whiteHex: '#FFFFFF',
+    whiteHex: '#ED5151',
     blackAlpha: 'rgba(12,15,20,0.5)',
     secondaryBlackAlpha: 'rgba(0,0,0,0.7)',
     thirdGreen: '#829e82',

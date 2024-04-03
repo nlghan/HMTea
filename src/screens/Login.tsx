@@ -26,7 +26,7 @@ const initializeFirebaseApp = () => {
 // Call this once when the app starts
 initializeFirebaseApp();
 
-const Login = () => {
+const Login = ({navigation}:any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword1, setShowPassword1] = useState(false);
@@ -54,7 +54,9 @@ const Login = () => {
 
         loadSavedLoginCredentials();
     }, []);
-
+    const handleSignUp = () =>{
+        navigation.navigate('Register')
+    }
     const handleLogin = async () => {
         const auth = getAuth(firebaseApp);
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -85,6 +87,7 @@ const Login = () => {
                     if (rememberMe) {
                         saveLoginCredentials();
                     }
+                    navigation.navigate('Tab')
                 } else {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');
@@ -162,11 +165,14 @@ const Login = () => {
                 <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
             <View style={styles.line}>
-                <Text style={styles.lineText}>_________________________________________</Text>
+            <Text style={styles.lineText}>_________________________________________</Text>
             </View>
             <View style={styles.footer}>
                 <Text style={styles.text5}>No account?</Text>
+                <TouchableOpacity style={styles.signup} onPress={handleSignUp}>
                 <Text style={styles.text6}>Sign up</Text>
+            </TouchableOpacity>
+                
             </View>
         </View>
     );
@@ -292,6 +298,9 @@ const styles = StyleSheet.create({
         marginBottom:10,
         paddingBottom:10
     },
+    signup:{
+
+    }
 });
 
 export default Login;

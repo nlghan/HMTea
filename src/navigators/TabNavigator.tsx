@@ -24,7 +24,8 @@ const TabNavigator = () => {
         tabBarBackground: () => (
           <BlurView overlayColor='' blurAmount={15} style={styles.blurStyle} />
         ),
-      }}>
+      }} initialRouteName='Home'
+      >
       <Tab.Screen
         name='Home'
         component={Home}

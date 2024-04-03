@@ -20,7 +20,7 @@ if (!firebaseApp) {
     firebaseApp = initializeApp(firebaseConfig);
 }
 
-const Register = () => {
+const Register = ({navigation}:any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -29,6 +29,9 @@ const Register = () => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
+    const handleLogin = () =>{
+        navigation.navigate('Login')
+    }
     const handleRegister = () => {
         if (password !== confirmPassword) {
             Alert.alert('Error', 'Passwords do not match');
@@ -147,11 +150,13 @@ const Register = () => {
                 <Text style={styles.registerText}>Sign Up</Text>
             </TouchableOpacity>
             <View style={styles.line}>
-                <Text style={styles.lineText}>_________________________________________</Text>
+            <Text style={styles.lineText}>_________________________________________</Text>
             </View>
             <View style={styles.footer}>
                 <Text style={styles.text5}>Already have an account?</Text>
+                <TouchableOpacity style={styles.login} onPress={handleLogin}>
                 <Text style={styles.text6}>Login</Text>
+            </TouchableOpacity>
             </View>
         </View></>
     );
@@ -244,7 +249,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter-Bold',
         fontSize: 17,
         color: '#4AA366',
-        paddingLeft: 40,
+        paddingLeft: 25,
     },
     text7:{
         color: '#999EA1',
@@ -262,6 +267,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         paddingBottom:10
     },
+    login:{}
 });
 
 export default Register;
