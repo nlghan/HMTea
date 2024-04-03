@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
+import CustomIcon from '../components/CustomIcon';
 
 // Initialize Firebase with your Firebase configuration
 const firebaseConfig = {
@@ -98,6 +99,7 @@ const Register = () => {
     };
 
     return (
+        <>
         <View style={styles.container}>
             <View style={styles.title}>
                 <Text style={styles.text1}>HMTea</Text>
@@ -105,14 +107,13 @@ const Register = () => {
                 <Text style={styles.text7}>Connect with us today!</Text>
             </View>
             <View style={styles.input}>
-            <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
+                <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
                     <TextInput
                         style={styles.text3}
                         placeholder='Email'
                         placeholderTextColor={'#B4BBCB'}
                         onChangeText={text => setEmail(text)}
-                        value={email}
-                    />
+                        value={email} />
                 </View>
                 {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
                 <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
@@ -122,8 +123,7 @@ const Register = () => {
                         placeholderTextColor={'#B4BBCB'}
                         secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
                         onChangeText={text => setPassword(text)}
-                        value={password}
-                    />
+                        value={password} />
                     <TouchableOpacity onPress={toggleShowPassword1}>
                         <Icon name={showPassword1 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
                     </TouchableOpacity>
@@ -136,8 +136,7 @@ const Register = () => {
                         placeholderTextColor={'#B4BBCB'}
                         secureTextEntry={!showPassword2} // Toggle secureTextEntry based on showPassword2 state
                         onChangeText={text => setConfirmPassword(text)}
-                        value={confirmPassword}
-                    />
+                        value={confirmPassword} />
                     <TouchableOpacity onPress={toggleShowPassword2}>
                         <Icon name={showPassword2 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
                     </TouchableOpacity>
@@ -154,7 +153,7 @@ const Register = () => {
                 <Text style={styles.text5}>Already have an account?</Text>
                 <Text style={styles.text6}>Login</Text>
             </View>
-        </View>
+        </View></>
     );
 };
 
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 80,
+        marginTop: 35,
     },
     registerText: {
         color: 'white',
