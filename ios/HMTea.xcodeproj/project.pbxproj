@@ -75,6 +75,7 @@
 		EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A565055749A344628B4495F5 /* masala_chai_ice.jpg */; };
 		508FE9389FC94C84A1B0ACBF /* oolong_fresh_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */; };
 		1FB40DC6EBAE48EE90539AA0 /* screenshot_2024_03_14_200800.png in Resources */ = {isa = PBXBuildFile; fileRef = 57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */; };
+		959C9464C63C4FBBBBF527D5 /* slide.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3C5C6341DE48E4A3200380 /* slide.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,7 @@
 		A565055749A344628B4495F5 /* masala_chai_ice.jpg */ = {isa = PBXFileReference; name = "masala_chai_ice.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_chai_ice.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */ = {isa = PBXFileReference; name = "oolong_fresh_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/oolong_fresh_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */ = {isa = PBXFileReference; name = "screenshot_2024_03_14_200800.png"; path = "../src/assets/app_images/screenshot_2024_03_14_200800.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AA3C5C6341DE48E4A3200380 /* slide.png */ = {isa = PBXFileReference; name = "slide.png"; path = "../src/assets/app_images/slide.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 				A565055749A344628B4495F5 /* masala_chai_ice.jpg */,
 				698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */,
 				57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */,
+				AA3C5C6341DE48E4A3200380 /* slide.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */,
 				508FE9389FC94C84A1B0ACBF /* oolong_fresh_tea.jpg in Resources */,
 				1FB40DC6EBAE48EE90539AA0 /* screenshot_2024_03_14_200800.png in Resources */,
+				959C9464C63C4FBBBBF527D5 /* slide.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

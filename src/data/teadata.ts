@@ -15,7 +15,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Green Tea',
       index: 0,
     },
     {
@@ -34,7 +34,7 @@ const TeaData = [
       average_rating: 4.8,
       ratings_count: '7000',
       favourite: false,
-      type: 'Tea',
+      type: 'Green Tea',
       index: 1,
     },
     {
@@ -53,7 +53,7 @@ const TeaData = [
       average_rating: 4.6,
       ratings_count: '6000',
       favourite: false,
-      type: 'Tea',
+      type: 'Green Tea',
       index: 2,
     },
     {
@@ -67,12 +67,12 @@ const TeaData = [
       prices: [
         {size: 'S', price: '1.4', currency: '$'},
         {size: 'M', price: '1.6', currency: '$'},
-        {size: 'L', price: '85000', currency: '$'},
+        {size: 'L', price: '2', currency: '$'},
       ],
       average_rating: 4.5,
       ratings_count: '5,678',
       favourite: false,
-      type: 'Tea',
+      type: 'Green Tea',
       index: 3,
     }, 
     {
@@ -91,7 +91,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Masala Tea',
       index: 4,
     },
     {
@@ -110,7 +110,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Masala Tea',
       index: 5,
     },
     {
@@ -129,7 +129,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Masala Tea',
       index: 6,
     },
     {
@@ -148,7 +148,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Masala Tea',
       index: 7,
     },
     {
@@ -167,7 +167,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Lemon Tea',
       index: 8,
     },
     {
@@ -186,7 +186,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Lemon Tea',
       index: 9,
     },
     {
@@ -205,7 +205,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Lemon Tea',
       index: 10,
     },
     {
@@ -224,7 +224,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Lemon Tea',
       index: 11,
     },
     {
@@ -243,7 +243,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Oolong Tea',
       index: 12,
     },
     {
@@ -262,7 +262,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Oolong Tea',
       index: 13,
     },
     {
@@ -281,7 +281,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Oolong Tea',
       index: 14,
     },
     {
@@ -300,7 +300,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Oolong Tea',
       index: 15,
     },
     {
@@ -319,7 +319,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Jasmine Tea',
       index: 16,
     },
     {
@@ -338,7 +338,7 @@ const TeaData = [
       average_rating: 4.7,
       ratings_count: '6,879',
       favourite: false,
-      type: 'Tea',
+      type: 'Jasmine Tea',
       index: 17,
     },
     {
@@ -357,7 +357,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Jasmine Tea',
         index: 18,
       },
       {
@@ -376,7 +376,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Jasmine Tea',
         index: 19,
       },
       {
@@ -395,7 +395,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Lotus Tea',
         index: 20,
       },
       {
@@ -414,7 +414,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Lotus Tea',
         index: 21,
       },
       {
@@ -433,7 +433,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Lotus Tea',
         index: 22,
       },
       {
@@ -452,7 +452,7 @@ const TeaData = [
         average_rating: 4.7,
         ratings_count: '6,879',
         favourite: false,
-        type: 'Tea',
+        type: 'Lotus Tea',
         index: 23,
       },
   ];

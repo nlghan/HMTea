@@ -1,36 +1,40 @@
-import { View, Text, StyleSheet, Image, StatusBar, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, StatusBar, ScrollView, TouchableOpacity, TextInput, FlatList, Dimensions, ToastAndroid } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Header from '../components/Header';
-import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
+import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from '../components/CustomIcon';
+import TeaCard from '../components/TeaCard';
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
   for (let i = 0; i < data.length; i++) {
-    if (temp[data[i].name] == undefined) {
-      temp[data[i].name] = 1;
+    if (temp[data[i].type] == undefined) {
+      temp[data[i].type] = 1;
     } else {
-      temp[data[i].name]++;
+      temp[data[i].type]++;
     }
   }
   let categories = Object.keys(temp);
   categories.unshift('All');
   return categories;
-};
+ };
 
-const getTeaList = (category: string, data: any) => {
-  if (category == 'All') {
+ const getTeaList = (category: string, data: any) => {
+  if (category === 'All') {
     return data;
   } else {
-    let tealist = data.filter((item: any) => item.name == category);
+    let tealist = data.filter((item: any) => item.name.toLowerCase().includes(category.toLowerCase()));
     return tealist;
   }
 };
 
-const Home = () => {
+
+const Home = ({navigation}:any) => {
   const TeaList = useStore((state: any) => state.TeaList);
+  const addToCart = useStore((state: any) => state.addToCart);
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
   // console.log("TeaList =", TeaList.length);
   const [categories, setCategories] = useState(getCategoriesFromData(TeaList))
   const [searchText, setSearchText] = useState('')
@@ -40,6 +44,64 @@ const Home = () => {
   });
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
   const tabBarHeight = useBottomTabBarHeight();
+  console.log('categories =', categories)
+
+  const ListRef: any = useRef<FlatList>();
+
+  const searchTea = (search: string) => {
+    if (search != '') {
+      ListRef?.current?.scrollToOffset({
+        animated: true,
+        offset: 0,
+      });
+      setCategoriesIndex({index: 0, category: categories[0]});
+      setSortedTea([
+        ...TeaList.filter((item: any) =>
+          item.name.toLowerCase().includes(search.toLowerCase()),
+        ),
+      ]);
+    }
+  };
+
+  const resetSearchTea = () => {
+    ListRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
+    setCategoriesIndex({index: 0, category: categories[0]});
+    setSortedTea([...TeaList]);
+    setSearchText('');
+  };
+
+  const TeaCardAddToCart = ({
+    id,
+    index,
+    name,
+    roasted,
+    imagelink_square,
+    special_ingredient,
+    type,
+    prices,
+  }: any) => {
+    addToCart({
+      id,
+      index,
+      name,
+      roasted,
+      imagelink_square,
+      special_ingredient,
+      type,
+      prices,
+    });
+    calculateCartPrice();
+    ToastAndroid.showWithGravity(
+      `${name} is Added to Cart`,
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+
+
 
   return (
     <View style={styles.container}>
@@ -55,16 +117,115 @@ const Home = () => {
             <Text style={styles.text3}>Sale 30%</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.InputContainerComponent}>
-          <CustomIcon style={styles.icon} name="search" size={18} color={searchText.length >0 ? COLORS.primaryGreenHex : COLORS.primaryLightHex  } />
+       
+        <View style={styles.InputContainerComponent}>
+          <TouchableOpacity
+            onPress={() => {
+              searchTea(searchText);
+            }}>
+            <CustomIcon
+              style={styles.InputIcon}
+              name="search"
+              size={FONTSIZE.size_18}
+              color={
+                searchText.length > 0
+                  ? COLORS.whiteHex
+                  : COLORS.primaryLightHex
+              }
+            />
+          </TouchableOpacity>
           <TextInput
-            style={styles.textInput}
-            placeholder="Find your tea"
-            placeholderTextColor={COLORS.primaryLightHex}
-            onChangeText={(text) => setSearchText(text)}
+            placeholder="What would you like..."
             value={searchText}
+            onChangeText={text => {
+              setSearchText(text);
+              searchTea(text);
+            }}
+            placeholderTextColor={COLORS.primaryLightHex}
+            style={styles.TextInputContainer}
           />
-        </TouchableOpacity>
+          </View>
+
+          <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator= {false}
+          contentContainerStyle={styles.CategoryScrollViewStyle}>
+          {categories.map((data, index) => (
+            <View
+              key={index.toString()}
+              style={styles.CategoryScrollViewContainer}>
+              <TouchableOpacity
+                style={styles.CategoryScrollViewItem}
+                onPress={() => {
+                  ListRef?.current?.scrollToOffset({
+                    animated: true,
+                    offset: 0,
+                  });
+                  setCategoriesIndex({index: index, category: categories[index]});
+                  setSortedTea([
+                    ...getTeaList(categories[index], TeaList),
+                  ]);
+                }}>
+                <Text
+                  style={[
+                    styles.CategoryText,
+                    categoriesIndex.index == index
+                      ? {color: COLORS.whiteHex}
+                      : {},
+                  ]}>
+                  {data}
+                </Text>
+                {categoriesIndex.index == index ? (
+                  <View style={styles.ActiveCategory} />
+                ) : (
+                  <></>
+                )}
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView>
+
+         {/* Coffee Flatlist */}
+
+         <FlatList
+          ref={ListRef}
+          horizontal
+          ListEmptyComponent={
+            <View style={styles.EmptyListContainer}>
+              <Text style={styles.CategoryText}>No Coffee Available</Text>
+            </View>
+          }
+          showsHorizontalScrollIndicator={false}
+          data={sortedTea}
+          contentContainerStyle={styles.FlatListContainer}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('Details', {
+                    index: item.index,
+                    id: item.id,
+                    type: item.type,
+                  });
+                }}>
+                <TeaCard
+                  id={item.id}
+                  index={item.index}
+                  type={item.type}
+                  imagelink_square={item.imagelink_square}
+                  name={item.name}
+                  special_ingredient={item.special_ingredient}
+                  average_rating={item.average_rating}
+                  price={item.prices[2]}
+                  buttonPressHandler={TeaCardAddToCart}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />
+
+
       </ScrollView>
     </View>
   );
@@ -125,7 +286,7 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_20,
     backgroundColor: COLORS.primaryGreenHex,
     alignItems: 'center',
-    height: 40,
+    height: 50,
     paddingHorizontal: 10,
     marginTop: 15,
   },
@@ -135,7 +296,66 @@ const styles = StyleSheet.create({
   textInput:{
     flex: 1,
     color: 'white',
-  }
+  },
+  InputIcon: {
+    marginHorizontal: SPACING.space_20,
+  },
+  TextInputContainer: {
+    flex: 1,
+    height: SPACING.space_20 * 3,
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.secondaryLightHex,
+    alignItems: 'center',
+    justifyContent: 'center', // Chỉnh text nằm giữa chiều dọc
+  },
+  CategoryScrollViewStyle: {
+    // paddingHorizontal: SPACING.space_20,
+    marginTop: SPACING.space_20
+
+  },
+  CategoryScrollViewContainer: {
+    paddingHorizontal: SPACING.space_15,
+    height:25
+  },
+  CategoryScrollViewItem: {
+    alignItems: 'center',
+  },
+  CategoryText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.secondaryLightHex,
+    marginBottom: SPACING.space_4,
+  },
+  ActiveCategory: {
+    height: SPACING.space_10,
+    width: SPACING.space_10,
+    borderRadius: BORDERRADIUS.radius_10,
+    backgroundColor: COLORS.whiteHex,
+  },
+  FlatListContainer: {
+    height:400,
+    gap: SPACING.space_20,
+
+  },
+  EmptyListContainer: {
+    width: Dimensions.get('window').width - SPACING.space_30 * 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: SPACING.space_36 * 3.6,
+  },
+  CoffeeBeansTitle: {
+    fontSize: FONTSIZE.size_18,
+    marginLeft: SPACING.space_30,
+    marginTop: SPACING.space_20,
+    fontFamily: FONTFAMILY.poppins_medium,
+    color: COLORS.secondaryLightHex,
+  },
+
+
+
+
+
 
 });
 
