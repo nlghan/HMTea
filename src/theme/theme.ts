@@ -47,6 +47,7 @@ interface Spacing {
     secondaryBlackAlpha: string;
     primaryGray: string;
     thirdGreen:string,
+    yellow: string
   }
   
   export const COLORS: Color = {
@@ -64,6 +65,7 @@ interface Spacing {
     blackAlpha: 'rgba(12,15,20,0.5)',
     secondaryBlackAlpha: 'rgba(0,0,0,0.7)',
     thirdGreen: '#829e82',
+    yellow:'yellow'
   };
   
   interface FontFamily {

@@ -44,7 +44,7 @@ const Home = ({navigation}:any) => {
   });
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
   const tabBarHeight = useBottomTabBarHeight();
-  console.log('categories =', categories)
+  // console.log('categories =', categories)
 
   const ListRef: any = useRef<FlatList>();
 
@@ -316,7 +316,8 @@ const styles = StyleSheet.create({
   },
   CategoryScrollViewContainer: {
     paddingHorizontal: SPACING.space_15,
-    height:25
+    height:30,
+    // backgroundColor:'lightgray'
   },
   CategoryScrollViewItem: {
     alignItems: 'center',
@@ -334,8 +335,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whiteHex,
   },
   FlatListContainer: {
-    height:400,
+    height:430,
     gap: SPACING.space_20,
+    // backgroundColor :'lightyellow'
 
   },
   EmptyListContainer: {

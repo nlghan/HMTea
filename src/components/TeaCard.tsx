@@ -58,7 +58,7 @@ const TeaCard: React.FC<TeaCardProps> = ({
           <View style={styles.CardRatingContainer}>
             <CustomIcon
               name={'star'}
-              color={COLORS.whiteHex}
+              color={COLORS.yellow}
               size={FONTSIZE.size_16}
             />
             <Text style={styles.CardRatingText}>{average_rating}</Text>

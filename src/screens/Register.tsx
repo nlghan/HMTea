@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
@@ -58,14 +58,14 @@ const Register = ({navigation}:any) => {
             return;
         }
 
-        // Kiểm tra xem email đã tồn tại chưa
+        // Check if email already exists
         fetchSignInMethodsForEmail(auth, email)
             .then((signInMethods) => {
                 if (signInMethods.length > 0) {
-                    // Email đã tồn tại
+                    // Email already exists
                     Alert.alert('Error', 'Email already exists. Please use another email.');
                 } else {
-                    // Đăng ký nếu email chưa tồn tại
+                    // Register if email does not exist
                     createUserWithEmailAndPassword(auth, email, password)
                         .then((userCredential) => {
                             // Registered
@@ -102,63 +102,66 @@ const Register = ({navigation}:any) => {
     };
 
     return (
-        <>
-        <View style={styles.container}>
-            <View style={styles.title}>
-                <Text style={styles.text1}>HMTea</Text>
-                <Text style={styles.text2}>Create an Account</Text>
-                <Text style={styles.text7}>Connect with us today!</Text>
-            </View>
-            <View style={styles.input}>
-                <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
-                    <TextInput
-                        style={styles.text3}
-                        placeholder='Email'
-                        placeholderTextColor={'#B4BBCB'}
-                        onChangeText={text => setEmail(text)}
-                        value={email} />
-                </View>
-                {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-                <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
-                    <TextInput
-                        style={styles.text3}
-                        placeholder='Password'
-                        placeholderTextColor={'#B4BBCB'}
-                        secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
-                        onChangeText={text => setPassword(text)}
-                        value={password} />
-                    <TouchableOpacity onPress={toggleShowPassword1}>
-                        <Icon name={showPassword1 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <View>
+                    <View style={styles.title}>
+                        <Text style={styles.text1}>HMTea</Text>
+                        <Text style={styles.text2}>Create an Account</Text>
+                        <Text style={styles.text7}>Connect with us today!</Text>
+                    </View>
+                    <View style={styles.input}>
+                        <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
+                            <TextInput
+                                style={styles.text3}
+                                placeholder='Email'
+                                placeholderTextColor={'#B4BBCB'}
+                                onChangeText={text => setEmail(text)}
+                                value={email} />
+                        </View>
+                        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+                        <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
+                            <TextInput
+                                style={styles.text3}
+                                placeholder='Password'
+                                placeholderTextColor={'#B4BBCB'}
+                                secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
+                                onChangeText={text => setPassword(text)}
+                                value={password} />
+                            <TouchableOpacity onPress={toggleShowPassword1}>
+                                <Icon name={showPassword1 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
+                            </TouchableOpacity>
+                        </View>
+                        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+                        <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
+                            <TextInput
+                                style={styles.text3}
+                                placeholder='Confirm Password'
+                                placeholderTextColor={'#B4BBCB'}
+                                secureTextEntry={!showPassword2} // Toggle secureTextEntry based on showPassword2 state
+                                onChangeText={text => setConfirmPassword(text)}
+                                value={confirmPassword} />
+                            <TouchableOpacity onPress={toggleShowPassword2}>
+                                <Icon name={showPassword2 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
+                            </TouchableOpacity>
+                        </View>
+                        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+                    </View>
+                    <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+                        <Text style={styles.registerText}>Sign Up</Text>
                     </TouchableOpacity>
+                    <View style={styles.line}>
+                        <Text style={styles.lineText}>_________________________________________</Text>
+                    </View>
+                    <View style={styles.footer}>
+                        <Text style={styles.text5}>Already have an account?</Text>
+                        <TouchableOpacity style={styles.login} onPress={handleLogin}>
+                            <Text style={styles.text6}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-                <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
-                    <TextInput
-                        style={styles.text3}
-                        placeholder='Confirm Password'
-                        placeholderTextColor={'#B4BBCB'}
-                        secureTextEntry={!showPassword2} // Toggle secureTextEntry based on showPassword2 state
-                        onChangeText={text => setConfirmPassword(text)}
-                        value={confirmPassword} />
-                    <TouchableOpacity onPress={toggleShowPassword2}>
-                        <Icon name={showPassword2 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
-                {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-            </View>
-            <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-                <Text style={styles.registerText}>Sign Up</Text>
-            </TouchableOpacity>
-            <View style={styles.line}>
-            <Text style={styles.lineText}>_________________________________________</Text>
-            </View>
-            <View style={styles.footer}>
-                <Text style={styles.text5}>Already have an account?</Text>
-                <TouchableOpacity style={styles.login} onPress={handleLogin}>
-                <Text style={styles.text6}>Login</Text>
-            </TouchableOpacity>
-            </View>
-        </View></>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         margin: 15,
+        flex: 1,
     },
     title: {
         marginTop: 80,
@@ -178,7 +182,6 @@ const styles = StyleSheet.create({
     },
     text2: {
         color: 'black',
-        textAlign: 'center',
         fontFamily: 'Inder-Regular',
         fontSize: 30,
     },
@@ -207,6 +210,7 @@ const styles = StyleSheet.create({
     text3: {
         color: '#2C683F',
         paddingLeft: 15,
+
     },
     icon: {
         paddingRight: 10,
@@ -253,7 +257,7 @@ const styles = StyleSheet.create({
     },
     text7:{
         color: '#999EA1',
-        fontSize: 14,
+        fontSize: 16,
         fontFamily: 'Inder-Regular',
         paddingTop:10,
         fontWeight: '500'
