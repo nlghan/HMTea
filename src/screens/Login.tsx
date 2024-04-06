@@ -135,6 +135,7 @@ const Login = ({ navigation }: any) => {
               placeholderTextColor={'#B4BBCB'}
               onChangeText={text => setEmail(text)}
               value={email}
+              keyboardType='email-address'
             />
           </View>
           {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}

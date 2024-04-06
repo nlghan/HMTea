@@ -26,9 +26,10 @@ const getCategoriesFromData = (data: any) => {
     return data;
   } else {
     let tealist = data.filter((item: any) => item.name.toLowerCase().includes(category.toLowerCase()));
-    return tealist;
+    return tealist.sort((a: { index: number; }, b: { index: number; }) => a.index - b.index); // Sắp xếp lại theo index để duy trì đúng vị trí của ảnh
   }
 };
+
 
 
 const Home = ({navigation}:any) => {
@@ -316,8 +317,7 @@ const styles = StyleSheet.create({
   },
   CategoryScrollViewContainer: {
     paddingHorizontal: SPACING.space_15,
-    height:30,
-    // backgroundColor:'lightgray'
+    height:25
   },
   CategoryScrollViewItem: {
     alignItems: 'center',
@@ -335,9 +335,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whiteHex,
   },
   FlatListContainer: {
-    height:430,
+    height:400,
     gap: SPACING.space_20,
-    // backgroundColor :'lightyellow'
 
   },
   EmptyListContainer: {
@@ -353,11 +352,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.secondaryLightHex,
   },
-
-
-
-
-
 
 });
 
