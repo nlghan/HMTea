@@ -14,7 +14,7 @@
       "sha1": "3455b9a804fed85c996001bfbcc73e6034bdf528"
     },
     {
-      "path": "src/assets/app_images/avt (1).png",
+      "path": "src/assets/app_images/avt_1.png",
       "sha1": "30fb90c80e14a2aebca174e560ca606aff6d4656"
     },
     {
@@ -22,7 +22,7 @@
       "sha1": "039fbff59306d5e4300ef7614d796844345575af"
     },
     {
-      "path": "src/assets/app_images/iconApp.png",
+      "path": "src/assets/app_images/iconapp.png",
       "sha1": "4407d20e1b48e0273ef80ec0ad1001b5eab8b930"
     },
     {
@@ -34,12 +34,60 @@
       "sha1": "6e379b78ebd5966fb944789b2b10470d3263c63c"
     },
     {
-      "path": "src/assets/app_images/Screenshot 2024-03-14 200800.png",
+      "path": "src/assets/app_images/screenshot_2024_03_14_200800.png",
       "sha1": "763cd2a19a4f967d9fdd421a50e17c03233443a0"
+    },
+    {
+      "path": "src/assets/app_images/slide.png",
+      "sha1": "889d3053761ee08f52617bc4b1ebfc422c37bac7"
     },
     {
       "path": "src/assets/fonts/app_icons.ttf",
       "sha1": "18e5fe2f93c853bbb495975f04df56438d595de5"
+    },
+    {
+      "path": "src/assets/fonts/Inder-Regular.ttf",
+      "sha1": "9a6b94bc6dfaf51efe3b7de6ab993715ef0c709d"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Black.ttf",
+      "sha1": "f79fa58ace5f55e338c99bf71e7e0702841df6f2"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Bold.ttf",
+      "sha1": "47ff07c75746682133b81e7ac0537ce50a4c9916"
+    },
+    {
+      "path": "src/assets/fonts/Inter-ExtraBold.ttf",
+      "sha1": "c9b3d2f2449ab2c67ff075f806973fa3d7e104b3"
+    },
+    {
+      "path": "src/assets/fonts/Inter-ExtraLight.ttf",
+      "sha1": "f78ee1d6cbfc64f656247c604ef270ef116abbf5"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Light.ttf",
+      "sha1": "cbb2506d8da21edbb2dc8cfa26e3b42a97d138f8"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Medium.ttf",
+      "sha1": "e76f580811e031813e7150131a0724811cdd737a"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular.ttf",
+      "sha1": "cfa780d0b50b2bb7eacb82984f1b18a95aaa40c5"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold.ttf",
+      "sha1": "5e0c44e57e7e090252d79f622899e67585bb892c"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Thin.ttf",
+      "sha1": "757805e615c974756646e54ceff8e409d5c47207"
+    },
+    {
+      "path": "src/assets/fonts/Lobster-Regular.ttf",
+      "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
     },
     {
       "path": "src/assets/fonts/Poppins-Black.ttf",
@@ -78,14 +126,6 @@
       "sha1": "09ba4dcd5509c8085bf88c665dcc51cbdfced27b"
     },
     {
-      "path": "src/assets/tea_assets/green_tea/portrait/green-tea-cinnamon.jpg",
-      "sha1": "96dd9f909610f2a76e8aa8ece3262e1188adae15"
-    },
-    {
-      "path": "src/assets/tea_assets/green_tea/portrait/green-tea-origin.jpg",
-      "sha1": "8bec333e282d0cc53868e216183784379569c53b"
-    },
-    {
       "path": "src/assets/tea_assets/green_tea/portrait/greentea.jpg",
       "sha1": "efb3190e8318616178b7db2182cf3539f5e37b8f"
     },
@@ -98,23 +138,31 @@
       "sha1": "4610c9623ad13ebceb02c6c0ea66d065acb4a08d"
     },
     {
-      "path": "src/assets/tea_assets/green_tea/portrait/Pomegranate-Green-Tea.jpg",
+      "path": "src/assets/tea_assets/green_tea/portrait/green_tea_cinnamon.jpg",
+      "sha1": "96dd9f909610f2a76e8aa8ece3262e1188adae15"
+    },
+    {
+      "path": "src/assets/tea_assets/green_tea/portrait/green_tea_origin.jpg",
+      "sha1": "8bec333e282d0cc53868e216183784379569c53b"
+    },
+    {
+      "path": "src/assets/tea_assets/green_tea/portrait/pomegranate_green_tea.jpg",
       "sha1": "fd8bb7b6301487383664cd54eed2b27e26dda7e5"
     },
     {
-      "path": "src/assets/tea_assets/jasmine_tea/portrait/iced-jasmine-tea.jpeg",
+      "path": "src/assets/tea_assets/jasmine_tea/portrait/iced_jasmine_tea.jpeg",
       "sha1": "4dc3c2700117133705c2a993045d3da26f4b832c"
     },
     {
-      "path": "src/assets/tea_assets/jasmine_tea/portrait/jasmine-tea.jpeg",
+      "path": "src/assets/tea_assets/jasmine_tea/portrait/jasmine_tea.jpeg",
       "sha1": "3871088e5c90991d03c3ac45e9e999d654714342"
     },
     {
-      "path": "src/assets/tea_assets/jasmine_tea/portrait/lychee-jasmine-tea.jpg",
+      "path": "src/assets/tea_assets/jasmine_tea/portrait/lychee_jasmine_tea.jpg",
       "sha1": "d621eddc0585434d9ead04d0215106812278f3a4"
     },
     {
-      "path": "src/assets/tea_assets/jasmine_tea/portrait/strawberry-jasmine-tea.jpg",
+      "path": "src/assets/tea_assets/jasmine_tea/portrait/strawberry_jasmine_tea.jpg",
       "sha1": "76723e5c69e5b20ab0b00f5fe695c65c6274fb0b"
     },
     {
@@ -126,16 +174,16 @@
       "sha1": "4a6812a80ad67bd00bb7183bc35d42c38f9b874e"
     },
     {
-      "path": "src/assets/tea_assets/lemon_tea/portrait/lemon-tea.jpg",
-      "sha1": "a28efae1c595f47f89bf207c8f105abf656e9054"
-    },
-    {
       "path": "src/assets/tea_assets/lemon_tea/portrait/lemontea1_detail.jpg",
       "sha1": "5cea12dd06a285482d218bb98fb90cd3d5952a19"
     },
     {
       "path": "src/assets/tea_assets/lemon_tea/portrait/lemontea2_detail.jpg",
       "sha1": "fa972f6b3c5102e350cc72cafff0751f19be84e0"
+    },
+    {
+      "path": "src/assets/tea_assets/lemon_tea/portrait/lemon_tea.jpg",
+      "sha1": "a28efae1c595f47f89bf207c8f105abf656e9054"
     },
     {
       "path": "src/assets/tea_assets/lemon_tea/portrait/rose_lemon_tea.jpg",
@@ -146,19 +194,15 @@
       "sha1": "fc20b819d61b41fbdb3d34a62c72e5babfab64bb"
     },
     {
-      "path": "src/assets/tea_assets/lemon_tea/square/lemonteaice_home.jpg",
-      "sha1": "7f96906366819fc0be55751e371c9468f38078d9"
-    },
-    {
       "path": "src/assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png",
       "sha1": "e656b7e0787ae77d4ab8102f1091a5484447c19e"
     },
     {
-      "path": "src/assets/tea_assets/lotus_tea/portrait/lotus-tea.jpg",
+      "path": "src/assets/tea_assets/lotus_tea/portrait/lotus_tea.jpg",
       "sha1": "841683eb3165e46eec635139a24e00332f6a0335"
     },
     {
-      "path": "src/assets/tea_assets/lotus_tea/portrait/lychee-lotus-tea.jpg",
+      "path": "src/assets/tea_assets/lotus_tea/portrait/lychee_lotus_tea.jpg",
       "sha1": "6a1f83827b93e2ec4027c85a2cacb0faf4303272"
     },
     {
@@ -166,35 +210,35 @@
       "sha1": "c1287c6eebce76228773e059c85aa673c517176a"
     },
     {
-      "path": "src/assets/tea_assets/masala_tea/portrait/Masala-Chai-Ice.jpg",
-      "sha1": "dc3aad28429f098a650a555cbffa4fcd78f2a311"
-    },
-    {
-      "path": "src/assets/tea_assets/masala_tea/portrait/Masala-Chai.jpg",
-      "sha1": "ccdba0b2f749624dd079f1ed5c6b9c6729c9927b"
-    },
-    {
-      "path": "src/assets/tea_assets/masala_tea/portrait/masala-tea-cheese.jpg",
-      "sha1": "38b2837abc784b0d5cb36919c921b652cafc6f84"
-    },
-    {
-      "path": "src/assets/tea_assets/masala_tea/portrait/masala-tea.jpg",
-      "sha1": "aba1627b38e9013ff1275783539d7e4e3ba0e454"
-    },
-    {
       "path": "src/assets/tea_assets/masala_tea/portrait/masalatea1_detail.jpg",
       "sha1": "360e86dfd5350c690613eb6ce0656992ea28e714"
     },
     {
-      "path": "src/assets/tea_assets/oolong_tea/portrait/iced-oolong-tea.jpg",
+      "path": "src/assets/tea_assets/masala_tea/portrait/masala_chai.jpg",
+      "sha1": "ccdba0b2f749624dd079f1ed5c6b9c6729c9927b"
+    },
+    {
+      "path": "src/assets/tea_assets/masala_tea/portrait/masala_chai_ice.jpg",
+      "sha1": "dc3aad28429f098a650a555cbffa4fcd78f2a311"
+    },
+    {
+      "path": "src/assets/tea_assets/masala_tea/portrait/masala_tea.jpg",
+      "sha1": "aba1627b38e9013ff1275783539d7e4e3ba0e454"
+    },
+    {
+      "path": "src/assets/tea_assets/masala_tea/portrait/masala_tea_cheese.jpg",
+      "sha1": "38b2837abc784b0d5cb36919c921b652cafc6f84"
+    },
+    {
+      "path": "src/assets/tea_assets/oolong_tea/portrait/iced_oolong_tea.jpg",
       "sha1": "0fee2d96badff1baaac63ab2b4172cab6073474f"
     },
     {
-      "path": "src/assets/tea_assets/oolong_tea/portrait/olong-tea.jpg",
+      "path": "src/assets/tea_assets/oolong_tea/portrait/olong_tea.jpg",
       "sha1": "8f54ee1fe888f0a2565b80129d2645d273b37f16"
     },
     {
-      "path": "src/assets/tea_assets/oolong_tea/portrait/Oolong-fresh-Tea.jpg",
+      "path": "src/assets/tea_assets/oolong_tea/portrait/oolong_fresh_tea.jpg",
       "sha1": "e8fd173b28d3349a6ba01ee22bf4996dce409cd9"
     },
     {
