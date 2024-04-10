@@ -1,3 +1,4 @@
+
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../components/Header'
@@ -79,3 +80,23 @@ const styles = StyleSheet.create({
 })
 
 export default Details
+=======
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import Header from '../components/Header'
+
+const Details = () => {
+  return (
+    <View>
+      <Header />
+      <Text>Details</Text>
+    </View>
+  )
+}
+
+
+
+const styles = StyleSheet.create({})
+
+export default Details
+

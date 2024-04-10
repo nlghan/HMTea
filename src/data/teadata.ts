@@ -174,7 +174,9 @@ const TeaData = [
     id: 'C10',
     name: 'Iced Lemon Tea',
     description: `Iced Lemon Tea is a cool and refreshing beverage that blends the zesty tang of lemon with the smoothness of tea, served over ice for a refreshing twist. This invigorating concoction features freshly brewed black tea infused with the vibrant flavor of lemon juice, creating a perfect balance of citrusy brightness and tea richness.`,
+
     imagelink_square: require('../assets/tea_assets/lemon_tea/square/lemonteaice_home.jpg'),
+
     imagelink_portrait: require('../assets/tea_assets/lemon_tea/portrait/iced_lemon_tea.jpg'),
     ingredients: 'Black Tea',
     special_ingredient: 'With Ice',
