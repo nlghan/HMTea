@@ -204,7 +204,7 @@ const Home = ({navigation}:any) => {
             return (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.push('Details', {
+                  navigation.navigate('Details', {
                     index: item.index,
                     id: item.id,
                     type: item.type,
