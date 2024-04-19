@@ -1,15 +1,14 @@
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
-import {useStore} from '../store/store';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {COLORS, SPACING} from '../theme/theme';
+import { useStore } from '../store/store';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { COLORS, SPACING } from '../theme/theme';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import PaymentFooter from '../components/PaymentFooter';
 import CartItem from '../components/CartItem';
 
-
-const Cart = ({navigation}: any) => {
+const Cart = ({ navigation }: any) => {
   const CartList = useStore((state: any) => state.CartList);
   const CartPrice = useStore((state: any) => state.CartPrice);
   const incrementCartItemQuantity = useStore(
@@ -22,32 +21,38 @@ const Cart = ({navigation}: any) => {
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
   const tabBarHeight = useBottomTabBarHeight();
 
-  const buttonPressHandler = () => {
-    navigation.push('Payment', {amount: CartPrice});
+  useEffect(() => {
+    // Gọi hàm pushListsToFirestore khi có sự thay đổi trong CartList
     pushListsToFirestore();
+  }, [CartList, pushListsToFirestore]);
+
+  const buttonPressHandler = () => {
+    navigation.push('Payment', { amount: CartPrice });
+    // pushListsToFirestore();
   };
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
     incrementCartItemQuantity(id, size);
     calculateCartPrice();
-    pushListsToFirestore();
+    // pushListsToFirestore();
   };
 
   const decrementCartItemQuantityHandler = (id: string, size: string) => {
     decrementCartItemQuantity(id, size);
     calculateCartPrice();
-    pushListsToFirestore();
+    // pushListsToFirestore();
   };
+
   return (
     <View style={styles.ScreenContainer}>
-      <Header/>
+      <Header />
       <StatusBar backgroundColor={COLORS.thirdGreen} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         <View
-          style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
+          style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
             {CartList.length == 0 ? (
               <EmptyListAnimation title={'Cart is Empty'} />
@@ -70,12 +75,9 @@ const Cart = ({navigation}: any) => {
                       special_ingredient={data.special_ingredient}
                       prices={data.prices}
                       type={data.type}
-                      incrementCartItemQuantityHandler={
-                        incrementCartItemQuantityHandler
-                      }
-                      decrementCartItemQuantityHandler={
-                        decrementCartItemQuantityHandler
-                      }
+                      incrementCartItemQuantityHandler={incrementCartItemQuantityHandler}
+                      decrementCartItemQuantityHandler={decrementCartItemQuantityHandler}
+                      user={data.user}
                     />
                   </TouchableOpacity>
                 ))}
@@ -87,7 +89,7 @@ const Cart = ({navigation}: any) => {
             <PaymentFooter
               buttonPressHandler={buttonPressHandler}
               buttonTitle="Pay"
-              price={{price: CartPrice, currency: '$'}}
+              price={{ price: CartPrice, currency: '$' }}
             />
           ) : (
             <></>
@@ -99,15 +101,13 @@ const Cart = ({navigation}: any) => {
 
 }
 
-
-
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     backgroundColor: '#f8f8f8',
   },
   ScrollViewFlex: {
-    marginTop:10,
+    marginTop: 10,
     flexGrow: 1,
   },
   ScrollViewInnerView: {

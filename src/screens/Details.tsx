@@ -41,7 +41,7 @@ const Details = ({ navigation, route }: any) => {
       type,
       prices: [{...price, quantity: 1}],
       user
-    });
+    }, user);
     calculateCartPrice();
     navigation.navigate('Cart');
   };

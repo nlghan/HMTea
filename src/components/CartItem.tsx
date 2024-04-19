@@ -24,6 +24,7 @@ interface CartItemProps {
     special_ingredient: string;
     prices: any;
     type: string;
+    user: string;
     incrementCartItemQuantityHandler: any;
     decrementCartItemQuantityHandler: any;
 }
@@ -35,6 +36,7 @@ const CartItem: React.FC<CartItemProps> = ({
     special_ingredient,
     prices,
     type,
+    user,
     incrementCartItemQuantityHandler,
     decrementCartItemQuantityHandler,
 }) => {

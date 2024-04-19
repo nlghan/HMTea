@@ -49,7 +49,7 @@ const Home = ({ navigation }: any) => {
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
   const tabBarHeight = useBottomTabBarHeight();
   // console.log('categories =', categories)
-
+  
  
 
 
@@ -85,22 +85,22 @@ const Home = ({ navigation }: any) => {
     id,
     index,
     name,
-    roasted,
     imagelink_square,
     special_ingredient,
     type,
     prices,
+    user
   }: any) => {
     addToCart({
       id,
       index,
       name,
-      roasted,
       imagelink_square,
       special_ingredient,
       type,
       prices,
-    });
+      user
+    }, user);
     calculateCartPrice();
     ToastAndroid.showWithGravity(
       `${name} is Added to Cart`,

@@ -37,14 +37,14 @@ export const useStore = create(
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
         const userDocSnapshot = await getDoc(userDocRef);
-        
+
         if (userDocSnapshot.exists()) {
           // Lấy dữ liệu người dùng từ Firestore
           const userData = userDocSnapshot.data();
           set(
             produce(state => {
               // Cập nhật trạng thái với dữ liệu từ Firestore
-              state.TeaList = userData.TeaData || state.TeaList;
+              state.TeaList = userData.TeaData || TeaData;
               state.FavoriteList = userData.FavoriteList || [];
               state.CartList = userData.CartList || [];
               state.OrderList = userData.OrderList || [];
@@ -77,7 +77,8 @@ export const useStore = create(
             if (teaToAdd) {
               if (!teaToAdd.favourite) {
                 teaToAdd.favourite = true;
-                state.FavoriteList.unshift({ ...teaToAdd, user });}
+                state.FavoriteList.unshift({ ...teaToAdd, user });
+              }
             }
           }
         })
@@ -96,7 +97,7 @@ export const useStore = create(
           }
         })
       ),
-      addToCart: (cartItem: any) =>
+      addToCart: (cartItem: any, user: any) =>
         set(
           produce(state => {
             let found = false;
@@ -134,24 +135,24 @@ export const useStore = create(
           }),
         ),
 
-        calculateCartPrice: () =>
-          set(
-            produce(state => {
-              let totalprice = 0;
-              for (let i = 0; i < state.CartList.length; i++) {
-                let tempprice = 0;
-                for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                  tempprice =
-                    tempprice +
-                    parseFloat(state.CartList[i].prices[j].price) *
-                    state.CartList[i].prices[j].quantity;
-                }
-                state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
-                totalprice = totalprice + tempprice;
+      calculateCartPrice: () =>
+        set(
+          produce(state => {
+            let totalprice = 0;
+            for (let i = 0; i < state.CartList.length; i++) {
+              let tempprice = 0;
+              for (let j = 0; j < state.CartList[i].prices.length; j++) {
+                tempprice =
+                  tempprice +
+                  parseFloat(state.CartList[i].prices[j].price) *
+                  state.CartList[i].prices[j].quantity;
               }
-              state.CartPrice = totalprice.toFixed(2).toString();
-            }),
-          ),
+              state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
+              totalprice = totalprice + tempprice;
+            }
+            state.CartPrice = totalprice.toFixed(2).toString();
+          }),
+        ),
 
       incrementCartItemQuantity: (id: any, size: any) => // Chức năng tăng số lượng
         set(
@@ -201,14 +202,14 @@ export const useStore = create(
         const { user, FavoriteList, CartList, OrderList, TeaList } = state;
         const db = getFirestore();
         const userDocRef = doc(db, 'user', user);
-      
+
         const data = {
           TeaData: TeaList,
           FavoriteList,
-          CartList,
-          OrderList,
+          CartList, // Lọc chỉ lấy các mục của người dùng hiện tại
+          OrderList, // Lọc chỉ lấy các mục của người dùng hiện tại
         };
-      
+
         try {
           await setDoc(userDocRef, data);
           console.log('Lists pushed to Firestore successfully');
@@ -222,7 +223,7 @@ export const useStore = create(
       storage: createJSONStorage(() => AsyncStorage),
     }
   )
-  
+
 );
 
 

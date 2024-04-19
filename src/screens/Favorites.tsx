@@ -39,7 +39,7 @@ const Favorites = ({navigation}: any) => {
           <View style={styles.ItemContainer}>
 
             {FavoritesList.length == 0 ? (
-              <EmptyListAnimation title={'You have not seen anything!'} />
+              <EmptyListAnimation title={'Find something!'} />
             ) : (
               <View style={styles.ListItemContainer}>
                 {FavoritesList.map((data: any) => (
