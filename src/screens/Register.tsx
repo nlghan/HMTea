@@ -92,6 +92,7 @@ const Register = ({navigation}:any) => {
                 console.error('Error checking email:', error.message);
                 Alert.alert('Error', 'An error occurred while checking email.');
             });
+        navigation.navigate('Login')
     };
 
     // Function to toggle password visibility for the first input
@@ -156,7 +157,7 @@ const Register = ({navigation}:any) => {
             <Text style={styles.lineText}>_________________________________________</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.text5}>You need to add personal information</Text>
+                <Text style={styles.text5}>Already have an account ?</Text>
                 <TouchableOpacity style={styles.login} onPress={handleLogin}>
                 <Text style={styles.text6}>Login</Text>
             </TouchableOpacity>
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     footer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,

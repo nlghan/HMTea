@@ -30,6 +30,7 @@ interface TeaCardProps {
   special_ingredient: string;
   average_rating: number;
   price: any;
+  user: any;
   buttonPressHandler: any;
 }
 
@@ -42,6 +43,7 @@ const TeaCard: React.FC<TeaCardProps> = ({
   special_ingredient,
   average_rating,
   price,
+  user,
   buttonPressHandler,
 }) => {
   return (
@@ -58,7 +60,7 @@ const TeaCard: React.FC<TeaCardProps> = ({
           <View style={styles.CardRatingContainer}>
             <CustomIcon
               name={'star'}
-              color={COLORS.yellow}
+              color={'yellow'}
               size={FONTSIZE.size_16}
             />
             <Text style={styles.CardRatingText}>{average_rating}</Text>
@@ -66,6 +68,7 @@ const TeaCard: React.FC<TeaCardProps> = ({
         </ImageBackground>
         <Text style={styles.CardTitle}>{name}</Text>
         <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
+        {/* <Text style={styles.CardSubtitle}>{user}</Text> */}
         <View style={styles.CardFooterRow}>
           <Text style={styles.CardPriceCurrency}>
             $ <Text style={styles.CardPrice}>{price.price}</Text>

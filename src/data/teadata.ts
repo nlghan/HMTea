@@ -16,6 +16,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Green Tea',
+    user: '',
     index: 0,
   },
   {
@@ -35,6 +36,7 @@ const TeaData = [
     ratings_count: '7000',
     favourite: false,
     type: 'Green Tea',
+    user: 'Han',
     index: 1,
   },
   {
@@ -54,6 +56,7 @@ const TeaData = [
     ratings_count: '6000',
     favourite: false,
     type: 'Green Tea',
+    user: 'Han',
     index: 2,
   },
   {
@@ -73,6 +76,7 @@ const TeaData = [
     ratings_count: '5,678',
     favourite: false,
     type: 'Green Tea',
+    user: 'Han',
     index: 3,
   }, 
   {
@@ -92,6 +96,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Masala Tea',
+    user: 'Han',
     index: 4,
   },
   {
@@ -111,6 +116,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Masala Tea',
+    user: 'Han',
     index: 5,
   },
   {
@@ -130,6 +136,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Masala Tea',
+    user: 'Han',
     index: 6,
   },
   {
@@ -149,6 +156,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Masala Tea',
+    user: 'Han',
     index: 7,
   },
   {
@@ -168,13 +176,16 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Lemon Tea',
+    user: 'Han',
     index: 8,
   },
   {
     id: 'C10',
     name: 'Iced Lemon Tea',
     description: `Iced Lemon Tea is a cool and refreshing beverage that blends the zesty tang of lemon with the smoothness of tea, served over ice for a refreshing twist. This invigorating concoction features freshly brewed black tea infused with the vibrant flavor of lemon juice, creating a perfect balance of citrusy brightness and tea richness.`,
+
     imagelink_square: require('../assets/tea_assets/lemon_tea/square/iced_lemon_tea.jpg'),
+
     imagelink_portrait: require('../assets/tea_assets/lemon_tea/portrait/iced_lemon_tea.jpg'),
     ingredients: 'Black Tea',
     special_ingredient: 'With Ice',
@@ -187,6 +198,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Lemon Tea',
+    user: 'Han',
     index: 9,
   },
   {
@@ -206,6 +218,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Lemon Tea',
+    user: 'Han',
     index: 10,
   },
   {
@@ -226,6 +239,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Lemon Tea',
+    user: 'Han',
     index: 11,
   },
   {
@@ -246,6 +260,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Oolong Tea',
+    user: 'Han',
     index: 12,
   },
   {
@@ -265,6 +280,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Oolong Tea',
+    user: 'Han',
     index: 13,
   },
   {
@@ -284,6 +300,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Oolong Tea',
+    user: 'Han',
     index: 14,
   },
   {
@@ -303,6 +320,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Oolong Tea',
+    user: 'Han',
     index: 15,
   },
   {
@@ -322,6 +340,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Jasmine Tea',
+    user: 'Han',
     index: 16,
   },
   {
@@ -341,6 +360,7 @@ const TeaData = [
     ratings_count: '6,879',
     favourite: false,
     type: 'Jasmine Tea',
+    user: 'Han',
     index: 17,
   },
   {
@@ -360,6 +380,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Jasmine Tea',
+      user: 'Han',
       index: 18,
     },
     {
@@ -379,6 +400,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Jasmine Tea',
+      user: 'Han',
       index: 19,
     },
     {
@@ -398,6 +420,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Lotus Tea',
+      user: 'Han',
       index: 20,
     },
     {
@@ -417,6 +440,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Lotus Tea',
+      user: '',
       index: 21,
     },
     {
@@ -436,6 +460,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Lotus Tea',
+      user: '',
       index: 22,
     },
     {
@@ -455,6 +480,7 @@ const TeaData = [
       ratings_count: '6,879',
       favourite: false,
       type: 'Lotus Tea',
+      user: '',
       index: 23,
     },
 ];

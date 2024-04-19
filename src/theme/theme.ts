@@ -1,3 +1,5 @@
+import { ColorValue } from "react-native";
+
 interface Spacing {
     space_2: number;
     space_4: number;
@@ -33,6 +35,7 @@ interface Spacing {
   };
   
   interface Color {
+    primaryOrangeHex: ColorValue | undefined;
     primaryGreenHex: string;
     secondaryGreenHex: string;
     primaryDarkHex: string;
@@ -65,7 +68,8 @@ interface Spacing {
     blackAlpha: 'rgba(12,15,20,0.5)',
     secondaryBlackAlpha: 'rgba(0,0,0,0.7)',
     thirdGreen: '#829e82',
-    yellow:'yellow'
+    yellow: '#D0F1D9',
+    primaryOrangeHex: undefined
   };
   
   interface FontFamily {

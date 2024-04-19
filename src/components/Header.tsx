@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const Header = () => {
+    const navigation = useNavigation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -11,6 +13,10 @@ const Header = () => {
 
     const handleContactPress = () => {
         Linking.openURL('https://www.facebook.com/people/HMTea/61558009175942/?mibextid=qi2Omg&rdid=L7vgP2gyIRVzx3eK');
+    };
+
+    const handleAvatarPress = () => {        
+        navigation.navigate('Info');
     };
 
     return (
@@ -25,9 +31,9 @@ const Header = () => {
             <View>
                 <Text style={styles.text}>HMTea</Text>
             </View>
-            <View>
+            <TouchableOpacity onPress={handleAvatarPress}>
                 <Image style={styles.avt} source={require('../assets/app_images/avt_1.png')} />
-            </View>
+            </TouchableOpacity>
 
             {/* Menu items */}
             {isMenuOpen && (
@@ -83,6 +89,7 @@ const styles = StyleSheet.create({
     avt: {
         width: 50,
         height: 50,
+        borderRadius: 25, // Add this for a circular avatar
     },
     categoriesContainer: {
         width: '72%',
@@ -125,7 +132,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: 'italic',
         textAlign: 'center'
-
     }
 });
 

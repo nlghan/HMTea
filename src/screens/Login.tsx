@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { getAuth, signInWithCredential,GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
-
+import { useStore } from '../store/store';
+import { getFirestore, collection, addDoc, setDoc, getDoc, doc } from 'firebase/firestore';
 
 
 // Initialize Firebase with your Firebase configuration
@@ -15,18 +17,21 @@ const firebaseConfig = {
     storageBucket: "hmtea-82dc0.appspot.com",
     messagingSenderId: "916037871147",
     appId: "1:916037871147:android:d40830a41ae50f4282ec6e",
+
 };
 
 // Check if Firebase app is already initialized
 let firebaseApp: FirebaseApp | undefined;
 
 const initializeFirebaseApp = () => {
+
     if (!firebaseApp) {
         firebaseApp = initializeApp(firebaseConfig, 'HMTEA');
         GoogleSignin.configure({
             webClientId: '916037871147-pkjb846hn759hllqd0e7mu02oc0s6nlk.apps.googleusercontent.com',
         });
     }
+
 };
 
 // Call this once when the app starts
@@ -39,6 +44,8 @@ const Login = ({navigation}:any) => {
     const [rememberMe, setRememberMe] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const login = useStore((state: any) => state.login);
+    const clear = useStore((state: any) => state.clearListsOnLogin);
 
     useEffect(() => {        
         const loadSavedLoginCredentials = async () => {
@@ -81,25 +88,25 @@ const Login = ({navigation}:any) => {
     const handleLogin = async () => {
         const auth = getAuth(firebaseApp);
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
+    
         // Reset previous errors
         setEmailError('');
         setPasswordError('');
-
+    
         // Check if email is empty or not valid
         if (!email || !emailRegex.test(email)) {
             setEmailError('Please enter a valid email address.');
             return;
         }
-
+    
         // Check if password is empty
         if (!password) {
             setPasswordError('Please enter your password.');
             return;
         }
-
+    
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in
                 if (userCredential.user) {
                     console.log('Login Successful:', userCredential.user.email);
@@ -108,18 +115,45 @@ const Login = ({navigation}:any) => {
                     if (rememberMe) {
                         saveLoginCredentials();
                     }
-                    navigation.navigate('Tab')
+                    // Check if user exists in Firestore
+                    const db = getFirestore();
+                    const userDocRef = doc(db, 'user', email);
+                    const userDoc = await getDoc(userDocRef);
+    
+                    if (userDoc.exists()) {
+                        console.log('User already exists in Firestore:', userDoc.data());
+                    } else {
+                        console.log('User does not exist in Firestore. Adding user...');
+                        // Thêm thông tin người dùng vào Firestore
+                        const userData = {
+                            email: userCredential.user.email,
+                            // Các thông tin khác của người dùng nếu có
+                        };
+    
+                        try {
+                            await setDoc(userDocRef, userData);
+                            console.log('User added to Firestore successfully');
+                        } catch (error) {
+                            console.error('Error adding user to Firestore:', error);
+                        }
+                    }
+                    login(userCredential.user.email);
+                    navigation.navigate('Tab', {userEmail: userCredential.user.email });
+                    navigation.navigate('Info', { userEmail: userCredential.user.email });
+                    
                 } else {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');
                 }
+            
             })
             .catch((error) => {
-                // Handle Errors here.
                 console.error('Login Failed:', error.message);
                 Alert.alert('Login Failed', error.message);
             });
+        
     };
+    
 
     const toggleShowPassword1 = () => {
         setShowPassword1(!showPassword1);
