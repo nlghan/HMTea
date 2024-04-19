@@ -15,7 +15,7 @@ import {
   FONTSIZE,
   SPACING,
 } from '../theme/theme';
-import CustomIcon from './CustomIcon';
+import { Icon } from 'react-native-vector-icons/Icon';
 
 interface ImageBackgroundInfoProps {
   EnableBackHandler: boolean;
@@ -28,6 +28,7 @@ interface ImageBackgroundInfoProps {
   ingredients: string;
   average_rating: number;
   ratings_count: string;
+  user: string;
   BackHandler?: any;
   ToggleFavourite: any;
 }
@@ -43,6 +44,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
   ingredients,
   average_rating,
   ratings_count,
+  user,
   BackHandler,
   ToggleFavourite,
 }) => {
@@ -50,7 +52,9 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
     <View>
       <ImageBackground
         source={imagelink_portrait}
-        style={styles.ItemBackgroundImage}>
+        style={styles.ItemBackgroundImage}
+        imageStyle={styles.imageStyle} // <-- Add this line for borderRadius
+      >
         {EnableBackHandler ? (
           <View style={styles.ImageHeaderBarContainerWithBack}>
             <TouchableOpacity
@@ -58,21 +62,21 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                 BackHandler();
               }}>
               <GradientBGIcon
-                name="left"
+                name="navigate-before"
                 color={COLORS.primaryGray}
-                size={FONTSIZE.size_16}
+                size={FONTSIZE.size_24}
               />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                ToggleFavourite(favourite, type, id);
+                ToggleFavourite(favourite, type, id, user);
               }}>
               <GradientBGIcon
-                name="like"
+                name="bookmark-add"
                 color={
-                  favourite ? COLORS.primaryGray : COLORS.accentRedHex
+                  favourite ? COLORS.accentRedHex : COLORS.primaryGray
                 }
-                size={FONTSIZE.size_16}
+                size={FONTSIZE.size_20}
               />
             </TouchableOpacity>
           </View>
@@ -80,19 +84,18 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
           <View style={styles.ImageHeaderBarContainerWithoutBack}>
             <TouchableOpacity
               onPress={() => {
-                ToggleFavourite(favourite, type, id);
+                ToggleFavourite(favourite, type, id, user);
               }}>
               <GradientBGIcon
-                name="like"
+                name="bookmark-add"
                 color={
-                    favourite ? COLORS.accentRedHex : COLORS.primaryGreenHex
+                  favourite ? COLORS.accentRedHex : COLORS.primaryGray
                 }
-                size={FONTSIZE.size_16}
+                size={FONTSIZE.size_20}
               />
             </TouchableOpacity>
           </View>
         )}
-
       </ImageBackground>
     </View>
   );
@@ -103,6 +106,11 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 20 / 25,
     justifyContent: 'space-between',
+    borderRadius: BORDERRADIUS.radius_20,
+    marginTop:5 // <-- Add this line for borderRadius
+  },
+  imageStyle: {
+    borderRadius: BORDERRADIUS.radius_20, // <-- Add this line for borderRadius
   },
   ImageHeaderBarContainerWithBack: {
     padding: SPACING.space_30,
@@ -116,7 +124,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  
 });
 
 export default ImageBackgroundInfo;

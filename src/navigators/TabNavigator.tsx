@@ -10,6 +10,7 @@ import { BlurView } from '@react-native-community/blur';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,9 +32,9 @@ const TabNavigator = () => {
         component={Home}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <CustomIcon
+            <Icon
               name="home"
-              size={20}
+              size={26}
               color={focused ? COLORS.primaryGreenHex : COLORS.primaryGray}
             />
           ),
@@ -44,9 +45,9 @@ const TabNavigator = () => {
         component={Cart}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <CustomIcon
-              name="cart"
-              size={20}
+            <Icon
+              name="shopping-bag"
+              size={26}
               color={focused ? COLORS.primaryGreenHex : COLORS.primaryGray}
             />
           ),
@@ -57,9 +58,9 @@ const TabNavigator = () => {
         component={Favorites}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <CustomIcon
-              name="like"
-              size={20}
+            <Icon
+              name="bookmark-add"
+              size={26}
               color={focused ? COLORS.primaryGreenHex : COLORS.primaryGray}
             />
           ),
@@ -70,9 +71,9 @@ const TabNavigator = () => {
         component={OrderHistory}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <CustomIcon
-              name="bell"
-              size={20}
+            <Icon
+              name="notifications"
+              size={26}
               color={focused ? COLORS.primaryGreenHex : COLORS.primaryGray}
             />
           ),

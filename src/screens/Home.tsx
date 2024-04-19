@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from '../components/CustomIcon';
 import TeaCard from '../components/TeaCard';
+import TeaData from '../data/teadata';
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -19,24 +20,26 @@ const getCategoriesFromData = (data: any) => {
   let categories = Object.keys(temp);
   categories.unshift('All');
   return categories;
- };
+};
 
- const getTeaList = (category: string, data: any) => {
+const getTeaList = (category: string, data: any) => {
   if (category === 'All') {
+    // console.log(data)
     return data;
   } else {
     let tealist = data.filter((item: any) => item.name.toLowerCase().includes(category.toLowerCase()));
+    console.log(tealist)
     return tealist.sort((a: { index: number; }, b: { index: number; }) => a.index - b.index); // Sắp xếp lại theo index để duy trì đúng vị trí của ảnh
   }
 };
 
 
 
-const Home = ({navigation}:any) => {
+const Home = ({ navigation }: any) => {
   const TeaList = useStore((state: any) => state.TeaList);
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
-  // console.log("TeaList =", TeaList.length);
+  console.log("TeaList =", TeaList);
   const [categories, setCategories] = useState(getCategoriesFromData(TeaList))
   const [searchText, setSearchText] = useState('')
   const [categoriesIndex, setCategoriesIndex] = useState({
@@ -47,6 +50,10 @@ const Home = ({navigation}:any) => {
   const tabBarHeight = useBottomTabBarHeight();
   // console.log('categories =', categories)
 
+ 
+
+
+
   const ListRef: any = useRef<FlatList>();
 
   const searchTea = (search: string) => {
@@ -55,7 +62,7 @@ const Home = ({navigation}:any) => {
         animated: true,
         offset: 0,
       });
-      setCategoriesIndex({index: 0, category: categories[0]});
+      setCategoriesIndex({ index: 0, category: categories[0] });
       setSortedTea([
         ...TeaList.filter((item: any) =>
           item.name.toLowerCase().includes(search.toLowerCase()),
@@ -69,7 +76,7 @@ const Home = ({navigation}:any) => {
       animated: true,
       offset: 0,
     });
-    setCategoriesIndex({index: 0, category: categories[0]});
+    setCategoriesIndex({ index: 0, category: categories[0] });
     setSortedTea([...TeaList]);
     setSearchText('');
   };
@@ -108,17 +115,17 @@ const Home = ({navigation}:any) => {
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.thirdGreen} />
       <Header />
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>       
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
         <View style={styles.slider}>
           <Image style={styles.slide} source={require("../assets/app_images/slide.png")} />
           <View style={styles.descript}>
             <Text style={styles.text2}>Top pick for you</Text>
           </View>
           <View style={styles.sale}>
-            <Text style={styles.text3}>Sale 30%</Text>
+            <Text style={styles.text3}>View item</Text>
           </View>
         </View>
-       
+
         <View style={styles.InputContainerComponent}>
           <TouchableOpacity
             onPress={() => {
@@ -145,11 +152,11 @@ const Home = ({navigation}:any) => {
             placeholderTextColor={COLORS.primaryLightHex}
             style={styles.TextInputContainer}
           />
-          </View>
+        </View>
 
-          <ScrollView
+        <ScrollView
           horizontal
-          showsHorizontalScrollIndicator= {false}
+          showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.CategoryScrollViewStyle}>
           {categories.map((data, index) => (
             <View
@@ -162,7 +169,7 @@ const Home = ({navigation}:any) => {
                     animated: true,
                     offset: 0,
                   });
-                  setCategoriesIndex({index: index, category: categories[index]});
+                  setCategoriesIndex({ index: index, category: categories[index] });
                   setSortedTea([
                     ...getTeaList(categories[index], TeaList),
                   ]);
@@ -171,7 +178,7 @@ const Home = ({navigation}:any) => {
                   style={[
                     styles.CategoryText,
                     categoriesIndex.index == index
-                      ? {color: COLORS.whiteHex}
+                      ? { color: COLORS.whiteHex }
                       : {},
                   ]}>
                   {data}
@@ -186,9 +193,9 @@ const Home = ({navigation}:any) => {
           ))}
         </ScrollView>
 
-         {/* Coffee Flatlist */}
+        {/* Coffee Flatlist */}
 
-         <FlatList
+        <FlatList
           ref={ListRef}
           horizontal
           ListEmptyComponent={
@@ -200,7 +207,7 @@ const Home = ({navigation}:any) => {
           data={sortedTea}
           contentContainerStyle={styles.FlatListContainer}
           keyExtractor={item => item.id}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -209,6 +216,8 @@ const Home = ({navigation}:any) => {
                     index: item.index,
                     id: item.id,
                     type: item.type,
+                    user: item.user,
+                    
                   });
                 }}>
                 <TeaCard
@@ -220,8 +229,8 @@ const Home = ({navigation}:any) => {
                   special_ingredient={item.special_ingredient}
                   average_rating={item.average_rating}
                   price={item.prices[2]}
-                  buttonPressHandler={TeaCardAddToCart}
-                />
+                  user={''} 
+                  buttonPressHandler={TeaCardAddToCart}                />
               </TouchableOpacity>
             );
           }}
@@ -276,12 +285,12 @@ const styles = StyleSheet.create({
   text2: {
     color: "#005A24",
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   ScrollViewFlex: {
     flexGrow: 1,
-    paddingHorizontal:15,
+    paddingHorizontal: 15,
   },
   InputContainerComponent: {
     flexDirection: 'row',
@@ -292,10 +301,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 15,
   },
-  icon:{
+  icon: {
     marginRight: 10,
   },
-  textInput:{
+  textInput: {
     flex: 1,
     color: 'white',
   },
@@ -318,7 +327,7 @@ const styles = StyleSheet.create({
   },
   CategoryScrollViewContainer: {
     paddingHorizontal: SPACING.space_15,
-    height:25
+    height: 25
   },
   CategoryScrollViewItem: {
     alignItems: 'center',
@@ -336,7 +345,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whiteHex,
   },
   FlatListContainer: {
-    height:400,
+    height: 400,
     gap: SPACING.space_20,
 
   },

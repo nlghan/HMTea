@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, SPACING} from '../theme/theme';
 import CustomIcon from './CustomIcon';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface GradientBGIconProps {
   name: string;
@@ -18,7 +19,7 @@ const GradientBGIcon: React.FC<GradientBGIconProps> = ({name, color, size}) => {
         end={{x: 1, y: 1}}
         colors={[COLORS.primaryLightHex, COLORS.primaryLightHex]}
         style={styles.LinearGradientBG}>
-        <CustomIcon name={name} color={color} size={size} />
+        <Icon name={name} color={color} size={size} />
       </LinearGradient>
     </View>
   );
