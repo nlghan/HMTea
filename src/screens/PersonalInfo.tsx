@@ -1,62 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { initializeApp } from '@firebase/app';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { useStore } from '../store/store';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-interface InformationProps {
-  iconName: string; // Icon path
-  fontName: string; // Font family
-}
-const firebaseConfig = {
-    apiKey: "AIzaSyBwirHS7SLtA9blevL6K1M7YGr59Dy96Aw",
-    projectId: "hmtea-82dc0",
-    storageBucket: "hmtea-82dc0.appspot.com",
-    messagingSenderId: "916037871147",
-    appId: "1:916037871147:android:d40830a41ae50f4282ec6e",
-};
-
-const app = initializeApp(firebaseConfig);
-const Information = ({ navigation }: { navigation: any }) => {
+const Information = ({ navigation, route }: { navigation: any, route: any }) => {
   const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const user = useStore((state: any) => state.user);
+  const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
-  const handleHome = () =>{
-    navigation.navigate('Home');
-  };
   useEffect(() => {
-    const auth = getAuth();
-    const db = getFirestore();
-    const userEmail = auth.currentUser?.email;
-
+    // Load user info if available
     const loadUserInfo = async () => {
-      if (userEmail) {
-        // Load email from Firebase Authentication
-        setEmail(userEmail);
-        console.log("email: ", userEmail)
-
-        // Load other user information from Firestore
-        const userDoc = doc(db, 'personalInfo', userEmail);
-        const docSnap = await getDoc(userDoc);
+      // Load user info from Firestore if user is logged in
+      if (user) {
+        const db = getFirestore();
+        const userDocRef = doc(db, 'user', user);
+        const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data();
+          const userData = docSnap.data()?.Information;
           if (userData) {
-            setAddress(userData.address);
-            setFullName(userData.fullName );
-            setPhoneNumber(userData.phoneNumber);            
+            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+            if (userData.fullName) {
+              setFullName(userData.fullName);
+            }
+            if (userData.address) {
+              setAddress(userData.address);
+            }
+            if (userData.phoneNumber) {
+              setPhoneNumber(userData.phoneNumber);
+            }
           }
         }
       }
     };
-
     loadUserInfo();
-  }, []); 
+  }, [user]);
+  
+
+  const saveUserInfo = async () => {
+    // Update user info in the store and push to Firestore
+    useStore.setState({ fullName, address, phoneNumber }); // Update store state
+    pushListsToFirestore(); // Push to Firestore
+  };
+
+  const handleHome = () => {
+    navigation.navigate('Tab');
+  };
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <View style={styles.container}>
       <View style={styles.header}>
             <TouchableOpacity onPress={handleHome} >
                 <Icon name='chevron-left' size={25}/>
@@ -73,8 +71,14 @@ const Information = ({ navigation }: { navigation: any }) => {
           <Image style={styles.avt} source={require('../assets/app_images/avt_1.png')} />
           </View>        
           <View style={styles.userInfo}>
-            <Text style={styles.userInfoText}>Full name: {fullName}</Text>
-            <Text style={styles.userInfoText}>Email: {email}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Full name"
+                value={fullName}
+                onChangeText={setFullName}
+              />
+            <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
+            
           </View>
           <View style={styles.iconContainer}>
           <Icon name='edit-square' size={25} color={'white'}/>
@@ -85,12 +89,22 @@ const Information = ({ navigation }: { navigation: any }) => {
           <Icon name='location-on' size={30} color={'lightgreen'}  /> 
           </View>      
           <View style={styles.textContainer}>
-            <Text style={styles.infoText}>Address: {address}</Text>
-            <Text style={styles.infoText}>Phone Number: {phoneNumber}</Text>
+            <TextInput
+                  style={styles.input2}
+                  placeholder="Address"
+                  value={address}
+                  onChangeText={setAddress}
+                />
+            <TextInput
+                style={styles.input2}
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
           </View>
-          <View style={styles.change}>
-              <Text style={styles.textChange}>Change</Text>
-          </View>
+          <TouchableOpacity style={styles.saveButton} onPress={saveUserInfo}>
+        <Text style={styles.saveText}>Save</Text>
+      </TouchableOpacity>
         </View>
       </View>
       <View style={styles.divider} />
@@ -119,8 +133,11 @@ const Information = ({ navigation }: { navigation: any }) => {
           <Text style={styles.myAccountText1}>Logout</Text>          
         </View>
     </View>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -155,7 +172,8 @@ const styles = StyleSheet.create({
   },
   avt: {
     width: 50,
-    height: 50,    
+    height: 50,  
+    borderRadius: 25,      
   },
   boder: {
     borderRadius: 50,
@@ -200,11 +218,13 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     flex: 1,
+    marginBottom: 5,
+
   },
   userInfoText: {
     color: '#ffffff',
     fontSize: 16,
-    marginBottom: 5,
+    
   },
   infoContainer: {
     backgroundColor: 'white',
@@ -222,7 +242,8 @@ const styles = StyleSheet.create({
   
   textContainer: {
     flex: 1,
-    marginLeft: 20,
+    marginLeft: 20, 
+       
   },
   change: {
    height: 30,
@@ -235,7 +256,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   infoText: {
-    color: '#2C683F',
+    color: 'white',
     fontSize: 16,
     marginBottom: 5,
   },
@@ -258,11 +279,23 @@ const styles = StyleSheet.create({
     marginTop: 10, 
     color: 'gray',
   },
-  iconDivider: {
-    marginTop: 10,    
-    width: 28,
-    height: 28, 
+  input: {
+    height: 40,    
+    marginBottom: 10,    
   },
+  input2: {
+    height: 40,
+    color: 'black', 
+    marginBottom: 5,    
+  },
+  saveButton: {
+    alignItems: 'center',  
+    padding: 20,
+    marginTop: 5,
+  },
+  saveText: {
+    color: 'red'
+  }
 });
 
 export default Information;

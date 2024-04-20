@@ -12,9 +12,13 @@ interface State {
   FavoriteList: any[];
   CartList: any[];
   OrderList: any[];
+  fullName: string;
+  address: string;
+  phoneNumber: string;
   clearListsOnLogin: (email: any) => void;
   login: (email: string) => void;
   addToFavoriteList: (type: string | string[], id: any, user: any) => void;
+  addToCart: (cartItem: any, user: any) => void;
   pushListsToFirestore: () => Promise<void>;
 }
 
@@ -26,6 +30,9 @@ export const useStore = create(
       FavoriteList: [],
       CartList: [],
       OrderList: [],
+      fullName: '', // Thêm các trường thông tin mới
+      address: '',
+      phoneNumber: '',
       clearListsOnLogin: (email: any) => set(
         produce(state => {
           state.FavoriteList = [];
@@ -37,39 +44,36 @@ export const useStore = create(
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
         const userDocSnapshot = await getDoc(userDocRef);
-
+      
         if (userDocSnapshot.exists()) {
-          // Lấy dữ liệu người dùng từ Firestore
           const userData = userDocSnapshot.data();
-          set(
-            produce(state => {
-              // Cập nhật trạng thái với dữ liệu từ Firestore
-              state.TeaList = userData.TeaData || TeaData;
-              state.FavoriteList = userData.FavoriteList || [];
-              state.CartList = userData.CartList || [];
-              state.OrderList = userData.OrderList || [];
-              state.user = email;
-              state.TeaList.forEach((tea: { user: string }) => {
-                tea.user = email;
-              });
-            })
-          );
+          set((state: any) => ({
+            ...state,
+            TeaList: userData.TeaData || TeaData,
+            FavoriteList: userData.FavoriteList || [],
+            CartList: userData.CartList || [],
+            OrderList: userData.OrderList || [],
+            fullName: userData.Information?.fullName || '',
+            address: userData.Information?.address || '',
+            phoneNumber: userData.Information?.phoneNumber || '',
+            user: email,
+            
+          }));
         } else {
-          // Nếu không tìm thấy dữ liệu người dùng, đặt trạng thái về giá trị mặc định
-          set(
-            produce(state => {
-              state.FavoriteList = [];
-              state.CartList = [];
-              state.OrderList = [];
-              state.user = email;
-              // Đặt lại user trong TeaList
-              state.TeaList.forEach((tea: { user: string }) => {
-                tea.user = email;
-              });
-            })
-          );
+          set((state: any) => ({
+            ...state,
+            FavoriteList: [],
+            CartList: [],
+            OrderList: [],
+            fullName: '',
+            address: '',
+            phoneNumber: '',
+            user: email,
+            TeaList: TeaData,
+          }));
         }
       },
+      
       addToFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
           if (type.includes('Tea')) {
@@ -199,22 +203,27 @@ export const useStore = create(
         ),
       pushListsToFirestore: async () => {
         const state = get() as State;
-        const { user, FavoriteList, CartList, OrderList, TeaList } = state;
+        const { user, FavoriteList, CartList, OrderList, TeaList, fullName, address, phoneNumber } = state;
         const db = getFirestore();
         const userDocRef = doc(db, 'user', user);
 
         const data = {
           TeaData: TeaList,
           FavoriteList,
-          CartList, // Lọc chỉ lấy các mục của người dùng hiện tại
-          OrderList, // Lọc chỉ lấy các mục của người dùng hiện tại
+          CartList,
+          OrderList,
+          Information: {  // Thêm trường thông tin người dùng
+            fullName,
+            address,
+            phoneNumber
+          }
         };
 
         try {
           await setDoc(userDocRef, data);
-          console.log('Lists pushed to Firestore successfully');
+          console.log('Lists and Information pushed to Firestore successfully');
         } catch (error) {
-          console.error('Error pushing lists to Firestore:', error);
+          console.error('Error pushing lists and Information to Firestore:', error);
         }
       },
     }),
@@ -226,26 +235,3 @@ export const useStore = create(
 
 );
 
-
-const getStoredData = async () => {
-  try {
-    // Lấy dữ liệu từ AsyncStorage
-    const jsonValue = await AsyncStorage.getItem('HMTea');
-
-    // Kiểm tra xem dữ liệu có tồn tại không
-    if (jsonValue !== null) {
-      console.log('Stored JSON data:', jsonValue);
-      const data = JSON.parse(jsonValue);
-      // Cập nhật currentUser thành user đang đăng nhập
-      data.state.user = data.state.currentUser;
-      delete data.state.currentUser;
-      // Lưu lại dữ liệu đã cập nhật
-      await AsyncStorage.setItem('HMTea', JSON.stringify(data));
-    } else {
-      console.log('No data found in AsyncStorage.');
-    }
-  } catch (error) {
-    console.error('Error getting data from AsyncStorage:', error);
-  }
-};
-getStoredData();
