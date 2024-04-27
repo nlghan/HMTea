@@ -33,6 +33,7 @@ export const useStore = create(
       fullName: '', // Thêm các trường thông tin mới
       address: '',
       phoneNumber: '',
+
       clearListsOnLogin: (email: any) => set(
         produce(state => {
           state.FavoriteList = [];
@@ -44,7 +45,7 @@ export const useStore = create(
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
         const userDocSnapshot = await getDoc(userDocRef);
-      
+
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
           set((state: any) => ({
@@ -234,4 +235,3 @@ export const useStore = create(
   )
 
 );
-
