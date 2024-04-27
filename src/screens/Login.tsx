@@ -137,10 +137,8 @@ const Login = ({navigation}:any) => {
                             console.error('Error adding user to Firestore:', error);
                         }
                     }
-                    login(userCredential.user.email);
-                    navigation.navigate('Tab', {userEmail: userCredential.user.email });
-                    navigation.navigate('Info', { userEmail: userCredential.user.email });
-                    
+                    login(userCredential.user.email)
+                    navigation.navigate('Tab', {userEmail: userCredential.user.email })
                 } else {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');

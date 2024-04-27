@@ -15,8 +15,9 @@ const Header = () => {
         Linking.openURL('https://www.facebook.com/people/HMTea/61558009175942/?mibextid=qi2Omg&rdid=L7vgP2gyIRVzx3eK');
     };
 
-    const handleAvatarPress = () => {        
-        navigation.navigate('Info');
+    const handleAvatarPress = () => {
+        // Chuyển trang "Infor"
+        navigation.navigate('Infor' as never);
     };
 
     return (

@@ -1,110 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import { initializeApp } from '@firebase/app';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { useStore } from '../store/store';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-// interface InformationProps {
-//   iconName: string; // Icon path
-//   fontName: string; // Font family
-// }
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBwirHS7SLtA9blevL6K1M7YGr59Dy96Aw",
-//     projectId: "hmtea-82dc0",
-//     storageBucket: "hmtea-82dc0.appspot.com",
-//     messagingSenderId: "916037871147",
-//     appId: "1:916037871147:android:d40830a41ae50f4282ec6e",
-// };
-
-// const app = initializeApp(firebaseConfig);
 
 const Information = ({ navigation, route }: { navigation: any, route: any }) => {
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const user = useStore((state: any) => state.user);
-
-  const handleHome = () => {
-    navigation.goBack();
-  };
+  const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
   useEffect(() => {
+    // Load user info if available
     const loadUserInfo = async () => {
-      const auth = getAuth();
-      const db = getFirestore();
-
-      let userEmailFromParams = null;
-      const { userEmail } = route.params || {};
-      
-      if (userEmail) {
-        userEmailFromParams = userEmail;
-        setCurrentUserEmail(userEmailFromParams);
-      } else {
-        userEmailFromParams = auth.currentUser?.email;
-        if (userEmailFromParams) {
-          setCurrentUserEmail(userEmailFromParams);
-        }
-      }
-
-      if (userEmailFromParams) {
-        const userDocRef = doc(db, 'user', userEmailFromParams);
+      // Load user info from Firestore if user is logged in
+      if (user) {
+        const db = getFirestore();
+        const userDocRef = doc(db, 'user', user);
         const docSnap = await getDoc(userDocRef);
-        
         if (docSnap.exists()) {
           const userData = docSnap.data()?.Information;
           if (userData) {
-            setFullName(userData[0] || '');
-            setAddress(userData[1] || '');
-            setPhoneNumber(userData[2] || '');
+            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+            if (userData.fullName) {
+              setFullName(userData.fullName);
+            }
+            if (userData.address) {
+              setAddress(userData.address);
+            }
+            if (userData.phoneNumber) {
+              setPhoneNumber(userData.phoneNumber);
+            }
           }
         }
       }
-
-      // return auth.onAuthStateChanged(user => {
-      //   if (user) {
-      //     // Nếu user đang đăng nhập, lấy email và cập nhật state
-      //     setCurrentUserEmail(user.email);
-      //   } else {
-      //     // Nếu không, đặt email về null hoặc giá trị mặc định khác
-      //     setCurrentUserEmail(null);
-      //   }
-      // });
     };
-
     loadUserInfo();
-    
-  }, [route.params]);
-  
+  }, [user]);
   
 
   const saveUserInfo = async () => {
-    const auth = getAuth();
-    const db = getFirestore();
-    let userEmailFromParams = null;
-      const { userEmail } = route.params || {};
-      userEmailFromParams = userEmail;
-        setCurrentUserEmail(userEmailFromParams);
-      if (userEmail) {
-        userEmailFromParams = userEmail;
-        setCurrentUserEmail(userEmailFromParams);
-      } else {
-        userEmailFromParams = auth.currentUser?.email;
-        if (userEmailFromParams) {
-          setCurrentUserEmail(userEmailFromParams);
-        }
-      }   
-  
-    if (userEmail) {
-      const userDocRef = doc(db, 'user', userEmail); // Đặt tên collection là 'users' (hoặc tùy chỉnh theo tên bạn đã sử dụng)
-      
-      await setDoc(userDocRef, {
-        Information: [fullName, address, phoneNumber],
-      });
-    }
+    // Update user info in the store and push to Firestore
+    useStore.setState({ fullName, address, phoneNumber }); // Update store state
+    pushListsToFirestore(); // Push to Firestore
   };
+
+  const handleHome = () => {
+    navigation.navigate('Tab');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -131,7 +77,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
                 value={fullName}
                 onChangeText={setFullName}
               />
-            <Text style={styles.infoText}>Email: {currentUserEmail || 'Not logged in'}</Text>
+            <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
             
           </View>
           <View style={styles.iconContainer}>
@@ -191,6 +137,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
         </TouchableWithoutFeedback>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

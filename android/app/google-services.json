@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "916037871147-79lr14ugtr8nlejhv457f9794attu5js.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hmtea",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
           "client_id": "916037871147-pkjb846hn759hllqd0e7mu02oc0s6nlk.apps.googleusercontent.com",
           "client_type": 3
         }

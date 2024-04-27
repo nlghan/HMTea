@@ -68,13 +68,18 @@
 		4C21BFBA305743FFB67B24A4 /* masala_tea_cheese.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */; };
 		FE3C6F79FF91472C9123FFF7 /* iced_oolong_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */; };
 		EB84E0ACBB1D478DBB689ABA /* olong_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 34C1F794809B4DC5A92B941D /* olong_tea.jpg */; };
+
+		68B0C05DBD4B4166AF7BCC67 /* iconapp.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */; };
+
 		C245EE133A8A4ABBBAC65C48 /* pomegranate_green_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */; };
 		6E7B91C4FF974C35B29DA786 /* masala_chai.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAF1B13600764DF68B00CE54 /* masala_chai.jpg */; };
 		EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A565055749A344628B4495F5 /* masala_chai_ice.jpg */; };
 		508FE9389FC94C84A1B0ACBF /* oolong_fresh_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */; };
 		1FB40DC6EBAE48EE90539AA0 /* screenshot_2024_03_14_200800.png in Resources */ = {isa = PBXBuildFile; fileRef = 57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */; };
 		959C9464C63C4FBBBBF527D5 /* slide.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3C5C6341DE48E4A3200380 /* slide.png */; };
+
 		09FF0E0CD71E431AB787C70A /* iconapp.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B50826204464DA5A292C3 /* iconapp.png */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,13 +164,18 @@
 		1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */ = {isa = PBXFileReference; name = "masala_tea_cheese.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_tea_cheese.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */ = {isa = PBXFileReference; name = "iced_oolong_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/iced_oolong_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		34C1F794809B4DC5A92B941D /* olong_tea.jpg */ = {isa = PBXFileReference; name = "olong_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/olong_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
+		E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */ = {isa = PBXFileReference; name = "iconapp.png"; path = "../src/assets/app_images/iconapp.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
 		A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */ = {isa = PBXFileReference; name = "pomegranate_green_tea.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/pomegranate_green_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EAF1B13600764DF68B00CE54 /* masala_chai.jpg */ = {isa = PBXFileReference; name = "masala_chai.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_chai.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A565055749A344628B4495F5 /* masala_chai_ice.jpg */ = {isa = PBXFileReference; name = "masala_chai_ice.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_chai_ice.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */ = {isa = PBXFileReference; name = "oolong_fresh_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/oolong_fresh_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */ = {isa = PBXFileReference; name = "screenshot_2024_03_14_200800.png"; path = "../src/assets/app_images/screenshot_2024_03_14_200800.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AA3C5C6341DE48E4A3200380 /* slide.png */ = {isa = PBXFileReference; name = "slide.png"; path = "../src/assets/app_images/slide.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
 		0F8B50826204464DA5A292C3 /* iconapp.png */ = {isa = PBXFileReference; name = "iconapp.png"; path = "../src/assets/app_images/iconapp.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,13 +338,17 @@
 				1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */,
 				1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */,
 				34C1F794809B4DC5A92B941D /* olong_tea.jpg */,
+				E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */,
+
 				A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */,
 				EAF1B13600764DF68B00CE54 /* masala_chai.jpg */,
 				A565055749A344628B4495F5 /* masala_chai_ice.jpg */,
 				698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */,
 				57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */,
 				AA3C5C6341DE48E4A3200380 /* slide.png */,
+
 				0F8B50826204464DA5A292C3 /* iconapp.png */,
+
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -489,13 +503,19 @@
 				4C21BFBA305743FFB67B24A4 /* masala_tea_cheese.jpg in Resources */,
 				FE3C6F79FF91472C9123FFF7 /* iced_oolong_tea.jpg in Resources */,
 				EB84E0ACBB1D478DBB689ABA /* olong_tea.jpg in Resources */,
+
+				68B0C05DBD4B4166AF7BCC67 /* iconapp.png in Resources */,
+
 				C245EE133A8A4ABBBAC65C48 /* pomegranate_green_tea.jpg in Resources */,
 				6E7B91C4FF974C35B29DA786 /* masala_chai.jpg in Resources */,
 				EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */,
 				508FE9389FC94C84A1B0ACBF /* oolong_fresh_tea.jpg in Resources */,
 				1FB40DC6EBAE48EE90539AA0 /* screenshot_2024_03_14_200800.png in Resources */,
 				959C9464C63C4FBBBBF527D5 /* slide.png in Resources */,
+
+
 				09FF0E0CD71E431AB787C70A /* iconapp.png in Resources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
