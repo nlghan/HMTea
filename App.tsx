@@ -26,7 +26,6 @@ const App = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={Login} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="Register" component={Register} options={{ animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="Info" component={PersonalInfo} options={{ animation: 'slide_from_bottom' }} /> 
         <Stack.Screen name="Home" component={Home} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="Header" component={Header} options={{ animation: 'slide_from_bottom' }} />     
         <Stack.Screen name="Tab" component={TabNavigator} options={{ animation: 'slide_from_bottom' }} />
