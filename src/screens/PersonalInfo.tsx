@@ -28,7 +28,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   const user = useStore((state: any) => state.user);
 
   const handleHome = () => {
-    navigation.goBack();
+    navigation.navigate('Tab');
   };
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
                 value={fullName}
                 onChangeText={setFullName}
               />
-            <Text style={styles.infoText}>Email: {currentUserEmail || 'Not logged in'}</Text>
+            <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
             
           </View>
           <View style={styles.iconContainer}>
