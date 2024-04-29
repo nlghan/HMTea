@@ -40,8 +40,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
     loadUserInfo();
   }, [user]);
   
-
-  const saveUserInfo = async () => {
+    const saveUserInfo = async () => {
     // Update user info in the store and push to Firestore
     useStore.setState({ fullName, address, phoneNumber }); // Update store state
     pushListsToFirestore(); // Push to Firestore
@@ -49,6 +48,16 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
   const handleHome = () => {
     navigation.navigate('Tab');
+  };
+  const handleCart = () => {
+    navigation.navigate('Cart');
+    
+  };
+  const handleFavorites = () => {
+    navigation.navigate('Favorite');
+  };
+  const handleLogin = () => {
+    navigation.navigate('Login');
   };
 
   return (
@@ -116,22 +125,22 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
         <Icon name='notifications' size={30}/>
           <Text style={styles.myAccountText1}>Notifications</Text>
         </View>
-        <View style={styles.dividerContainer}>
+        <TouchableOpacity style={styles.dividerContainer} onPress={handleCart}>
         <Icon name='shopping-cart' size={30}/>
           <Text style={styles.myAccountText1}>My Orders</Text>
-        </View>
-        <View style={styles.dividerContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dividerContainer} onPress={handleFavorites}>
         <Icon name='favorite' size={30}/>
           <Text style={styles.myAccountText1}>My Favourites</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.dividerContainer}>
         <Icon name='settings' size={30}/>
           <Text style={styles.myAccountText1}>Settings</Text>          
         </View>
-        <View style={styles.dividerContainer}>
+        <TouchableOpacity style={styles.dividerContainer} onPress={handleLogin}>
         <Icon name='logout' size={30}/>
           <Text style={styles.myAccountText1}>Logout</Text>          
-        </View>
+        </TouchableOpacity>
     </View>
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
@@ -243,7 +252,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginLeft: 20, 
-       
+      
   },
   change: {
    height: 30,

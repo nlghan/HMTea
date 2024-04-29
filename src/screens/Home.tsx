@@ -7,6 +7,9 @@ import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/th
 import CustomIcon from '../components/CustomIcon';
 import TeaCard from '../components/TeaCard';
 import TeaData from '../data/teadata';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import VoiceTest from '../components/VoiceTest';
+import Voice from "@react-native-voice/voice"
 
 const getCategoriesFromData = (data: any) => {
   let temp: any = {};
@@ -47,6 +50,7 @@ const Home = ({ navigation }: any) => {
     category: categories[0],
   });
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
+  const [showVoiceTab, setShowVoiceTab] = useState(false);
   const tabBarHeight = useBottomTabBarHeight();
   // console.log('categories =', categories)
   
@@ -109,6 +113,11 @@ const Home = ({ navigation }: any) => {
     );
   };
 
+ 
+  const handleVoiceSearch = () => {
+    setShowVoiceTab(true);
+  };
+
 
 
   return (
@@ -141,7 +150,7 @@ const Home = ({ navigation }: any) => {
                   : COLORS.primaryLightHex
               }
             />
-          </TouchableOpacity>
+          </TouchableOpacity>          
           <TextInput
             placeholder="What would you like..."
             value={searchText}
@@ -152,8 +161,20 @@ const Home = ({ navigation }: any) => {
             placeholderTextColor={COLORS.primaryLightHex}
             style={styles.TextInputContainer}
           />
-        </View>
-
+          <TouchableOpacity onPress={handleVoiceSearch}>
+            <Icon name='keyboard-voice' size={25}/>
+          </TouchableOpacity>
+          {showVoiceTab && (
+            <VoiceTest
+              onVoiceSearch={(text) => {
+                setSearchText(text);
+                setShowVoiceTab(false);
+              }}
+              onChangeText={(text) => setSearchText(text)}
+              startListening={handleVoiceSearch} // Pass the startListening function here
+            />
+          )}
+        </View>       
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}

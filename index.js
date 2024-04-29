@@ -8,5 +8,6 @@ import Login from './src/screens/Login';
 import {name as appName} from './app.json';
 import Register from './src/screens/Register';
 import Info from './src/screens/PersonalInfo'
+import SpeechToText from './src/components/SpeechToText'
 
 AppRegistry.registerComponent(appName, () => App);

@@ -6,6 +6,10 @@
       "sha1": "4ec7050dda251f228cb2b9a5220cc986099dd3c7"
     },
     {
+      "path": "src/assets/app_images/angle_left.png",
+      "sha1": "241f6d02c49152bef4359ac8a869212d79227db3"
+    },
+    {
       "path": "src/assets/app_images/applepay.png",
       "sha1": "0b06e72fa97134cda893f1688ab8852fef316f1f"
     },
@@ -16,6 +20,18 @@
     {
       "path": "src/assets/app_images/avt_1.png",
       "sha1": "30fb90c80e14a2aebca174e560ca606aff6d4656"
+    },
+    {
+      "path": "src/assets/app_images/cart.png",
+      "sha1": "bbfee996047508ae7a9f4db9920896d96ef8fdce"
+    },
+    {
+      "path": "src/assets/app_images/cowbell.png",
+      "sha1": "2668e068b0131fc01e8028268f503bed0ef43eb5"
+    },
+    {
+      "path": "src/assets/app_images/favourite.png",
+      "sha1": "0c174061c92c93387caae2e07d998a94373ddeff"
     },
     {
       "path": "src/assets/app_images/gpay.png",
@@ -34,8 +50,28 @@
       "sha1": "6e379b78ebd5966fb944789b2b10470d3263c63c"
     },
     {
+      "path": "src/assets/app_images/logout.png",
+      "sha1": "5392807eb39ffb7edadfae1cd5a0744c0d2d43d8"
+    },
+    {
+      "path": "src/assets/app_images/marker.png",
+      "sha1": "0dc0088d5a194918ba44224a793d85a521e42629"
+    },
+    {
+      "path": "src/assets/app_images/marker_1.png",
+      "sha1": "15e90324ea08fd07fff4682a1b2de5ec880a5d72"
+    },
+    {
+      "path": "src/assets/app_images/pencil.png",
+      "sha1": "d951d916cd0053a6e6873a47e0ebb7acb7fe6157"
+    },
+    {
       "path": "src/assets/app_images/screenshot_2024_03_14_200800.png",
       "sha1": "763cd2a19a4f967d9fdd421a50e17c03233443a0"
+    },
+    {
+      "path": "src/assets/app_images/settings.png",
+      "sha1": "139b783774d9c6d0010385ef2877636f77408692"
     },
     {
       "path": "src/assets/app_images/slide.png",
