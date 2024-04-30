@@ -1,14 +1,15 @@
 import { View, Text, StyleSheet, Image, StatusBar, ScrollView, TouchableOpacity, TextInput, FlatList, Dimensions, ToastAndroid } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Header from '../components/Header';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from '../components/CustomIcon';
 import TeaCard from '../components/TeaCard';
-import TeaData from '../data/teadata';
+import { useTranslation } from 'react-i18next'; // Import hook useTranslation
+import i18n from '../i18n/i18n';
 
-const getCategoriesFromData = (data: any) => {
+const getCategoriesFromData = (data: any, currentLanguage: string) => {
   let temp: any = {};
   for (let i = 0; i < data.length; i++) {
     if (temp[data[i].type] == undefined) {
@@ -18,12 +19,15 @@ const getCategoriesFromData = (data: any) => {
     }
   }
   let categories = Object.keys(temp);
-  categories.unshift('All');
+  // Kiểm tra ngôn ngữ hiện tại và quyết định xem sử dụng "All" hay "Tất cả"
+  const allText = currentLanguage === 'vi' ? 'Tất cả' : 'All';
+  categories.unshift(allText);
   return categories;
 };
 
+
 const getTeaList = (category: string, data: any) => {
-  if (category === 'All') {
+  if (category === 'All' || category === 'Tất cả') {
     // console.log(data)
     return data;
   } else {
@@ -39,8 +43,9 @@ const Home = ({ navigation }: any) => {
   const TeaList = useStore((state: any) => state.TeaList);
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+  const language = useStore((state: any) => state.language)
   console.log("TeaList =", TeaList);
-  const [categories, setCategories] = useState(getCategoriesFromData(TeaList))
+  const [categories, setCategories] = useState(getCategoriesFromData(TeaList, language))
   const [searchText, setSearchText] = useState('')
   const [categoriesIndex, setCategoriesIndex] = useState({
     index: 0,
@@ -49,8 +54,16 @@ const Home = ({ navigation }: any) => {
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
   const tabBarHeight = useBottomTabBarHeight();
   // console.log('categories =', categories)
-  
- 
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    // Update i18n language to match language from useStore
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
+
+
+
 
 
 
@@ -103,12 +116,24 @@ const Home = ({ navigation }: any) => {
     }, user);
     calculateCartPrice();
     ToastAndroid.showWithGravity(
-      `${name} is Added to Cart`,
+      `${name} ${t('addto')}`,
       ToastAndroid.SHORT,
-      ToastAndroid.CENTER,
+      ToastAndroid.CENTER
     );
   };
 
+  useEffect(() => {
+    setCategories(getCategoriesFromData(TeaList, language));
+    const filteredTea = getTeaList(categoriesIndex.category, TeaList);
+    if (searchText !== '') {
+      const searchResult = TeaList.filter((item: { name: string; }) =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setSortedTea(searchResult);
+    } else {
+      setSortedTea(filteredTea);
+    }
+  }, [categoriesIndex, searchText, TeaList]);
 
 
   return (
@@ -119,10 +144,13 @@ const Home = ({ navigation }: any) => {
         <View style={styles.slider}>
           <Image style={styles.slide} source={require("../assets/app_images/slide.png")} />
           <View style={styles.descript}>
-            <Text style={styles.text2}>Top pick for you</Text>
+            <Text style={styles.text2}>
+            {t('pick')}
+            </Text>
           </View>
+
           <View style={styles.sale}>
-            <Text style={styles.text3}>View item</Text>
+            <Text style={styles.text3}>{t('view')}</Text>
           </View>
         </View>
 
@@ -143,7 +171,7 @@ const Home = ({ navigation }: any) => {
             />
           </TouchableOpacity>
           <TextInput
-            placeholder="What would you like..."
+            placeholder={t('whatWould')}
             value={searchText}
             onChangeText={text => {
               setSearchText(text);
@@ -200,7 +228,7 @@ const Home = ({ navigation }: any) => {
           horizontal
           ListEmptyComponent={
             <View style={styles.EmptyListContainer}>
-              <Text style={styles.CategoryText}>No Coffee Available</Text>
+              <Text style={styles.CategoryText}>{t('avai')}</Text>
             </View>
           }
           showsHorizontalScrollIndicator={false}
@@ -212,12 +240,12 @@ const Home = ({ navigation }: any) => {
               <TouchableOpacity
                 onPress={() => {
 
-                  navigation.push('Details', {
+                  navigation.navigate('Details', {
                     index: item.index,
                     id: item.id,
                     type: item.type,
                     user: item.user,
-                    
+
                   });
                 }}>
                 <TeaCard
@@ -229,8 +257,9 @@ const Home = ({ navigation }: any) => {
                   special_ingredient={item.special_ingredient}
                   average_rating={item.average_rating}
                   price={item.prices[2]}
-                  user={''} 
-                  buttonPressHandler={TeaCardAddToCart}                />
+                  user={''}
+                  buttonPressHandler={TeaCardAddToCart}
+                  language={language} />
               </TouchableOpacity>
             );
           }}
@@ -274,7 +303,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     zIndex: 1000,
     top: 30, // Để văn bản nằm ở giữa chiều dọc của ảnh
-    left: '80%', // Để văn bản nằm ở giữa chiều ngang của ảnh
+    left: '75%', // Để văn bản nằm ở giữa chiều ngang của ảnh
     transform: [{ translateX: -150 }, { translateY: -15 }], // Để văn bản được căn giữa theo chiều ngang và dọc của ảnh
   },
   text3: {

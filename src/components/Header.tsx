@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next'; // Import hook useTranslation
+import i18n from '../i18n/i18n';
+import { useStore } from '../store/store'; // Import useStore hook
 
 const Header = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation(); // Use useTranslation hook
+    const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        // Update i18n language to match language from useStore
+        i18n.changeLanguage(languageFromStore);
+    }, [languageFromStore]);
 
     const handleContactPress = () => {
         Linking.openURL('https://www.facebook.com/people/HMTea/61558009175942/?mibextid=qi2Omg&rdid=L7vgP2gyIRVzx3eK');
@@ -18,6 +29,10 @@ const Header = () => {
     const handleAvatarPress = () => {
         // Chuyển trang "Infor"
         navigation.navigate('Infor' as never);
+    };
+
+    const handlePolicyPress = () => {
+        Linking.openURL('https://www.termsfeed.com/live/b2f9beb7-206c-48ac-9865-74d02a752721?fbclid=IwZXh0bgNhZW0CMTAAAR1UxrPhiNK1bRX82Z0hnAjmrpcChQFcdxO05IYA46VJdt947-FPNa1KQBw_aem_AaeUp7Nfg6zy1SCszF0KGgSa7WyZNWBHDQxsYvvb7vpXu_ImQn3FUUe_ODOuIguBzyDgwbITjYxxsA1CmUdgaRtG');
     };
 
     return (
@@ -39,25 +54,25 @@ const Header = () => {
             {/* Menu items */}
             {isMenuOpen && (
                 <View style={styles.categoriesContainer}>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={handlePolicyPress}>
                         <Icon name="security" size={24} color="#2C683F" />
-                        <Text style={styles.menuText}>Privacy Policy</Text>
+                        <Text style={styles.menuText}>{t('privacyPolicy')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}>
                         <Icon name="assignment" size={24} color="#2C683F" />
-                        <Text style={styles.menuText}>Terms & Conditions</Text>
+                        <Text style={styles.menuText}>{t('termsAndConditions')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}>
                         <Icon name="language" size={24} color="#2C683F" />
-                        <Text style={styles.menuText}>Language: English</Text>
+                        <Text style={styles.menuText}>{t('language')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem} onPress={handleContactPress}>
                         <Icon name="support" size={24} color="#2C683F" />
-                        <Text style={styles.menuText}>Contact</Text>
+                        <Text style={styles.menuText}>{t('contact')}</Text>
                     </TouchableOpacity>
                     <View style={styles.footerMenu}>
-                        <Text style={styles.menuTextFooter}>Version: 0.0.1</Text>
-                        <Text style={styles.menuTextFooter}>Built by: GiaHan - DiemMy</Text>
+                        <Text style={styles.menuTextFooter}>{t('version')}</Text>
+                        <Text style={styles.menuTextFooter}>{t('builtBy')}</Text>
                     </View>
                 </View>
             )}

@@ -1,15 +1,15 @@
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { useStore } from '../store/store';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo';
 import PaymentFooter from '../components/PaymentFooter';
+import { useTranslation } from 'react-i18next'; // Import hook useTranslation
+import i18n from '../i18n/i18n';
 
 const Details = ({ navigation, route }: any) => {
-  const { userEmail } = route.params;
-  console.log("routes =", route.params);
   const ItemOfIndex = useStore((state: any) =>
     route.params.type == 'Tea' ? state.TeaList : state.TeaList,
   )[route.params.index];
@@ -18,9 +18,18 @@ const Details = ({ navigation, route }: any) => {
 
   const addToCart = useStore((state: any) => state.addToCart);
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+  const user = useStore((state: any) => state.user);
 
   const [price, setPrice] = useState(ItemOfIndex.prices[0]);
   const [fullDesc, setFullDesc] = useState(false);
+
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    // Update i18n language to match language from useStore
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
 
   const addToCarthandler = ({
     id,
@@ -88,10 +97,10 @@ const Details = ({ navigation, route }: any) => {
             ratings_count={ItemOfIndex.ratings_count}
             BackHandler={BackHandler}
             ToggleFavourite={ToggleFavourite} 
-            user={ItemOfIndex.user}          
+            user={user}          
             />
           <View style={styles.FooterInfoArea}>
-          <Text style={styles.InfoTitle}>Description</Text>
+          <Text style={styles.InfoTitle}>{t('description')}</Text>
           {fullDesc ? (
             <TouchableWithoutFeedback
               onPress={() => {
@@ -111,7 +120,7 @@ const Details = ({ navigation, route }: any) => {
               </Text>
             </TouchableWithoutFeedback>
           )}
-          <Text style={styles.InfoTitle}>Size</Text>
+          <Text style={styles.InfoTitle}>{t('size')}</Text>
           <View style={styles.SizeOuterContainer}>
             {ItemOfIndex.prices.map((data: any) => (
               <TouchableOpacity
@@ -155,7 +164,7 @@ const Details = ({ navigation, route }: any) => {
 
           <PaymentFooter
           price={price}
-          buttonTitle="Add to Cart"
+          buttonTitle={t('Add')}
           buttonPressHandler={() => {
             addToCarthandler({
               id: ItemOfIndex.id,
@@ -166,7 +175,7 @@ const Details = ({ navigation, route }: any) => {
               special_ingredient: ItemOfIndex.special_ingredient,
               type: ItemOfIndex.type,
               price: price,
-              user: ItemOfIndex.user,
+              user: user,
             });
           }}
         />

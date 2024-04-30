@@ -59,7 +59,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
-              name="bookmark-add"
+              name="favorite"
               size={26}
               color={focused ? COLORS.primaryGreenHex : COLORS.primaryGray}
             />

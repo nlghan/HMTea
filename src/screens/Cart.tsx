@@ -7,6 +7,8 @@ import { COLORS, SPACING } from '../theme/theme';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import PaymentFooter from '../components/PaymentFooter';
 import CartItem from '../components/CartItem';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/i18n';
 
 const Cart = ({ navigation }: any) => {
   const CartList = useStore((state: any) => state.CartList);
@@ -43,6 +45,13 @@ const Cart = ({ navigation }: any) => {
     // pushListsToFirestore();
   };
 
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
+
   return (
     <View style={styles.ScreenContainer}>
       <Header />
@@ -55,7 +64,7 @@ const Cart = ({ navigation }: any) => {
           style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
             {CartList.length == 0 ? (
-              <EmptyListAnimation title={'Cart is Empty'} />
+              <EmptyListAnimation title={t('emptyCart')} />
             ) : (
               <View style={styles.ListItemContainer}>
                 {CartList.map((data: any) => (
@@ -88,8 +97,8 @@ const Cart = ({ navigation }: any) => {
           {CartList.length != 0 ? (
             <PaymentFooter
               buttonPressHandler={buttonPressHandler}
-              buttonTitle="Pay"
-              price={{ price: CartPrice, currency: '$' }}
+              buttonTitle={t('pay')}
+              price={{ price: CartPrice, currency: t('currency') }}
             />
           ) : (
             <></>

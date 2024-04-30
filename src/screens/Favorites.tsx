@@ -1,14 +1,16 @@
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
 
-import {useStore} from '../store/store';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {COLORS, SPACING} from '../theme/theme';
+import { useStore } from '../store/store';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { COLORS, SPACING } from '../theme/theme';
 import FavoritesItemCard from '../components/FavoritesItemCard';
 import EmptyListAnimation from '../components/EmptyListAnimation';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/i18n';
 
-const Favorites = ({navigation}: any) => {
+const Favorites = ({ navigation }: any) => {
   const FavoritesList = useStore((state: any) => state.FavoriteList);
   const tabBarHeight = useBottomTabBarHeight();
   const user = useStore((state: any) => state.user);
@@ -16,36 +18,44 @@ const Favorites = ({navigation}: any) => {
   const deleteFromFavoriteList = useStore((state: any) => state.deleteFromFavoriteList);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
+
+
   const ToggleFavourite = (favourite: boolean, type: string, id: string) => {
     if (favourite) {
-      deleteFromFavoriteList(type, id, user); 
+      deleteFromFavoriteList(type, id, user);
     } else {
-      addToFavoriteList(type, id, user); 
+      addToFavoriteList(type, id, user);
     }
     console.log("status", favourite, type, id, user)
     pushListsToFirestore();
   };
-  
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
+
   return (
     <View style={styles.ScreenContainer}>
-      <Header/>
+      <Header />
       <StatusBar backgroundColor={COLORS.thirdGreen} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         <View
-          style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
+          style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
 
             {FavoritesList.length == 0 ? (
-              <EmptyListAnimation title={'Find something!'} />
+              <EmptyListAnimation title={t('emptyFavorite')} />
             ) : (
               <View style={styles.ListItemContainer}>
                 {FavoritesList.map((data: any) => (
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.push('Details', {
+                      navigation.navigate('Details', {
                         index: data.index,
                         id: data.id,
                         type: data.type,
@@ -63,8 +73,8 @@ const Favorites = ({navigation}: any) => {
                       ratings_count={data.ratings_count}
                       description={data.description}
                       favourite={data.favourite}
-                      user={data.user}
-                      ToggleFavouriteItem={(favourite: boolean, type: string, id: string) => ToggleFavourite(favourite, type, id)} 
+                      user={user}
+                      ToggleFavouriteItem={(favourite: boolean, type: string, id: string) => ToggleFavourite(favourite, type, id)}
                     />
                   </TouchableOpacity>
                 ))}

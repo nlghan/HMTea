@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TeaData from '../data/teadata';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import TeaDataVi from '../data/teadatavi';
 
 interface State {
   user: string;
@@ -15,6 +16,7 @@ interface State {
   fullName: string;
   address: string;
   phoneNumber: string;
+  language: string;
   clearListsOnLogin: (email: any) => void;
   login: (email: string) => void;
   addToFavoriteList: (type: string | string[], id: any, user: any) => void;
@@ -33,50 +35,56 @@ export const useStore = create(
       fullName: '', // Thêm các trường thông tin mới
       address: '',
       phoneNumber: '',
-      clearListsOnLogin: (email: any) => set(
+      clearListsOnLogin: (email: any, language: string) => set(
         produce(state => {
-          state.FavoriteList = [];
-          state.CartList = [];
-          state.OrderList = [];
+          if (state.language !== language) {
+            state.FavoriteList = [];
+            state.CartList = [];
+            state.language = language;
+            state.TeaList = language === 'vi' ? TeaDataVi : TeaData;
+        }
         })
       ),
-      login: async (email: string) => {
+
+      login: async (email: string, language: string) => {
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
         const userDocSnapshot = await getDoc(userDocRef);
-      
+
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
           set((state: any) => ({
             ...state,
-            TeaList: userData.TeaData || TeaData,
-            FavoriteList: userData.FavoriteList || [],
-            CartList: userData.CartList || [],
-            OrderList: userData.OrderList || [],
-            fullName: userData.Information?.fullName || '',
-            address: userData.Information?.address || '',
-            phoneNumber: userData.Information?.phoneNumber || '',
+            language: language,
+            TeaList: language === 'vi' ? userData?.TeaDataVi || TeaDataVi : userData?.TeaData || TeaData,
+            FavoriteList: userData?.FavoriteList || [],
+            CartList: language === state.language ? userData?.CartList || [] : [], // Reset CartList if language changes
+            OrderList: userData?.OrderList || [],
+            fullName: userData?.Information?.fullName || '',
+            address: userData?.Information?.address || '',
+            phoneNumber: userData?.Information?.phoneNumber || '',
             user: email,
-            
           }));
         } else {
           set((state: any) => ({
             ...state,
+            language: language,
             FavoriteList: [],
-            CartList: [],
+            CartList: [], // Reset CartList for new user
             OrderList: [],
             fullName: '',
             address: '',
             phoneNumber: '',
             user: email,
-            TeaList: TeaData,
+            TeaList: language === 'vi' ? TeaDataVi : TeaData,
           }));
         }
       },
-      
+
+
       addToFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea')) {
+          if (type.includes('Tea') || type.includes('Trà')) {
             const teaToAdd = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToAdd) {
               if (!teaToAdd.favourite) {
@@ -89,7 +97,7 @@ export const useStore = create(
       ),
       deleteFromFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea')) {
+          if (type.includes('Tea') || type.includes('Trà')) {
             const teaToModify = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToModify) {
               teaToModify.favourite = !teaToModify.favourite;
@@ -139,24 +147,32 @@ export const useStore = create(
           }),
         ),
 
-      calculateCartPrice: () =>
-        set(
-          produce(state => {
-            let totalprice = 0;
-            for (let i = 0; i < state.CartList.length; i++) {
-              let tempprice = 0;
-              for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                tempprice =
-                  tempprice +
-                  parseFloat(state.CartList[i].prices[j].price) *
-                  state.CartList[i].prices[j].quantity;
+        calculateCartPrice: () =>
+          set(
+            produce((state) => {
+              let totalprice = 0;
+              for (let i = 0; i < state.CartList.length; i++) {
+                let tempprice = 0;
+                for (let j = 0; j < state.CartList[i].prices.length; j++) {
+                  tempprice +=
+                    parseFloat(state.CartList[i].prices[j].price) *
+                    state.CartList[i].prices[j].quantity;
+                }
+                if (state.language === 'en') {
+                  state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
+                } else {
+                  state.CartList[i].ItemPrice = tempprice.toString();
+                }
+                totalprice += tempprice;
               }
-              state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
-              totalprice = totalprice + tempprice;
-            }
-            state.CartPrice = totalprice.toFixed(2).toString();
-          }),
-        ),
+              if (state.language === 'en') {
+                state.CartPrice = totalprice.toFixed(2).toString();
+              } else {
+                state.CartPrice = totalprice.toString();
+              }
+            })
+          ),
+        
 
       incrementCartItemQuantity: (id: any, size: any) => // Chức năng tăng số lượng
         set(
@@ -203,19 +219,20 @@ export const useStore = create(
         ),
       pushListsToFirestore: async () => {
         const state = get() as State;
-        const { user, FavoriteList, CartList, OrderList, TeaList, fullName, address, phoneNumber } = state;
+        const { user, FavoriteList, CartList, OrderList, TeaList, fullName, address, phoneNumber, language } = state;
         const db = getFirestore();
         const userDocRef = doc(db, 'user', user);
 
         const data = {
-          TeaData: TeaList,
+          TeaData: language === 'vi' ? TeaDataVi : TeaData,
           FavoriteList,
           CartList,
           OrderList,
-          Information: {  // Thêm trường thông tin người dùng
+          Information: {
             fullName,
             address,
-            phoneNumber
+            phoneNumber,
+            language, // Add language field to Firestore
           }
         };
 
@@ -226,6 +243,7 @@ export const useStore = create(
           console.error('Error pushing lists and Information to Firestore:', error);
         }
       },
+      resetCartList: () => set({ CartList: [] }),
     }),
     {
       name: 'HMTea',

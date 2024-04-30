@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BORDERRADIUS,
   COLORS,
@@ -7,6 +7,10 @@ import {
   FONTSIZE,
   SPACING,
 } from '../theme/theme';
+import { useTranslation } from 'react-i18next';
+import { useStore } from '../store/store';
+import i18n from '../i18n/i18n';
+
 
 interface PriceProps {
   price: string;
@@ -24,12 +28,20 @@ const PaymentFooter: React.FC<PaymentFooterProps> = ({
   buttonPressHandler,
   buttonTitle,
 }) => {
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
   return (
     <View style={styles.PriceFooter}>
       <View style={styles.PriceContainer}>
-        <Text style={styles.PriceTitle}>Price</Text>
+        <Text style={styles.PriceTitle}>{t('price')}</Text>
         <Text style={styles.PriceText}>
-          {price.currency} <Text style={styles.Price}>{price.price}</Text>
+        <Text style={styles.Price}>{price.price}</Text> <Text> </Text>
+          {t('currency')}
+           
         </Text>
       </View>
       <TouchableOpacity
@@ -46,38 +58,46 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop:15,
-    
+    marginTop: 15,
+
     // paddingHorizontal: SPACING.space_20, // gap -> paddingHorizontal
   },
   PriceContainer: {
     alignItems: 'center',
-    width: 150,
-    paddingLeft:10
+    width: 220,
+   
   },
   PriceTitle: {
-    fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_18,
+    fontFamily: 'Inter-Bold',
+    fontSize: FONTSIZE.size_20,
     color: COLORS.primaryDarkHex,
+    marginLeft: -100
   },
   PriceTextContainer: {
     flexDirection: 'row',
     alignItems: 'baseline',
+    
+    
   },
   Currency: {
     fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_24,
+    fontSize: FONTSIZE.size_28,
     color: COLORS.primaryOrangeHex,
+    
+    
   },
   Price: {
-    fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_24,
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_20,
     color: COLORS.primaryDarkHex,
+    
   },
   PriceText: {
-    fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_24,
-    color: COLORS.primaryOrangeHex,
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.primaryDarkHex,
+    width:180,
+    
   },
   PayButton: {
     backgroundColor: COLORS.primaryGreenHex,

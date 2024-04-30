@@ -72,7 +72,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                 ToggleFavourite(favourite, type, id, user);
               }}>
               <GradientBGIcon
-                name="bookmark-add"
+                name="favorite"
                 color={
                   favourite ? COLORS.accentRedHex : COLORS.primaryGray
                 }
@@ -87,7 +87,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                 ToggleFavourite(favourite, type, id, user);
               }}>
               <GradientBGIcon
-                name="bookmark-add"
+                name="favorite"
                 color={
                   favourite ? COLORS.accentRedHex : COLORS.primaryGray
                 }

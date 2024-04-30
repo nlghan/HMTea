@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { getAuth, signInWithCredential,GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithCredential, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import { useStore } from '../store/store';
 import { getFirestore, collection, addDoc, setDoc, getDoc, doc } from 'firebase/firestore';
+import LanguageSwitch from '../components/LanguageSwitch';
+import { useTranslation } from 'react-i18next'; // Import hook useTranslation
 
 
 // Initialize Firebase with your Firebase configuration
@@ -37,7 +39,8 @@ const initializeFirebaseApp = () => {
 // Call this once when the app starts
 initializeFirebaseApp();
 
-const Login = ({navigation}:any) => {
+const Login = ({ navigation }: any) => {
+    const { t, i18n } = useTranslation(); // Use useTranslation hook
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword1, setShowPassword1] = useState(false);
@@ -45,9 +48,11 @@ const Login = ({navigation}:any) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const login = useStore((state: any) => state.login);
+    const [language, setLanguage] = useState('en');
     const clear = useStore((state: any) => state.clearListsOnLogin);
+    const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
-    useEffect(() => {        
+    useEffect(() => {
         const loadSavedLoginCredentials = async () => {
             try {
                 const savedEmail = await AsyncStorage.getItem('savedEmail');
@@ -63,7 +68,7 @@ const Login = ({navigation}:any) => {
                 console.error('Error loading saved login credentials:', error);
             }
         };
-        
+
 
         loadSavedLoginCredentials();
     }, [])
@@ -71,43 +76,43 @@ const Login = ({navigation}:any) => {
     async function onGoogleButtonPress() {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            const {idToken} = await GoogleSignin.signIn();
+            const { idToken } = await GoogleSignin.signIn();
             const googleCredential = GoogleAuthProvider.credential(idToken);
-            const auth = getAuth(); 
-            await signInWithCredential(auth, googleCredential);            
+            const auth = getAuth();
+            await signInWithCredential(auth, googleCredential);
             navigation.navigate('Tab')
-        } catch (error: any) { 
+        } catch (error: any) {
             console.error('Google sign-in failed:', error);
             Alert.alert('Google sign-in failed', error.message);
         }
     }
 
-    const handleSignUp = () =>{
+    const handleSignUp = () => {
         navigation.navigate('Register')
     }
     const handleLogin = async () => {
         const auth = getAuth(firebaseApp);
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    
+
         // Reset previous errors
         setEmailError('');
         setPasswordError('');
-    
+
         // Check if email is empty or not valid
         if (!email || !emailRegex.test(email)) {
             setEmailError('Please enter a valid email address.');
             return;
         }
-    
+
         // Check if password is empty
         if (!password) {
             setPasswordError('Please enter your password.');
             return;
         }
-    
+
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
-                // Signed in
+
                 if (userCredential.user) {
                     console.log('Login Successful:', userCredential.user.email);
                     Alert.alert('Login Successful');
@@ -119,7 +124,7 @@ const Login = ({navigation}:any) => {
                     const db = getFirestore();
                     const userDocRef = doc(db, 'user', email);
                     const userDoc = await getDoc(userDocRef);
-    
+
                     if (userDoc.exists()) {
                         console.log('User already exists in Firestore:', userDoc.data());
                     } else {
@@ -129,7 +134,7 @@ const Login = ({navigation}:any) => {
                             email: userCredential.user.email,
                             // Các thông tin khác của người dùng nếu có
                         };
-    
+
                         try {
                             await setDoc(userDocRef, userData);
                             console.log('User added to Firestore successfully');
@@ -137,8 +142,10 @@ const Login = ({navigation}:any) => {
                             console.error('Error adding user to Firestore:', error);
                         }
                     }
-                    login(userCredential.user.email)
-                    navigation.navigate('Tab', {userEmail: userCredential.user.email })
+                    clear(userCredential.user.email, language)
+                    pushListsToFirestore();
+                    login(userCredential.user.email, language)
+                    navigation.navigate('Tab', { userEmail: userCredential.user.email })
                 } else {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');
@@ -149,7 +156,11 @@ const Login = ({navigation}:any) => {
                 Alert.alert('Login Failed', error.message);
             });
     };
-    
+
+    const changeLanguage = (lang: string) => {
+        setLanguage(lang);
+        i18n.changeLanguage(lang); // Change language in i18n
+    };
 
     const toggleShowPassword1 = () => {
         setShowPassword1(!showPassword1);
@@ -171,68 +182,73 @@ const Login = ({navigation}:any) => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <View style={styles.title}>
-              <Text style={styles.text1}>HMTea</Text>
-              <Text style={styles.text2}>Welcome Back!</Text>
-            </View>
-            <View style={styles.input}>
-              <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
-                <TextInput
-                  style={styles.text3}
-                  placeholder='Email'
-                  placeholderTextColor={'#B4BBCB'}
-                  onChangeText={text => setEmail(text)}
-                  value={email}
-                  keyboardType='email-address'
-                />
-              </View>
-              {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-              <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
-                <TextInput
-                  style={styles.text3}
-                  placeholder='Password'
-                  placeholderTextColor={'#B4BBCB'}
-                  secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
-                  onChangeText={text => setPassword(text)}
-                  value={password}
-                />
-                <TouchableOpacity onPress={toggleShowPassword1}>
-                  <Icon name={showPassword1 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <LanguageSwitch language={language} changeLanguage={changeLanguage} />
+
+                <View style={styles.title}>
+                    <Text style={styles.text1}>HMTea</Text>
+                    <Text style={styles.text2}>{t('welcome')}</Text>
+                </View>
+                <View style={styles.input}>
+                    <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
+                        <TextInput
+                            style={styles.text3}
+                            placeholder='Email'
+                            placeholderTextColor={'#B4BBCB'}
+                            onChangeText={text => setEmail(text)}
+                            value={email}
+                            keyboardType='email-address'
+                        />
+                    </View>
+                    {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+                    <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
+                        <TextInput
+                            style={styles.text3}
+                            placeholder='Password'
+                            placeholderTextColor={'#B4BBCB'}
+                            secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
+                            onChangeText={text => setPassword(text)}
+                            value={password}
+                        />
+                        <TouchableOpacity onPress={toggleShowPassword1}>
+                            <Icon name={showPassword1 ? 'visibility-off' : 'visibility'} size={25} color="#2C683F" style={styles.icon} />
+                        </TouchableOpacity>
+                    </View>
+                    {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+                </View>
+                <View style={styles.rememberMeContainer}>
+                    <Text style={styles.rememberMeText}>{t('rememberMe')}</Text>
+                    <TouchableOpacity onPress={toggleRememberMe} style={styles.checkbox}>
+                        {rememberMe ? (
+                            <Icon name="check-box" size={24} color="#2C683F" />
+                        ) : (
+                            <Icon name="check-box-outline-blank" size={24} color="#2C683F" />
+                        )}
+
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                    <Text style={styles.loginText}>{t('login')}</Text>
                 </TouchableOpacity>
-              </View>
-              {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-            </View>
-            <View style={styles.rememberMeContainer}>
-              <Text style={styles.rememberMeText}>Remember Me</Text>
-              <TouchableOpacity onPress={toggleRememberMe} style={styles.checkbox}>
-                {rememberMe ? (
-                  <Icon name="check-box" size={24} color="#2C683F" />
-                ) : (
-                  <Icon name="check-box-outline-blank" size={24} color="#2C683F" />
-                )}
-    
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.loginText}>Login</Text>
-            </TouchableOpacity>
-            <View style={styles.googleLoginButtonContainer}>            
-            <GoogleSigninButton style={styles.googleLoginButton} onPress={onGoogleButtonPress}/>                
-            </View>
-            <View style={styles.line}>
-              <Text style={styles.lineText}>_________________________________________</Text>
-            </View>
-            <View style={styles.footer}>
-              <Text style={styles.text5}>No account?</Text>
-              <TouchableOpacity style={styles.signup} onPress={handleSignUp}>
-                <Text style={styles.text6}>Sign up</Text>
-              </TouchableOpacity>    
-            </View>
-          </KeyboardAvoidingView>
+                <View style= {styles.or}>
+                <Text style={styles.text7}>Or</Text>
+                </View>
+                <View style={styles.googleLoginButtonContainer}>
+                    <GoogleSigninButton style={styles.googleLoginButton} onPress={onGoogleButtonPress} />
+                </View>
+                <View style={styles.line}>
+                    <Text style={styles.lineText}>_________________________________________</Text>
+                </View>
+                <View style={styles.footer}>
+                    <Text style={styles.text5}>{t('account')}</Text>
+                    <TouchableOpacity style={styles.signup} onPress={handleSignUp}>
+                        <Text style={styles.text6}>{t('signUp')}</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-      );
-    };
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -252,7 +268,8 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         fontFamily: 'Inder-Regular',
-        fontSize: 30,
+        fontSize: 25,
+        width: '100%'
     },
     input: {
         marginTop: 80,
@@ -286,7 +303,7 @@ const styles = StyleSheet.create({
     rememberMeContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         width: 380,
         marginBottom: 15,
     },
@@ -298,6 +315,7 @@ const styles = StyleSheet.create({
         color: '#2C683F',
         fontSize: 16,
         paddingLeft: 10,
+        paddingRight:20
     },
     text4: {
         color: '#4D5661',
@@ -312,7 +330,7 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 80,
+        marginTop: 50,
     },
     loginText: {
         color: 'white',
@@ -320,7 +338,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     line: {
-        marginTop: 60,
+        marginTop: 50,
     },
     lineText: {
         color: '#D9D9D9',
@@ -351,29 +369,27 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         fontSize: 14,
-        marginBottom:10,
-        paddingBottom:10
+        marginBottom: 10,
+        paddingBottom: 10
     },
-    signup:{
+    signup: {
 
     },
     googleLoginButtonContainer: {
-        width: 180,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingLeft: 190,
-        paddingTop: 5,
+        paddingTop: 10,
+        width: '98%',
+       
     },
     googleLoginButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#FFFFFF',
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#000000',
         height: 55,
-        width: 200,               
+        width: '100%',
+        paddingHorizontal: 100
     },
     googleLoginIcon: {
         marginRight: 10,
@@ -382,6 +398,33 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 18,
     },
+    languageContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    languageText: {
+        fontSize: 16,
+        color: '#2C683F',
+        marginHorizontal: 10,
+    },
+    activeLanguage: {
+        fontWeight: 'bold',
+    },
+    or:{
+        width: '100%',
+        justifyContent: 'center',
+        alignItems:'center',
+    },
+    text7:{
+        fontSize: 15,
+        paddingTop: 10,
+        color: '#2C683F',
+        justifyContent: 'center',
+        alignItems:'center'
+
+    }
 
 });
 
