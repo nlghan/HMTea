@@ -68,8 +68,8 @@ const TeaDataVi = [
       ingredients: 'Lựu đỏ',
       special_ingredient: 'Với Đường',
       prices: [
-        {size: 'M', price: '35000', currency: 'VND'},
-        {size: 'L', price: '40000', currency: 'VND'},  
+        {size: 'S', price: '35000', currency: 'VND'},
+        {size: 'M', price: '40000', currency: 'VND'},  
         {size: 'L', price: '50000', currency: 'VND'},
       ],
       average_rating: 4.5,

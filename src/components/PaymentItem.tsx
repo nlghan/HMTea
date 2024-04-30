@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     StyleSheet,
     Text,
@@ -16,6 +16,9 @@ import {
     SPACING,
 } from '../theme/theme';
 import CustomIcon from './CustomIcon';
+import { useTranslation } from 'react-i18next';
+import { useStore } from '../store/store';
+import i18n from '../i18n/i18n';
 
 interface CartItemProps {
     id: string;
@@ -40,6 +43,13 @@ const PaymentItem: React.FC<CartItemProps> = ({
     incrementCartItemQuantityHandler,
     decrementCartItemQuantityHandler,
 }) => {
+    const { t } = useTranslation(); // Use useTranslation hook
+    const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+    useEffect(() => {
+        i18n.changeLanguage(languageFromStore);
+    }, [languageFromStore]);
+
     return (
         <View>
             {prices.length != 1 ? (
@@ -77,8 +87,8 @@ const PaymentItem: React.FC<CartItemProps> = ({
                                     </Text>
                                 </View>
                                 <View style={styles.PriceTextContainer}>
-                                    <Text style={styles.Currency}>$</Text>
-                                    <Text style={styles.Price}>{data.price}</Text>
+                                    <Text style={styles.Price}>{prices[0].price}</Text>
+                                    <Text style={styles.Currency}>{t('currency')}</Text>
                                 </View>
                             </View>
                             <View style={styles.CartItemSizeValueContainer}>
@@ -144,8 +154,8 @@ const PaymentItem: React.FC<CartItemProps> = ({
                                 </Text>
                             </View>
                             <View style={styles.PriceTextContainer}>
-                                <Text style={styles.Currency}>$</Text>
                                 <Text style={styles.Price}>{prices[0].price}</Text>
+                                <Text style={styles.Currency}>{t('currency')}</Text>
                             </View>
                         </View>
                         <View style={styles.CartItemSingleQuantityContainer}>
@@ -315,13 +325,15 @@ const styles = StyleSheet.create({
     },
     Currency: {
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: FONTSIZE.size_20,
+        fontSize: FONTSIZE.size_16,
         color: COLORS.primaryOrangeHex,
+        paddingLeft: 4
     },
     Price: {
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: FONTSIZE.size_20,
+        fontSize: FONTSIZE.size_16,
         color: COLORS.primaryDarkHex,
+        paddingLeft: 15
     },
 });
 

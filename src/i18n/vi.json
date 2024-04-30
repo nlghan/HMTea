@@ -37,7 +37,10 @@
     "favor": "Danh sách yêu thích",
     "setting": "Cài đặt",
     "logout": "Đăng xuất",
-    "addto": "đã được thêm vào giỏ"
+    "addto": "đã được thêm vào giỏ",
+    "info": "Thông tin đặt hàng: ",
+    "orderBtn": "Đặt hàng",
+    "complete": "Cảm ơn bạn bạn đã đặt hàng!"
 
 
 

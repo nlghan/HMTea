@@ -37,7 +37,10 @@
     "favor": "My Favourites",
     "setting": "Setting",
     "logout": "Logout",
-    "addto": "is Added to Cart"
+    "addto": "is Added to Cart",
+    "info": "Order Information: ",
+    "orderBtn": "Order",
+    "complete": "Thank you for your order!"
 
 
   }
