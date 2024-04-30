@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
@@ -40,7 +38,6 @@ const Register = ({navigation}:any) => {
     // const handlePersonalInfo = () =>{
     //     navigation.navigate('PersonalInfo')
     // }
-
     const handleLogin = () =>{
         navigation.navigate('Login')
     }
@@ -70,7 +67,6 @@ const Register = ({navigation}:any) => {
             return;
         }
 
-
         // Kiểm tra xem email đã tồn tại chưa
         fetchSignInMethodsForEmail(auth, email)
             .then((signInMethods) => {
@@ -79,7 +75,6 @@ const Register = ({navigation}:any) => {
                     Alert.alert('Error', 'Email already exists. Please use another email.');
                 } else {
                     // Đăng ký nếu email chưa tồn tại
-
                     createUserWithEmailAndPassword(auth, email, password)
                         .then((userCredential) => {
                             // Registered
@@ -103,6 +98,7 @@ const Register = ({navigation}:any) => {
                 console.error('Error checking email:', error.message);
                 Alert.alert('Error', 'An error occurred while checking email.');
             });
+        navigation.navigate('Login')
     };
 
     // Function to toggle password visibility for the first input
@@ -121,7 +117,6 @@ const Register = ({navigation}:any) => {
     };
 
     return (
-
         <>
         <View style={styles.container}>
         <LanguageSwitch language={language} changeLanguage={changeLanguage} />
@@ -180,7 +175,6 @@ const Register = ({navigation}:any) => {
             </TouchableOpacity>
             </View>
         </View></>
-
     );
 };
 
@@ -189,9 +183,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         margin: 15,
-
-        flex: 1,
-
     },
     title: {
         marginTop: 80,
@@ -259,7 +250,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     footer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
@@ -278,9 +269,7 @@ const styles = StyleSheet.create({
     },
     text7:{
         color: '#999EA1',
-
         fontSize: 14,
-
         fontFamily: 'Inder-Regular',
         paddingTop:10,
         fontWeight: '500'

@@ -150,11 +150,13 @@ const Login = ({ navigation }: any) => {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');
                 }
+            
             })
             .catch((error) => {
                 console.error('Login Failed:', error.message);
                 Alert.alert('Login Failed', error.message);
             });
+        
     };
 
     const changeLanguage = (lang: string) => {
