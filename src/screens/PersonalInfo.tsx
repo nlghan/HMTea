@@ -52,6 +52,16 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   const handleHome = () => {
     navigation.navigate('Tab');
   };
+  const handleCart = () => {
+    navigation.navigate('Cart');
+    
+  };
+  const handleFavorites = () => {
+    navigation.navigate('Favorite');
+  };
+  const handleLogin = () => {
+    navigation.navigate('Login');
+  };
 
   const handleLogout = async () => {
     const auth = getAuth();
@@ -137,6 +147,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
               </TouchableOpacity>
             </View>
           </View>
+
           <View style={styles.divider} />
           <View style={styles.dividerContainer}>
             <Icon name='location-on' size={30} />
@@ -171,6 +182,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
+
   );
 };
 
@@ -279,6 +291,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginLeft: 20,
+
 
   },
   change: {

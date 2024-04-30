@@ -1,4 +1,24 @@
 {
   "name": "HMTea",
-  "displayName": "HMTea"
+  "displayName": "HMTea",
+  "expo": {
+    "plugins": ["@react-native-voice/voice"]
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.anonymous.SpeechToTextApp",
+    "infoPlist": {
+      "NSSpeechRecognitionUsageDescription": "This app uses speech recognition to convert your speech to text."
+    }
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#FFFFFF"
+    },
+    "permissions": ["android.permission.RECORD_AUDIO"],
+    "package": "com.anonymous.SpeechToTextApp"
+  }
 }
+
+
