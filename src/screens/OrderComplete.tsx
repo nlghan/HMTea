@@ -113,7 +113,7 @@ const OrderComplete = () => {
           ))}
         </Animated.View>
         <Text style={styles.text}>
-          {languageFromStore === 'vi' ? 'Cảm ơn bạn đã đặt hàng!' : 'Thank you for your order!'}
+        {languageFromStore === 'vi' ? 'Cảm ơn bạn đã đặt hàng!' : languageFromStore === 'fr' ? 'Merci pour votre commande!' : 'Thank you for your order!'}
         </Text>
 
       </View>

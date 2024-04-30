@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TeaData from '../data/teadata';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import TeaDataVi from '../data/teadatavi';
+import TeaDataFr from '../data/teadatafr';
 
 interface State {
   user: string;
@@ -41,7 +42,7 @@ export const useStore = create(
             state.FavoriteList = [];
             state.CartList = [];
             state.language = language;
-            state.TeaList = language === 'vi' ? TeaDataVi : TeaData;
+            state.TeaList = language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData; // Check for French language
         }
         })
       ),
@@ -56,7 +57,7 @@ export const useStore = create(
           set((state: any) => ({
             ...state,
             language: language,
-            TeaList: language === 'vi' ? userData?.TeaDataVi || TeaDataVi : userData?.TeaData || TeaData,
+            TeaList: language === 'vi' ? userData?.TeaDataVi || TeaDataVi : language === 'fr' ? userData?.TeaDataFr || TeaDataFr : userData?.TeaData || TeaData,
             FavoriteList: userData?.FavoriteList || [],
             CartList: language === state.language ? userData?.CartList || [] : [], // Reset CartList if language changes
             OrderList: userData?.OrderList || [],
@@ -76,7 +77,7 @@ export const useStore = create(
             address: '',
             phoneNumber: '',
             user: email,
-            TeaList: language === 'vi' ? TeaDataVi : TeaData,
+            TeaList: language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData, // Check for French language
           }));
         }
       },
@@ -84,7 +85,7 @@ export const useStore = create(
 
       addToFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea') || type.includes('Trà')) {
+          if (type.includes('Tea') || type.includes('Trà') || type.includes('Thé') ) {
             const teaToAdd = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToAdd) {
               if (!teaToAdd.favourite) {
@@ -97,7 +98,7 @@ export const useStore = create(
       ),
       deleteFromFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea') || type.includes('Trà')) {
+          if (type.includes('Tea') || type.includes('Trà') || type.includes('Thé') ) {
             const teaToModify = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToModify) {
               teaToModify.favourite = !teaToModify.favourite;
@@ -158,14 +159,14 @@ export const useStore = create(
                     parseFloat(state.CartList[i].prices[j].price) *
                     state.CartList[i].prices[j].quantity;
                 }
-                if (state.language === 'en') {
+                if (state.language === 'en' || state.language === 'fr') {
                   state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
                 } else {
                   state.CartList[i].ItemPrice = tempprice.toString();
                 }
                 totalprice += tempprice;
               }
-              if (state.language === 'en') {
+              if (state.language === 'en' || state.language === 'fr') {
                 state.CartPrice = totalprice.toFixed(2).toString();
               } else {
                 state.CartPrice = totalprice.toString();
@@ -224,7 +225,7 @@ export const useStore = create(
         const userDocRef = doc(db, 'user', user);
 
         const data = {
-          TeaData: language === 'vi' ? TeaDataVi : TeaData,
+          TeaData: language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData, // Check for French language
           FavoriteList,
           CartList,
           OrderList,

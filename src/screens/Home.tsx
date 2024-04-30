@@ -26,14 +26,14 @@ const getCategoriesFromData = (data: any, currentLanguage: string) => {
   }
   let categories = Object.keys(temp);
   // Kiểm tra ngôn ngữ hiện tại và quyết định xem sử dụng "All" hay "Tất cả"
-  const allText = currentLanguage === 'vi' ? 'Tất cả' : 'All';
+  const allText = currentLanguage === 'vi' ? 'Tất cả' : currentLanguage === 'fr' ? 'Tous' : 'All';
   categories.unshift(allText);
   return categories;
 };
 
 
 const getTeaList = (category: string, data: any) => {
-  if (category === 'All' || category === 'Tất cả') {
+  if (category === 'All' || category === 'Tất cả' || category === 'Tous') {
     // console.log(data)
     return data;
   } else {
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     zIndex: 1000,
     top: 30, // Để văn bản nằm ở giữa chiều dọc của ảnh
-    left: '75%', // Để văn bản nằm ở giữa chiều ngang của ảnh
+    left: '68%', // Để văn bản nằm ở giữa chiều ngang của ảnh
     transform: [{ translateX: -150 }, { translateY: -15 }], // Để văn bản được căn giữa theo chiều ngang và dọc của ảnh
   },
   text3: {

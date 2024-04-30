@@ -10,6 +10,9 @@ import { useStore } from '../store/store';
 import { getFirestore, collection, addDoc, setDoc, getDoc, doc } from 'firebase/firestore';
 import LanguageSwitch from '../components/LanguageSwitch';
 import { useTranslation } from 'react-i18next'; // Import hook useTranslation
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); 
 
 
 // Initialize Firebase with your Firebase configuration

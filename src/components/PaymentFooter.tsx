@@ -106,11 +106,12 @@ const styles = StyleSheet.create({
     height: SPACING.space_36 * 1.8,
     borderRadius: BORDERRADIUS.radius_20,
     marginRight: SPACING.space_20, // Add marginLeft for spacing
-    width: 160
+    width: 180,
+    marginLeft: -30
   },
   ButtonText: {
     fontFamily: FONTFAMILY.poppins_semibold,
-    fontSize: FONTSIZE.size_18,
+    fontSize: FONTSIZE.size_16,
     color: COLORS.primaryLightHex,
   },
 });

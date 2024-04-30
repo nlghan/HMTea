@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 // Import translations
 import translationEN from './en.json'
 import translationVI from './vi.json';
+import translationFR from './fr.json'
 
 // Initialize i18next
 i18n
@@ -17,6 +18,9 @@ i18n
       vi: {
         translation: translationVI,
       },
+      fr: {
+        translation: translationFR,
+      }
     },
     lng: 'en', // Default language
     fallbackLng: 'en', // Fallback language
