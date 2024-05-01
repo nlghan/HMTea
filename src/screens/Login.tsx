@@ -145,8 +145,6 @@ const Login = ({ navigation }: any) => {
                             console.error('Error adding user to Firestore:', error);
                         }
                     }
-                    clear(userCredential.user.email, language)
-                    pushListsToFirestore();
                     login(userCredential.user.email, language)
                     navigation.navigate('Tab', { userEmail: userCredential.user.email })
                 } else {

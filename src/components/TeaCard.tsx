@@ -52,7 +52,9 @@ const TeaCard: React.FC<TeaCardProps> = ({
   const getPriceText = () => {
     if (language === 'vi') {
       return `${price.price} VND`; // Hiển thị giá theo đơn vị VNĐ
-    } 
+    } else if (language === 'fr') {
+      return `${price.price} €`; // Hiển thị giá theo đơn vị VNĐ
+    }
     else {
       return `${price.price} $`; // Hiển thị giá theo đơn vị $
     }

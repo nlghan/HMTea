@@ -87,7 +87,7 @@ const PaymentItem: React.FC<CartItemProps> = ({
                                     </Text>
                                 </View>
                                 <View style={styles.PriceTextContainer}>
-                                    <Text style={styles.Price}>{prices[0].price}</Text>
+                                    <Text style={styles.Price}>{data.price}</Text>
                                     <Text style={styles.Currency}>{t('currency')}</Text>
                                 </View>
                             </View>

@@ -23,15 +23,21 @@ const Cart = ({ navigation }: any) => {
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
   const tabBarHeight = useBottomTabBarHeight();
 
-  useEffect(() => {
-    // Gọi hàm pushListsToFirestore khi có sự thay đổi trong CartList
-    pushListsToFirestore();
-  }, [CartList, pushListsToFirestore]);
+
 
   const buttonPressHandler = () => {
     navigation.push('Payment', { amount: CartPrice });
     // pushListsToFirestore();
   };
+
+
+  const { t } = useTranslation(); // Use useTranslation hook
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+  useEffect(() => {
+    // Gọi hàm pushListsToFirestore khi có sự thay đổi trong CartList hoặc ngôn ngữ
+    pushListsToFirestore();
+  }, [CartList, pushListsToFirestore, languageFromStore]);
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
     incrementCartItemQuantity(id, size);
@@ -45,8 +51,6 @@ const Cart = ({ navigation }: any) => {
     // pushListsToFirestore();
   };
 
-  const { t } = useTranslation(); // Use useTranslation hook
-  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
 
   useEffect(() => {
     i18n.changeLanguage(languageFromStore);
