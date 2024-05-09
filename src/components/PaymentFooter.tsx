@@ -39,8 +39,8 @@ const PaymentFooter: React.FC<PaymentFooterProps> = ({
       <View style={styles.PriceContainer}>
         <Text style={styles.PriceTitle}>{t('price')}</Text>
         <Text style={styles.PriceText}>
-        <Text style={styles.Price}>{price.price}</Text> <Text> </Text>
-          {t('currency')}
+        <Text style={styles.Price}>{price.price} {t('currency')}</Text> 
+         
            
         </Text>
       </View>

@@ -28,12 +28,20 @@ const Payment = ({ navigation }: any) => {
   );
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
+
+  const addToOrderHistoryListFromCart = useStore(
+    (state: any) => state.addToOrderHistoryListFromCart,
+  );
   const useNavigar = useNavigation();
   // const tabBarHeight1 = useBottomTabBarHeight();
 
  
   const buttonPressHandler = () => {
+    addToOrderHistoryListFromCart();
+    calculateCartPrice();   
     navigation.push('OrderComplete', { amount: CartPrice });
+    
+   
     // pushListsToFirestore();
   };
 
@@ -55,6 +63,9 @@ const Payment = ({ navigation }: any) => {
   const user = useStore((state: any) => state.user);
   
   
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+
   useEffect(() => {
     // Load user info if available
     const loadUserInfo = async () => {
@@ -64,17 +75,27 @@ const Payment = ({ navigation }: any) => {
         const userDocRef = doc(db, 'user', user);
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data()?.Information;
-          if (userData) {
-            setFullName(userData.fullName || '');
-            setAddress(userData.address || '');
-            setPhoneNumber(userData.phoneNumber || '');
+          const userData = docSnap.data();
+          if (userData && userData[languageFromStore]) {
+            const userLanguageData = userData[languageFromStore];
+            const userInformation = userLanguageData.Information || {};
+            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+            if (userInformation.fullName) {
+              setFullName(userInformation.fullName);
+            }
+            if (userInformation.address) {
+              setAddress(userInformation.address);
+            }
+            if (userInformation.phoneNumber) {
+              setPhoneNumber(userInformation.phoneNumber);
+            }
           }
         }
       }
     };
     loadUserInfo();
-  }, [user]);
+  }, [user, languageFromStore]);
+  
   
   
   useEffect(() => {    
@@ -88,7 +109,7 @@ const Payment = ({ navigation }: any) => {
   };
 
   const { t } = useTranslation(); // Use useTranslation hook
-  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+  
 
   useEffect(() => {
     // Update i18n language to match language from useStore

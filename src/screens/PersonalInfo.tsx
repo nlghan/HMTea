@@ -14,6 +14,9 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   const user = useStore((state: any) => state.user);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
+
   useEffect(() => {
     // Load user info if available
     const loadUserInfo = async () => {
@@ -23,25 +26,27 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
         const userDocRef = doc(db, 'user', user);
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data()?.Information;
-          if (userData) {
+          const userData = docSnap.data();
+          if (userData && userData[languageFromStore]) {
+            const userLanguageData = userData[languageFromStore];
+            const userInformation = userLanguageData.Information || {};
             // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-            if (userData.fullName) {
-              setFullName(userData.fullName);
+            if (userInformation.fullName) {
+              setFullName(userInformation.fullName);
             }
-            if (userData.address) {
-              setAddress(userData.address);
+            if (userInformation.address) {
+              setAddress(userInformation.address);
             }
-            if (userData.phoneNumber) {
-              setPhoneNumber(userData.phoneNumber);
+            if (userInformation.phoneNumber) {
+              setPhoneNumber(userInformation.phoneNumber);
             }
           }
         }
       }
     };
     loadUserInfo();
-  }, [user]);
-
+  }, [user, languageFromStore]);
+  
 
   const saveUserInfo = async () => {
     // Update user info in the store and push to Firestore
@@ -85,7 +90,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
 
   const { t } = useTranslation(); // Use useTranslation hook
-  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+  
 
   useEffect(() => {
     i18n.changeLanguage(languageFromStore);
