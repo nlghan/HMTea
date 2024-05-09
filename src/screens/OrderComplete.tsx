@@ -4,9 +4,11 @@ import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SPACING, BORDERRADIUS, FONTFAMILY, FONTSIZE } from '../theme/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useStore } from '../store/store';
 
 const OrderComplete = () => {
   const navigation = useNavigation();
+  const languageFromStore = useStore((state: any) => state.language);
   const spinValue = new Animated.Value(0);
   const particles = Array.from({ length: 30 }).map((_, index) => ({
     key: `particle-${index}`,
@@ -14,10 +16,10 @@ const OrderComplete = () => {
     scale: new Animated.Value(0),
     translateX: new Animated.Value(0),
     translateY: new Animated.Value(0),
-    size: Math.random() * 10 + 5, 
+    size: Math.random() * 10 + 5,
   }));
 
-  
+
   useEffect(() => {
     Animated.loop(
       Animated.timing(spinValue, {
@@ -29,13 +31,13 @@ const OrderComplete = () => {
     ).start();
   }, []);
 
-  
+
   useEffect(() => {
     particles.forEach(particle => {
-      const angle = Math.random() * 2 * Math.PI; 
-      const distance = Math.random() * 170; 
-      const translateX = Math.cos(angle) * distance; 
-      const translateY = Math.sin(angle) * distance; 
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 170;
+      const translateX = Math.cos(angle) * distance;
+      const translateY = Math.sin(angle) * distance;
 
       Animated.loop(
         Animated.parallel([
@@ -65,13 +67,13 @@ const OrderComplete = () => {
           }),
         ])
       ).start(() => {
-        particle.scale.setValue(0); 
-        particle.opacity.setValue(1); 
+        particle.scale.setValue(0);
+        particle.opacity.setValue(1);
       });
     });
   }, []);
 
-  
+
   const colorValue = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: [COLORS.primaryGreenHex, COLORS.whiteHex],
@@ -110,7 +112,10 @@ const OrderComplete = () => {
             />
           ))}
         </Animated.View>
-        <Text style={styles.text}>Thank you for your order!</Text>
+        <Text style={styles.text}>
+        {languageFromStore === 'vi' ? 'Cảm ơn bạn đã đặt hàng!' : languageFromStore === 'fr' ? 'Merci pour votre commande!' : 'Thank you for your order!'}
+        </Text>
+
       </View>
     </View>
   );

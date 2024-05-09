@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import { ScrollView, View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { useStore } from '../store/store';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/i18n';
+import { getAuth, signOut } from 'firebase/auth';
 
 const Information = ({ navigation, route }: { navigation: any, route: any }) => {
   const [fullName, setFullName] = useState('');
@@ -11,6 +13,9 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   const [phoneNumber, setPhoneNumber] = useState('');
   const user = useStore((state: any) => state.user);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
+
+  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+
 
   useEffect(() => {
     // Load user info if available
@@ -21,26 +26,29 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
         const userDocRef = doc(db, 'user', user);
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data()?.Information;
-          if (userData) {
+          const userData = docSnap.data();
+          if (userData && userData[languageFromStore]) {
+            const userLanguageData = userData[languageFromStore];
+            const userInformation = userLanguageData.Information || {};
             // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-            if (userData.fullName) {
-              setFullName(userData.fullName);
+            if (userInformation.fullName) {
+              setFullName(userInformation.fullName);
             }
-            if (userData.address) {
-              setAddress(userData.address);
+            if (userInformation.address) {
+              setAddress(userInformation.address);
             }
-            if (userData.phoneNumber) {
-              setPhoneNumber(userData.phoneNumber);
+            if (userInformation.phoneNumber) {
+              setPhoneNumber(userInformation.phoneNumber);
             }
           }
         }
       }
     };
     loadUserInfo();
-  }, [user]);
+  }, [user, languageFromStore]);
   
-    const saveUserInfo = async () => {
+
+  const saveUserInfo = async () => {
     // Update user info in the store and push to Firestore
     useStore.setState({ fullName, address, phoneNumber }); // Update store state
     pushListsToFirestore(); // Push to Firestore
@@ -60,90 +68,129 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
     navigation.navigate('Login');
   };
 
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      // Điều hướng đến màn hình đăng nhập hoặc màn hình chính tùy thuộc vào luồng ứng dụng của bạn
+      navigation.navigate('Login'); // Thay 'Login' bằng tên màn hình đăng nhập của bạn
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
+  const handleFavorite = () => {
+    navigation.navigate('Favorite');
+  };
+
+  const handleOrder = () => {
+    navigation.navigate('Cart');
+  };
+
+
+
+  const { t } = useTranslation(); // Use useTranslation hook
+  
+
+  useEffect(() => {
+    i18n.changeLanguage(languageFromStore);
+  }, [languageFromStore]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <View style={styles.container}>
-      <View style={styles.header}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <ScrollView style={styles.container}>
+          <View style={styles.header}>
             <TouchableOpacity onPress={handleHome} >
-                <Icon name='chevron-left' size={25}/>
-            </TouchableOpacity> 
-                    
-            <Text style={styles.text}>HMTea</Text> 
-            <Text style={styles.text}>   </Text>  
-                    
-      </View>
-      <Text style={styles.myAccountText}>My Account</Text>
-      <View style={styles.accountInfo}>
-        <View style={styles.profileContainer}>
-          <View>
-          <Image style={styles.avt} source={require('../assets/app_images/avt_1.png')} />
-          </View>        
-          <View style={styles.userInfo}>
-            <TextInput
-                style={styles.input}
-                placeholder="Full name"
-                value={fullName}
-                onChangeText={setFullName}
-              />
-            <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
-            
+              <Icon name='chevron-left' size={25} />
+            </TouchableOpacity>
+            <Text style={styles.text}>HMTea</Text>
+            <Text style={styles.text}>   </Text>
+
           </View>
-          <View style={styles.iconContainer}>
-          <Icon name='edit-square' size={25} color={'white'}/>
-          </View>
-        </View>
-        <View style={styles.infoContainer}>   
-          <View style={styles.iconContainer}>
-          <Icon name='location-on' size={30} color={'lightgreen'}  /> 
-          </View>      
-          <View style={styles.textContainer}>
-            <TextInput
+          <Text style={styles.myAccountText}>{t('myAccount')}</Text>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>         
+          <KeyboardAvoidingView style={styles.accountInfo} behavior="padding">
+            <View style={styles.profileContainer}>
+              <View>
+                <Image style={styles.avt} source={require('../assets/app_images/resume.png')} />
+              </View>
+              <View style={styles.userInfo}>
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('fullName')}                  
+                  value={fullName}
+                  onChangeText={setFullName}
+                />
+                <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
+
+              </View>
+              <View style={styles.iconContainer}>
+                <Icon name='edit-square' size={25} color={'white'} />
+              </View>
+            </View>
+            <View style={styles.infoContainer}>
+              <View style={styles.iconContainer}>
+                <Icon name='location-on' size={30} color={'lightgreen'} />
+              </View>
+              <View style={styles.textContainer}>
+                <TextInput
                   style={styles.input2}
-                  placeholder="Address"
+                  placeholder={t('address')}
+                  placeholderTextColor="gray"
                   value={address}
                   onChangeText={setAddress}
                 />
-            <TextInput
-                style={styles.input2}
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-              />
+                <TextInput
+                  style={styles.input2}
+                  placeholder={t('phone')}
+                  placeholderTextColor="gray"
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                />
+              </View>
+              <TouchableOpacity style={styles.saveButton} onPress={saveUserInfo}>
+                <Text style={styles.saveText}>{t('save')}</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
+
+          <View/>
+          <View style={styles.dividerContainer}>
+            <Icon name='location-on' size={30} />
+            <Text style={styles.myAccountText1}>{t('address')}</Text>
           </View>
-          <TouchableOpacity style={styles.saveButton} onPress={saveUserInfo}>
-        <Text style={styles.saveText}>Save</Text>
-      </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.divider} />
-        <View style={styles.dividerContainer}>
-        <Icon name='location-on' size={30}/>
-          <Text style={styles.myAccountText1}>My Delivery Address</Text>
-        </View>
-        <View style={styles.dividerContainer}>
-        <Icon name='notifications' size={30}/>
-          <Text style={styles.myAccountText1}>Notifications</Text>
-        </View>
-        <TouchableOpacity style={styles.dividerContainer} onPress={handleCart}>
-        <Icon name='shopping-cart' size={30}/>
-          <Text style={styles.myAccountText1}>My Orders</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.dividerContainer} onPress={handleFavorites}>
-        <Icon name='favorite' size={30}/>
-          <Text style={styles.myAccountText1}>My Favourites</Text>
-        </TouchableOpacity>
-        <View style={styles.dividerContainer}>
-        <Icon name='settings' size={30}/>
-          <Text style={styles.myAccountText1}>Settings</Text>          
-        </View>
-        <TouchableOpacity style={styles.dividerContainer} onPress={handleLogin}>
-        <Icon name='logout' size={30}/>
-          <Text style={styles.myAccountText1}>Logout</Text>          
-        </TouchableOpacity>
-    </View>
-            </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+          <View style={styles.dividerContainer}>
+            <Icon name='notifications' size={30} />
+            <Text style={styles.myAccountText1}>{t('noti')}</Text>
+          </View>
+          <TouchableOpacity onPress={handleOrder}>
+          <View style={styles.dividerContainer}>
+            <Icon name='shopping-cart' size={30} />
+            <Text style={styles.myAccountText1}>{t('order')}</Text>
+          </View>
+          </TouchableOpacity>        
+          <TouchableOpacity onPress={handleFavorite}>
+            <View style={styles.dividerContainer}>
+              <Icon name='favorite' size={30} />
+              <Text style={styles.myAccountText1}>{t('favor')}</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.dividerContainer}>
+            <Icon name='settings' size={30} />
+            <Text style={styles.myAccountText1}>{t('setting')}</Text>
+          </View>
+          <TouchableOpacity style={styles.dividerContainer} onPress={handleLogout}>
+            <Icon name='logout' size={30} />
+            <Text style={styles.myAccountText1}>{t('logout')}</Text>
+          </TouchableOpacity>
+
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+
   );
 };
 
@@ -153,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  header: {    
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -163,7 +210,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1000,    
+    zIndex: 1000,
   },
   headerIcon: {
     width: 30,
@@ -180,9 +227,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   avt: {
-    width: 50,
-    height: 50,  
-    borderRadius: 25,      
+    width: 40,
+    height: 40
   },
   boder: {
     borderRadius: 50,
@@ -195,7 +241,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  iconMarker:{
+  iconMarker: {
     marginLeft: 20,
     marginBottom: 15,
     width: 30,
@@ -211,9 +257,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#4AA366',
     marginTop: '2%',
     padding: '5%',
-    // borderRadius: 0,
     marginHorizontal: '2%',
-    height: '30%',
+    height: 270,
   },
   profileContainer: {
     flexDirection: 'row',
@@ -228,12 +273,13 @@ const styles = StyleSheet.create({
   userInfo: {
     flex: 1,
     marginBottom: 5,
+    marginLeft: 10,
 
   },
   userInfoText: {
     color: '#ffffff',
-    fontSize: 16,
-    
+    fontSize: 18,
+
   },
   infoContainer: {
     backgroundColor: 'white',
@@ -247,58 +293,57 @@ const styles = StyleSheet.create({
     width: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 10
   },
-  
+
   textContainer: {
     flex: 1,
-    marginLeft: 20, 
-      
+    marginLeft: 15,
   },
   change: {
-   height: 30,
-   width: 70,
-   borderColor: 'red',
-   borderRadius: 20,
+    height: 30,
+    width: 70,
+    borderColor: 'red',
+    borderRadius: 20,
   },
   textChange: {
     color: 'red',
-    fontSize: 14,
+    fontSize: 18,
   },
   infoText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 5,
-  },
-  divider: {
-    // height: 1,
-    // backgroundColor: '#DADADA',
-    // marginTop: '5%',
-  },
+    marginLeft: 5,
+  },  
   dividerContainer:
-  {    
+  {
     flexDirection: 'row',
     marginTop: 17,
     borderBottomColor: '#CCCCCC',
     borderBottomWidth: 1,
-    marginHorizontal: 15,   
+    marginHorizontal: 15,
+    paddingBottom: 5,
   },
   myAccountText1: {
     fontSize: 18,
     marginLeft: 15,
-    marginTop: 10, 
+    marginTop: 10,
     color: 'gray',
   },
   input: {
-    height: 40,    
-    marginBottom: 10,    
+    height: 40,
+    marginBottom: 10,
+    fontSize: 18
   },
   input2: {
     height: 40,
-    color: 'black', 
-    marginBottom: 5,    
+    color: 'black',
+    marginBottom: 5,
+    fontSize: 18
   },
   saveButton: {
-    alignItems: 'center',  
+    alignItems: 'center',
     padding: 20,
     marginTop: 5,
   },

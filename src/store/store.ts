@@ -4,17 +4,26 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TeaData from '../data/teadata';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import TeaDataVi from '../data/teadatavi';
+import TeaDataFr from '../data/teadatafr';
 
 interface State {
+  [x: string]: any;
   user: string;
   TeaList: any[];
-  CartPrice: number;
   FavoriteList: any[];
+  FavoriteListVi: any[]; // Danh sách yêu thích cho tiếng Việt
+  FavoriteListFr: any[]; // Danh sách yêu thích cho tiếng Pháp
   CartList: any[];
+  CartListVi: any[]; // Danh sách giỏ hàng cho tiếng Việt
+  CartListFr: any[];
   OrderList: any[];
+  OrderListVi: any[];
+  OrderListFr: any[];
   fullName: string;
   address: string;
   phoneNumber: string;
+  language: string;
   clearListsOnLogin: (email: any) => void;
   login: (email: string) => void;
   addToFavoriteList: (type: string | string[], id: any, user: any) => void;
@@ -33,51 +42,100 @@ export const useStore = create(
       fullName: '', // Thêm các trường thông tin mới
       address: '',
       phoneNumber: '',
-
-      clearListsOnLogin: (email: any) => set(
+      clearListsOnLogin: (email: any, language: string) => set(
         produce(state => {
-          state.FavoriteList = [];
-          state.CartList = [];
-          state.OrderList = [];
+          if (state.language !== language) {
+            state.FavoriteList = [];
+            state.CartList = [];
+            state.language = language;
+            state.TeaList = language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData; // Check for French language
+          }
         })
       ),
-      login: async (email: string) => {
+      login: async (email: string, language: string) => {
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
-        const userDocSnapshot = await getDoc(userDocRef);
-
-        if (userDocSnapshot.exists()) {
-          const userData = userDocSnapshot.data();
-          set((state: any) => ({
-            ...state,
-            TeaList: userData.TeaData || TeaData,
-            FavoriteList: userData.FavoriteList || [],
-            CartList: userData.CartList || [],
-            OrderList: userData.OrderList || [],
-            fullName: userData.Information?.fullName || '',
-            address: userData.Information?.address || '',
-            phoneNumber: userData.Information?.phoneNumber || '',
-            user: email,
+      
+        try {
+          const userDocSnapshot = await getDoc(userDocRef);
+      
+          if (userDocSnapshot.exists()) {
+            const userData = userDocSnapshot.data();
             
-          }));
-        } else {
-          set((state: any) => ({
-            ...state,
-            FavoriteList: [],
-            CartList: [],
-            OrderList: [],
-            fullName: '',
-            address: '',
-            phoneNumber: '',
-            user: email,
-            TeaList: TeaData,
-          }));
+            if (userData && userData[language]) {
+              const languageData = userData[language];
+      
+              const newState: any = {
+                language: language,
+                fullName: languageData.Information?.fullName || '',
+                address: languageData.Information?.address || '',
+                phoneNumber: languageData.Information?.phoneNumber || '',
+                user: email,
+              };
+      
+              // Kiểm tra và cập nhật danh sách yêu thích, giỏ hàng, và danh sách đơn hàng chỉ khi ngôn ngữ dữ liệu có sẵn
+              if (languageData.TeaList) newState.TeaList = languageData.TeaList;
+              if (languageData.FavoriteList) newState.FavoriteList = languageData.FavoriteList;
+              if (languageData.CartList) newState.CartList = languageData.CartList;
+              if (languageData.FavoriteListVi) newState.FavoriteListVi = languageData.FavoriteListVi;
+              if (languageData.FavoriteListFr) newState.FavoriteListFr = languageData.FavoriteListFr;
+              if (languageData.CartListVi) newState.CartListVi = languageData.CartListVi;
+              if (languageData.CartListFr) newState.CartListFr = languageData.CartListFr;
+              if (languageData.OrderList) newState.OrderList = languageData.OrderList;
+              if (languageData.OrderListVi) newState.OrderListVi = languageData.OrderListVi;
+              if (languageData.OrderListFr) newState.OrderListFr = languageData.OrderListFr;
+      
+              set(newState);
+            } else {
+              // Xử lý trường hợp không tìm thấy dữ liệu cho ngôn ngữ cụ thể, fallback về ngôn ngữ mặc định
+              set((state: any) => ({
+                ...state,
+                language: language,
+                FavoriteList: [],
+                CartList: [],
+                FavoriteListVi: [],
+                FavoriteListFr: [],
+                CartListVi: [],
+                CartListFr: [],
+                OrderList: [],
+                OrderListVi: [],
+                OrderListFr: [],
+                fullName: '',
+                address: '',
+                phoneNumber: '',
+                user: email,
+                TeaList: language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData,
+              }));
+            }
+          } else {
+            // Xử lý trường hợp không tìm thấy tài liệu người dùng
+            set((state: any) => ({
+              ...state,
+              language: language,
+              FavoriteList: [],
+              CartList: [],
+              FavoriteListVi: [],
+              FavoriteListFr: [],
+              CartListVi: [],
+              CartListFr: [],
+              OrderList: [],
+              OrderListVi: [],
+              OrderListFr: [],
+              fullName: '',
+              address: '',
+              phoneNumber: '',
+              user: email,
+              TeaList: language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData,
+            }));
+          }
+        } catch (error) {
+          console.error('Error fetching user data from Firestore:', error);
         }
       },
-      
+
       addToFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea')) {
+          if (type.includes('Tea') || type.includes('Trà') || type.includes('Thé')) {
             const teaToAdd = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToAdd) {
               if (!teaToAdd.favourite) {
@@ -86,11 +144,18 @@ export const useStore = create(
               }
             }
           }
+          if (state.language === 'en') {
+            state.FavoriteList = [...state.FavoriteList];
+          } else if (state.language === 'fr') {
+            state.FavoriteListFr = [...state.FavoriteList];
+          } else if (state.language === 'vi') {
+            state.FavoriteListVi = [...state.FavoriteList];
+          }
         })
       ),
       deleteFromFavoriteList: (type: string | string[], id: any, user: any) => set(
         produce(state => {
-          if (type.includes('Tea')) {
+          if (type.includes('Tea') || type.includes('Trà') || type.includes('Thé')) {
             const teaToModify = state.TeaList.find((tea: { id: any; }) => tea.id === id);
             if (teaToModify) {
               teaToModify.favourite = !teaToModify.favourite;
@@ -99,6 +164,13 @@ export const useStore = create(
             if (indexToRemove !== -1) {
               state.FavoriteList.splice(indexToRemove, 1);
             }
+          }
+          if (state.language === 'en') {
+            state.FavoriteList = [...state.FavoriteList];
+          } else if (state.language === 'fr') {
+            state.FavoriteListFr = [...state.FavoriteList];
+          } else if (state.language === 'vi') {
+            state.FavoriteListVi = [...state.FavoriteList];
           }
         })
       ),
@@ -137,27 +209,44 @@ export const useStore = create(
               cartItem.user = state.user;
               state.CartList.push(cartItem);
             }
+            // Ánh xạ dữ liệu cho từng ngôn ngữ
+            if (state.language === 'en') {
+              state.CartList = [...state.CartList];
+            } else if (state.language === 'fr') {
+              state.CartListFr = [...state.CartList];
+            } else if (state.language === 'vi') {
+              state.CartListVi = [...state.CartList];
+            }
           }),
         ),
+      
 
       calculateCartPrice: () =>
         set(
-          produce(state => {
+          produce((state) => {
             let totalprice = 0;
             for (let i = 0; i < state.CartList.length; i++) {
               let tempprice = 0;
               for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                tempprice =
-                  tempprice +
+                tempprice +=
                   parseFloat(state.CartList[i].prices[j].price) *
                   state.CartList[i].prices[j].quantity;
               }
-              state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
-              totalprice = totalprice + tempprice;
+              if (state.language === 'en' || state.language === 'fr') {
+                state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
+              } else {
+                state.CartList[i].ItemPrice = tempprice.toString();
+              }
+              totalprice += tempprice;
             }
-            state.CartPrice = totalprice.toFixed(2).toString();
-          }),
+            if (state.language === 'en' || state.language === 'fr') {
+              state.CartPrice = totalprice.toFixed(2).toString();
+            } else {
+              state.CartPrice = totalprice.toString();
+            }
+          })
         ),
+
 
       incrementCartItemQuantity: (id: any, size: any) => // Chức năng tăng số lượng
         set(
@@ -202,31 +291,92 @@ export const useStore = create(
             }
           }),
         ),
-      pushListsToFirestore: async () => {
-        const state = get() as State;
-        const { user, FavoriteList, CartList, OrderList, TeaList, fullName, address, phoneNumber } = state;
-        const db = getFirestore();
-        const userDocRef = doc(db, 'user', user);
-
-        const data = {
-          TeaData: TeaList,
-          FavoriteList,
-          CartList,
-          OrderList,
-          Information: {  // Thêm trường thông tin người dùng
-            fullName,
-            address,
-            phoneNumber
+        pushListsToFirestore: async () => {
+          try {
+            const state = get() as State;
+            const { user, FavoriteList, FavoriteListVi, FavoriteListFr, CartList, CartListVi, CartListFr, OrderList, OrderListFr, OrderListVi, TeaList, fullName, address, phoneNumber, language } = state;
+            const db = getFirestore();
+            const userDocRef = doc(db, 'user', user);
+          
+            const languageDataMapping: any = {
+              en: { TeaList, FavoriteList, CartList, OrderList },
+              fr: { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListFr },
+              vi: { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListVi }
+            };
+          
+            await setDoc(userDocRef, { [language]: { ...languageDataMapping[language], Information: { fullName, address, phoneNumber } } }, { merge: true });
+            console.log('Lists and Information pushed to Firestore successfully');
+            
+          } catch (error) {
+            console.error('Error pushing lists and Information to Firestore:', error);
           }
-        };
-
-        try {
-          await setDoc(userDocRef, data);
-          console.log('Lists and Information pushed to Firestore successfully');
-        } catch (error) {
-          console.error('Error pushing lists and Information to Firestore:', error);
+        },
+        
+        
+        addToOrderHistoryListFromCart: async () => {
+          try {
+            set(
+              produce((state: State) => {
+                const { language, CartList, CartListVi, CartListFr, OrderList, OrderListVi, OrderListFr } = state;
+        
+                let languageCartList = CartList;
+                let languageOrderList = OrderList;
+        
+                // Xác định danh sách Cart và Order tương ứng với ngôn ngữ hiện tại
+                if (language === 'vi') {
+                  languageCartList = CartListVi;
+                  languageOrderList = OrderListVi;
+                } else if (language === 'fr') {
+                  languageCartList = CartListFr;
+                  languageOrderList = OrderListFr;
+                }
+        
+                // Kiểm tra xem languageCartList có phần tử không
+                if (languageCartList.length === 0) {
+                  console.error('Error adding order to history: languageCartList is empty');
+                  return;
+                }
+        
+                // Tính toán tổng giá trị của giỏ hàng
+                state.calculateCartPrice();
+        
+                let totalPrice = parseFloat(state.CartPrice); // Sử dụng giá trị đã tính toán từ CartPrice
+        
+                let cartListPrice: string;
+                if (language === 'fr' || language === 'en') {
+                  cartListPrice = totalPrice.toFixed(2).toString();
+                } else {
+                  cartListPrice = totalPrice.toString();
+                }
+        
+                // Thêm đơn hàng vào OrderList tương ứng
+                const newOrder = {
+                  OrderDate: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
+                  CartList: languageCartList,
+                  CartListPrice: cartListPrice,
+                };
+        
+                // Cập nhật languageOrderList một cách chính xác
+                if (language === 'vi') {
+                  state.CartListVi = [];
+                  state.OrderListVi = [newOrder, ...languageOrderList];
+                } else if (language === 'fr') {
+                  state.CartListFr = [];
+                  state.OrderListFr = [newOrder, ...languageOrderList];
+                } else {
+                  state.CartList = [];
+                  state.OrderList = [newOrder, ...languageOrderList];
+                }
+              })
+            );
+          } catch (error) {
+            console.error('Error adding order to history:', error);
+          }
         }
-      },
+        
+      
+      
+      
     }),
     {
       name: 'HMTea',

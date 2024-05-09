@@ -20,6 +20,7 @@ import Favorites from './src/screens/Favorites';
 // import Information from './src/screens/InformationEx';
 import Header from './src/components/Header';
 import OrderComplete from './src/screens/OrderComplete';
+import OrderHistory from './src/screens/OrderHistory';
 
 const Stack = createNativeStackNavigator();
 

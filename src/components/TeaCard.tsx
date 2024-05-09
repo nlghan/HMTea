@@ -32,6 +32,7 @@ interface TeaCardProps {
   price: any;
   user: any;
   buttonPressHandler: any;
+  language: string; // Thêm props language vào đây
 }
 
 const TeaCard: React.FC<TeaCardProps> = ({
@@ -45,7 +46,20 @@ const TeaCard: React.FC<TeaCardProps> = ({
   price,
   user,
   buttonPressHandler,
+  language, // Nhận props language
 }) => {
+  // Hàm hiển thị giá dựa trên ngôn ngữ
+  const getPriceText = () => {
+    if (language === 'vi') {
+      return `${price.price} VND`; // Hiển thị giá theo đơn vị VNĐ
+    } else if (language === 'fr') {
+      return `${price.price} €`; // Hiển thị giá theo đơn vị VNĐ
+    }
+    else {
+      return `${price.price} $`; // Hiển thị giá theo đơn vị $
+    }
+  };
+
   return (
     <View style={styles.CardContainer}>
       <LinearGradient
@@ -71,7 +85,7 @@ const TeaCard: React.FC<TeaCardProps> = ({
         {/* <Text style={styles.CardSubtitle}>{user}</Text> */}
         <View style={styles.CardFooterRow}>
           <Text style={styles.CardPriceCurrency}>
-            $ <Text style={styles.CardPrice}>{price.price}</Text>
+            {getPriceText()} {/* Sử dụng hàm getPriceText để hiển thị giá */}
           </Text>
           <TouchableOpacity
             onPress={() => {
