@@ -38,6 +38,8 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
         i18n.changeLanguage(languageFromStore);
     }, [languageFromStore]);
 
+    
+
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}

@@ -319,20 +319,8 @@ export const useStore = create(
               produce((state: State) => {
                 const { language, CartList, CartListVi, CartListFr, OrderList, OrderListVi, OrderListFr } = state;
         
-                let languageCartList = CartList;
-                let languageOrderList = OrderList;
-        
-                // Xác định danh sách Cart và Order tương ứng với ngôn ngữ hiện tại
-                if (language === 'vi') {
-                  languageCartList = CartListVi;
-                  languageOrderList = OrderListVi;
-                } else if (language === 'fr') {
-                  languageCartList = CartListFr;
-                  languageOrderList = OrderListFr;
-                }
-        
                 // Kiểm tra xem languageCartList có phần tử không
-                if (languageCartList.length === 0) {
+                if (CartList.length === 0 && CartListVi.length === 0 && CartListFr.length === 0) {
                   console.error('Error adding order to history: languageCartList is empty');
                   return;
                 }
@@ -349,33 +337,38 @@ export const useStore = create(
                   cartListPrice = totalPrice.toString();
                 }
         
-                // Thêm đơn hàng vào OrderList tương ứng
+                // Thêm đơn hàng vào OrderList tương ứng với ngôn ngữ
                 const newOrder = {
                   OrderDate: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
-                  CartList: languageCartList,
+                  CartList: language === 'vi' ? CartListVi : language === 'fr' ? CartListFr : CartList,
                   CartListPrice: cartListPrice,
                 };
         
-                // Cập nhật languageOrderList một cách chính xác
+                // Cập nhật OrderList tương ứng với ngôn ngữ
                 if (language === 'vi') {
-                  state.CartListVi = [];
-                  state.OrderListVi = [newOrder, ...languageOrderList];
+                  state.CartListVi = []; // Reset CartListVi
+                  state.OrderListVi = [newOrder, ...OrderListVi]; // Thêm đơn hàng vào OrderListVi
+                  state.OrderList = [newOrder, ...OrderList]; // Cập nhật OrderList chung
+                  state.CartListVi = []; 
                 } else if (language === 'fr') {
-                  state.CartListFr = [];
-                  state.OrderListFr = [newOrder, ...languageOrderList];
+                  state.CartListFr = []; // Reset CartListFr
+                  state.OrderListFr = [newOrder, ...OrderListFr]; // Thêm đơn hàng vào OrderListFr
+                  state.OrderList = [newOrder, ...OrderList]; // Cập nhật OrderList chung
+                  state.CartListFr = []; 
                 } else {
-                  state.CartList = [];
-                  state.OrderList = [newOrder, ...languageOrderList];
+                  state.CartList = []; // Reset CartList
+                  state.OrderList = [newOrder, ...OrderList]; // Thêm đơn hàng vào OrderList
                 }
+                state.CartListVi = []; 
+                state.CartListFr = [];
+                state.CartList = [];
               })
+              
             );
           } catch (error) {
             console.error('Error adding order to history:', error);
           }
         }
-        
-      
-      
       
     }),
     {

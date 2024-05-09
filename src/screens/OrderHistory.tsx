@@ -1,35 +1,24 @@
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useStore} from '../store/store';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {
-  BORDERRADIUS,
-  COLORS,
-  FONTFAMILY,
-  FONTSIZE,
-  SPACING,
-} from '../theme/theme';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/i18n';
 import Header from '../components/Header';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import PopUpAnimation from '../components/PopUpAnimation';
 import OrderHistoryCard from '../components/OrderHistoryCard';
-import { useTranslation } from 'react-i18next';
-import i18n from '../i18n/i18n';
+import { useStore } from '../store/store';
+import { COLORS, SPACING, FONTFAMILY, FONTSIZE, BORDERRADIUS } from '../theme/theme';
 
-const OrderHistory = ({navigation}: any) => {
+const OrderHistory = ({ navigation }: any) => {
   const OrderHistoryList = useStore((state: any) => state.OrderList);
+  const OrderHistoryListVi = useStore((state: any) => state.OrderListVi);
+  const OrderHistoryListFr = useStore((state: any) => state.OrderListFr);
   const tabBarHeight = useBottomTabBarHeight();
   const [showAnimation, setShowAnimation] = useState(false);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
-  const navigationHandler = ({index, id, type}: any) => {
+  const navigationHandler = ({ index, id, type }: any) => {
     navigation.push('Details', {
       index,
       id,
@@ -44,8 +33,8 @@ const OrderHistory = ({navigation}: any) => {
     }, 2000);
   };
 
-  const { t } = useTranslation(); // Use useTranslation hook
-  const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
+  const { t } = useTranslation();
+  const languageFromStore = useStore((state: any) => state.language);
 
   useEffect(() => {
     // Update i18n language to match language from useStore
@@ -53,8 +42,9 @@ const OrderHistory = ({navigation}: any) => {
   }, [languageFromStore]);
 
   useEffect(() => {
+    // Load data from Firestore when there are changes in OrderList, OrderListVi, or OrderListFr
     pushListsToFirestore();
-  }, [OrderHistoryList, pushListsToFirestore, languageFromStore]);
+  }, [OrderHistoryList, OrderHistoryListVi, OrderHistoryListFr, pushListsToFirestore]);
 
   return (
     <View style={styles.ScreenContainer}>
@@ -74,10 +64,8 @@ const OrderHistory = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         <View
-          style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
+          style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
-          
-
             {OrderHistoryList.length == 0 ? (
               <EmptyListAnimation title={'No Order History'} />
             ) : (

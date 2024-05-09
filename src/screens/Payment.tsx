@@ -42,7 +42,7 @@ const Payment = ({ navigation }: any) => {
     navigation.push('OrderComplete', { amount: CartPrice });
     
    
-    // pushListsToFirestore();
+    pushListsToFirestore();
   };
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {
