@@ -34,14 +34,16 @@ const getCategoriesFromData = (data: any, currentLanguage: string) => {
 
 const getTeaList = (category: string, data: any) => {
   if (category === 'All' || category === 'Tất cả' || category === 'Tous') {
-    // console.log(data)
     return data;
   } else {
     let tealist = data.filter((item: any) => item.name.toLowerCase().includes(category.toLowerCase()));
-    console.log(tealist)
-    return tealist.sort((a: { index: number; }, b: { index: number; }) => a.index - b.index); // Sắp xếp lại theo index để duy trì đúng vị trí của ảnh
+    if (tealist.length === 0) {
+      tealist = data.filter((item: any) => item.type.toLowerCase().includes(category.toLowerCase()));
+    }
+    return tealist.sort((a: { index: number; }, b: { index: number; }) => a.index - b.index);
   }
 };
+
 
 
 

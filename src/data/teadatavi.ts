@@ -305,7 +305,7 @@ const TeaDataVi = [
     },
     {
       id: 'C16',
-      name: 'Trà Ô lOng Lạnh',
+      name: 'Trà Ô Long Lạnh',
       description: `Trà Ô Long Lạnh là một loại thức uống sảng khoái và kích thích hoàn hảo để làm mát trong những ngày nắng nóng. Được làm từ lá trà Ô Long cao cấp, hỗn hợp lạnh này mang lại hương vị sảng khoái và trong trẻo với hương thơm hoa và đất.`,
       imagelink_square: require('../assets/tea_assets/oolong_tea/square/iced_oolong_tea.jpg'),
       imagelink_portrait: require('../assets/tea_assets/oolong_tea/portrait/iced_oolong_tea.jpg'),
@@ -325,8 +325,8 @@ const TeaDataVi = [
     },
     {
       id: 'C17',
-      name: 'Trà Hoa Lài',
-      description: `Trà Hoa Lài là một thức uống thơm ngon và hương thơm được chế biến bằng cách ngâm hoa nhài mỏng manh vào lá trà xanh, trắng hoặc đen chất lượng cao. Xuất phát từ Trung Quốc, loại trà truyền thống này được khen ngợi với hương thơm hoa cuốn hút và hương vị tươi mát.`,
+      name: 'Trà Lài',
+      description: `Trà Lài là một thức uống thơm ngon và hương thơm được chế biến bằng cách ngâm hoa nhài mỏng manh vào lá trà xanh, trắng hoặc đen chất lượng cao. Xuất phát từ Trung Quốc, loại trà truyền thống này được khen ngợi với hương thơm hoa cuốn hút và hương vị tươi mát.`,
       imagelink_square: require('../assets/tea_assets/jasmine_tea/square/jasmine_tea.jpeg'),
       imagelink_portrait: require('../assets/tea_assets/jasmine_tea/portrait/jasmine_tea.jpeg'),
       ingredients: 'Trà Lài',
@@ -345,8 +345,8 @@ const TeaDataVi = [
     },
     {
       id: 'C18',
-      name: 'Trà Vải Lài',
-      description: `Trà Vải Lài là sự kết hợp tuyệt vời giữa hoa nhài thơm ngon và hương vị ngọt ngào, nhiệt đới của trái vải. Thức uống mát dịu này kết hợp hương thơm của hoa nhài ngâm cùng với hương vị ngọt ngào của trái vải, tạo ra một hòa quyện hương vị thú vị và làm mới.`,
+      name: 'Trà Lài Vải Thiều',
+      description: `Trà lài kết hợp vải thiều là sự kết hợp tuyệt vời giữa hoa nhài thơm ngon và hương vị ngọt ngào, nhiệt đới của trái vải. Thức uống mát dịu này kết hợp hương thơm của hoa nhài ngâm cùng với hương vị ngọt ngào của trái vải, tạo ra một hòa quyện hương vị thú vị và làm mới.`,
       imagelink_square: require('../assets/tea_assets/jasmine_tea/square/lychee_jasmine_tea.jpg'),
       imagelink_portrait: require('../assets/tea_assets/jasmine_tea/portrait/lychee_jasmine_tea.jpg'),
       ingredients: 'Trà Lài',
@@ -385,7 +385,7 @@ const TeaDataVi = [
       },
       {
         id: 'C20',
-        name: 'Trà Dâu Lài',
+        name: 'Trà Lài Dâu Tây',
         description: `Trà Hoa Nhài Và Dâu là sự kết hợp tuyệt vời giữa hương thơm nhẹ nhàng của trà ngâm hoa nhài và hương vị ngọt ngào của dâu chín mọng. Thức uống mát dịu này kết hợp hương thơm của hoa nhài với vị ngọt của dâu, tạo ra một hòa quyện hương vị thú vị và mới mẻ.`,
         imagelink_square: require('../assets/tea_assets/jasmine_tea/square/strawberry_jasmine_tea.jpg'),
         imagelink_portrait: require('../assets/tea_assets/jasmine_tea/portrait/strawberry_jasmine_tea.jpg'),
@@ -445,8 +445,8 @@ const TeaDataVi = [
       },
       {
         id: 'C23',
-        name: 'Trà Vải Sen',
-        description: `Trà Vải Sen là sự kết hợp tuyệt vời giữa hương thơm nhẹ nhàng của trà sen và hương vị ngọt ngào, nhiệt đới của trái vải. Thức uống mát dịu này kết hợp hương thơm nhẹ của cánh hoa sen với hương vị ngọt ngào của trái vải, tạo ra một hòa quyện hương vị thú vị và làm mới.`,
+        name: 'Trà Sen Vải Thiều',
+        description: `Trà Sen Vải là sự kết hợp tuyệt vời giữa hương thơm nhẹ nhàng của trà sen và hương vị ngọt ngào, nhiệt đới của trái vải. Thức uống mát dịu này kết hợp hương thơm nhẹ của cánh hoa sen với hương vị ngọt ngào của trái vải, tạo ra một hòa quyện hương vị thú vị và làm mới.`,
         imagelink_square: require('../assets/tea_assets/lotus_tea/square/lychee_lotus_tea.jpg'),
         imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/lychee_lotus_tea.jpg'),
         ingredients: 'Cánh sen khô',

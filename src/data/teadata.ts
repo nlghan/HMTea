@@ -285,8 +285,8 @@ const TeaData = [
   },
   {
     id: 'C15',
-    name: 'Oolong Peach Tea',
-    description: `Oolong Peach Tea is a delightful fusion of premium Oolong tea leaves and the juicy sweetness of ripe peaches, creating a harmonious blend of flavors that is both refreshing and satisfying. Crafted by infusing Oolong tea with the essence of ripe peaches, this tea offers a delightful balance of floral notes from the tea leaves and the luscious sweetness of peach.`,
+    name: 'Peach Oolong Tea',
+    description: `Peach Oolong Tea is a delightful fusion of premium Oolong tea leaves and the juicy sweetness of ripe peaches, creating a harmonious blend of flavors that is both refreshing and satisfying. Crafted by infusing Oolong tea with the essence of ripe peaches, this tea offers a delightful balance of floral notes from the tea leaves and the luscious sweetness of peach.`,
     imagelink_square: require('../assets/tea_assets/oolong_tea/square/oolong_peach_tea.png'),
     imagelink_portrait: require('../assets/tea_assets/oolong_tea/portrait/oolong_peach_tea.png'),
     ingredients: 'Oolong Tea',

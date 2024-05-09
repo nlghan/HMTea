@@ -11,9 +11,8 @@ import { useStore } from '../store/store';
 import { COLORS, SPACING, FONTFAMILY, FONTSIZE, BORDERRADIUS } from '../theme/theme';
 
 const OrderHistory = ({ navigation }: any) => {
-  const OrderHistoryList = useStore((state: any) => state.OrderList);
-  const OrderHistoryListVi = useStore((state: any) => state.OrderListVi);
-  const OrderHistoryListFr = useStore((state: any) => state.OrderListFr);
+  const OrderHistoryList = useStore((state: any) => state.OrderListAll);
+
   const tabBarHeight = useBottomTabBarHeight();
   const [showAnimation, setShowAnimation] = useState(false);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
@@ -44,7 +43,7 @@ const OrderHistory = ({ navigation }: any) => {
   useEffect(() => {
     // Load data from Firestore when there are changes in OrderList, OrderListVi, or OrderListFr
     pushListsToFirestore();
-  }, [OrderHistoryList, OrderHistoryListVi, OrderHistoryListFr, pushListsToFirestore]);
+  }, [OrderHistoryList]);
 
   return (
     <View style={styles.ScreenContainer}>
