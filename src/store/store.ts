@@ -91,6 +91,14 @@ export const useStore = create(
               set(newState);
             } else {
               // Xử lý trường hợp không tìm thấy dữ liệu cho ngôn ngữ cụ thể, fallback về ngôn ngữ mặc định
+              const languageDataMapping: any = {
+                en: { TeaList: TeaData, FavoriteList: [], CartList: [], OrderList: [] },
+                fr: { TeaList: TeaDataFr, FavoriteList: [], CartList: [], OrderList: [] },
+                vi: { TeaList: TeaDataVi, FavoriteList: [], CartList: [], OrderList: [] }
+              };
+      
+              await setDoc(userDocRef, { ...languageDataMapping }, { merge: true });
+      
               set((state: any) => ({
                 ...state,
                 language: language,
@@ -112,7 +120,15 @@ export const useStore = create(
               }));
             }
           } else {
-            // Xử lý trường hợp không tìm thấy tài liệu người dùng
+            // Xử lý trường hợp không tìm thấy tài liệu người dùng và tạo mới tài khoản với dữ liệu ban đầu cho cả ba ngôn ngữ
+            const languageDataMapping: any = {
+              en: { TeaList: TeaData, FavoriteList: [], CartList: [], OrderList: [] },
+              fr: { TeaList: TeaDataFr, FavoriteList: [], CartList: [], OrderList: [] },
+              vi: { TeaList: TeaDataVi, FavoriteList: [], CartList: [], OrderList: [] }
+            };
+      
+            await setDoc(userDocRef, { ...languageDataMapping }, { merge: true });
+      
             set((state: any) => ({
               ...state,
               language: language,
