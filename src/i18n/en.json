@@ -40,7 +40,10 @@
     "addto": "is Added to Cart",
     "info": "Order Information: ",
     "orderBtn": "Order",
-    "complete": "Thank you for your order!"
+    "complete": "Thank you for your order!",
+    "total": "Total Amount",
+    "orderTime": "Order Time",
+    "download": "Download"
 
 
   }

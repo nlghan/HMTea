@@ -4,6 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import CustomIcon from '../components/CustomIcon';
+import LanguageSwitch from '../components/LanguageSwitch';
+import i18n from '../i18n/i18n';
+import { useTranslation } from 'react-i18next';
 
 // Initialize Firebase with your Firebase configuration
 const firebaseConfig = {
@@ -21,6 +24,7 @@ if (!firebaseApp) {
 }
 
 const Register = ({navigation}:any) => {
+    const { t, i18n } = useTranslation(); // Use useTranslation hook
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,6 +32,8 @@ const Register = ({navigation}:any) => {
     const [showPassword2, setShowPassword2] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [language, setLanguage] = useState('en');
+
 
     // const handlePersonalInfo = () =>{
     //     navigation.navigate('PersonalInfo')
@@ -105,13 +111,19 @@ const Register = ({navigation}:any) => {
         setShowPassword2(!showPassword2);
     };
 
+    const changeLanguage = (lang: string) => {
+        setLanguage(lang);
+        i18n.changeLanguage(lang); // Change language in i18n
+    };
+
     return (
         <>
         <View style={styles.container}>
+        <LanguageSwitch language={language} changeLanguage={changeLanguage} />
             <View style={styles.title}>
                 <Text style={styles.text1}>HMTea</Text>
-                <Text style={styles.text2}>Create an Account</Text>
-                <Text style={styles.text7}>Connect with us today!</Text>
+                <Text style={styles.text2}>{t('create')}</Text>
+                <Text style={styles.text7}>{t('connect')}</Text>
             </View>
             <View style={styles.input}>
                 <View style={[styles.textInput, emailError ? styles.errorInput : null]}>
@@ -126,7 +138,7 @@ const Register = ({navigation}:any) => {
                 <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
                     <TextInput
                         style={styles.text3}
-                        placeholder='Password'
+                        placeholder={t('password')}
                         placeholderTextColor={'#B4BBCB'}
                         secureTextEntry={!showPassword1} // Toggle secureTextEntry based on showPassword1 state
                         onChangeText={text => setPassword(text)}
@@ -139,7 +151,7 @@ const Register = ({navigation}:any) => {
                 <View style={[styles.textInput2, passwordError ? styles.errorInput : null]}>
                     <TextInput
                         style={styles.text3}
-                        placeholder='Confirm Password'
+                        placeholder={t('confirm')}
                         placeholderTextColor={'#B4BBCB'}
                         secureTextEntry={!showPassword2} // Toggle secureTextEntry based on showPassword2 state
                         onChangeText={text => setConfirmPassword(text)}
@@ -151,15 +163,15 @@ const Register = ({navigation}:any) => {
                 {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
             </View>
             <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-                <Text style={styles.registerText}>Sign Up</Text>
+                <Text style={styles.registerText}>{t('signUp')}</Text>
             </TouchableOpacity>
             <View style={styles.line}>
             <Text style={styles.lineText}>_________________________________________</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.text5}>Already have an account ?</Text>
+                <Text style={styles.text5}>{t('advice')}</Text>
                 <TouchableOpacity style={styles.login} onPress={handleLogin}>
-                <Text style={styles.text6}>Login</Text>
+                <Text style={styles.text6}>{t('login')}</Text>
             </TouchableOpacity>
             </View>
         </View></>
@@ -271,7 +283,21 @@ const styles = StyleSheet.create({
         marginBottom:10,
         paddingBottom:10
     },
-    login:{}
+    login:{},
+    languageContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    languageText: {
+        fontSize: 16,
+        color: '#2C683F',
+        marginHorizontal: 10,
+    },
+    activeLanguage: {
+        fontWeight: 'bold',
+    },
 });
 
 export default Register;

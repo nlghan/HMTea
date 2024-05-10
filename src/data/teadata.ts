@@ -285,8 +285,8 @@ const TeaData = [
   },
   {
     id: 'C15',
-    name: 'Oolong Peach Tea',
-    description: `Oolong Peach Tea is a delightful fusion of premium Oolong tea leaves and the juicy sweetness of ripe peaches, creating a harmonious blend of flavors that is both refreshing and satisfying. Crafted by infusing Oolong tea with the essence of ripe peaches, this tea offers a delightful balance of floral notes from the tea leaves and the luscious sweetness of peach.`,
+    name: 'Peach Oolong Tea',
+    description: `Peach Oolong Tea is a delightful fusion of premium Oolong tea leaves and the juicy sweetness of ripe peaches, creating a harmonious blend of flavors that is both refreshing and satisfying. Crafted by infusing Oolong tea with the essence of ripe peaches, this tea offers a delightful balance of floral notes from the tea leaves and the luscious sweetness of peach.`,
     imagelink_square: require('../assets/tea_assets/oolong_tea/square/oolong_peach_tea.png'),
     imagelink_portrait: require('../assets/tea_assets/oolong_tea/portrait/oolong_peach_tea.png'),
     ingredients: 'Oolong Tea',
@@ -427,8 +427,8 @@ const TeaData = [
       id: 'C22',
       name: 'Blue Lotus Tea',
       description: `Blue Lotus Tea, also known as Sacred Blue Lily Tea, is an enchanting beverage derived from the flowers of the Blue Lotus (Nymphaea caerulea) plant. This tea holds historical and cultural significance, revered for its calming and euphoric properties.`,
-      imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_lotus_tea.png'),
-      imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png'),
+      imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_tea.png'),
+      imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_tea.png'),
       ingredients: 'Dried Blue Lotus petals',
       special_ingredient: 'Hot',
       prices: [

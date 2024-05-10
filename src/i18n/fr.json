@@ -40,5 +40,8 @@
     "addto": "est ajouté au panier",
     "info": "Informations de commande : ",
     "orderBtn": "Commander",
-    "complete": "Merci pour votre commande !"
+    "complete": "Merci pour votre commande !",
+    "total": "Montant Total",
+    "orderTime": "Heure de la commande",
+    "download": "Télécharger"
 }
