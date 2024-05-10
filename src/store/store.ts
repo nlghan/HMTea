@@ -73,8 +73,7 @@ export const useStore = create(
                 address: languageData.Information?.address || '',
                 phoneNumber: languageData.Information?.phoneNumber || '',
                 user: email,
-              };
-      
+              };      
               // Kiểm tra và cập nhật danh sách yêu thích, giỏ hàng, và danh sách đơn hàng chỉ khi ngôn ngữ dữ liệu có sẵn
               if (languageData.TeaList) newState.TeaList = languageData.TeaList;
               if (languageData.FavoriteList) newState.FavoriteList = languageData.FavoriteList;
