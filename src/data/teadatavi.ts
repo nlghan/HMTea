@@ -427,8 +427,8 @@ const TeaDataVi = [
         id: 'C22',
         name: 'Trà Sen Xanh',
         description: `Trà Sen Xanh, còn được biết đến với tên gọi Trà Sen Xanh Thánh, là một thức uống quyến rũ được chiết xuất từ hoa sen Xanh (Nymphaea caerulea). Loại trà này mang ý nghĩa lịch sử và văn hóa, được yêu thích vì khả năng làm dịu và mang đến sự thoải mái tinh thần.`,
-        imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_lotus_tea.png'),
-        imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png'),
+        imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_tea.png'),
+        imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_tea.png'),
         ingredients: 'Cánh sen khô',
         special_ingredient: 'Nóng',
         prices: [

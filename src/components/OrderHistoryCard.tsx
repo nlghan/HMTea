@@ -35,11 +35,11 @@ import i18n from '../i18n/i18n';
       <View style={styles.CardContainer}>
         <View style={styles.CardHeader}>
           <View>
-            <Text style={styles.HeaderTitle}>Order Time</Text>
+            <Text style={styles.HeaderTitle}>{t('orderTime')}</Text>
             <Text style={styles.HeaderSubtitle}>{OrderDate}</Text>
           </View>
           <View style={styles.PriceContainer}>
-            <Text style={styles.HeaderTitle}>Total Amount</Text>
+            <Text style={styles.HeaderTitle}>{t('total')}</Text>
             <Text style={styles.HeaderPrice}>{CartListPrice}</Text>
           </View>
         </View>
@@ -61,7 +61,8 @@ import i18n from '../i18n/i18n';
                 special_ingredient={data.special_ingredient}
                 prices={data.prices}
                 ItemPrice={data.ItemPrice}
-                user={''} currency={''}              />
+                user={''} 
+                currency={data.prices[0].currency}              />
             </TouchableOpacity>
           ))}
         </View>

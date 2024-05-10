@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/i18n';
 import Header from '../components/Header';
-import EmptyListAnimation from '../components/EmptyListAnimation';
-import PopUpAnimation from '../components/PopUpAnimation';
 import OrderHistoryCard from '../components/OrderHistoryCard';
 import { useStore } from '../store/store';
 import { COLORS, SPACING, FONTFAMILY, FONTSIZE, BORDERRADIUS } from '../theme/theme';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import PopUpAnimation from '../components/PopUpAnimation';
 
 const OrderHistory = ({ navigation }: any) => {
   const OrderHistoryList = useStore((state: any) => state.OrderListAll);
@@ -25,12 +25,98 @@ const OrderHistory = ({ navigation }: any) => {
     });
   };
 
-  const buttonPressHandler = () => {
-    setShowAnimation(true);
-    setTimeout(() => {
-      setShowAnimation(false);
-    }, 2000);
+  const buttonPressHandler = async () => {
+    setShowAnimation(true); // Hiển thị hiệu ứng
+
+    try {
+      let htmlContent = `
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-size: 25;
+          }
+          .header {
+            background-color: #2C683F;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+          }
+          .order {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+          }
+          .order-date {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 20;
+          }
+          .order-item {
+            margin-bottom: 5px;
+            font-size: 20;
+          }
+          .special-ingredient {
+            font-size: 20; /* Kích thước chữ mới cho thành phần đặc biệt */
+          }
+        </style>
+        <div class="header">
+          <h1>Order History</h1>
+        </div>
+      `;
+
+      OrderHistoryList.forEach((data: any) => {
+        htmlContent += `
+          <div class="order">
+            <div class="order-date">Date: ${data.OrderDate}</div>
+            <div class="order-item">Total Amount: ${data.CartListPrice}</div>
+            <div class="order-item">Products: 
+              <ul>
+                ${data.CartList.map((product: any) => `<li>${product.name} - ${product.ItemPrice} ${product.prices[0].currency}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="order-item special-ingredient">Special Ingredients:</div>
+          <ul>
+               ${data.CartList.map((product: any) => `<li class="special-ingredient">${product.special_ingredient}</li>`).join('')}
+          </ul>
+          </div>
+        `;
+      });
+
+      const options = {
+        html: htmlContent,
+        fileName: 'OrderHistory',
+        directory: 'Documents',
+      };
+
+      const pdf = await RNHTMLtoPDF.convert(options);
+      //setShowAnimation(false); // Tắt hiệu ứng sau khi tạo và lưu PDF thành công
+      //Alert.alert('PDF Saved', pdf.filePath);
+    } catch (error) {
+      console.error('Error creating PDF:', error);
+      setShowAnimation(false); // Tắt hiệu ứng nếu có lỗi xảy ra
+      Alert.alert('Error', 'Failed to create PDF');
+    }
   };
+
+
+
+  // Sử dụng setTimeout để tắt hiệu ứng sau 4 giây
+  const showAnimationDuration = 4000;
+  const hideAnimation = () => {
+    setShowAnimation(false);
+  };
+
+  useEffect(() => {
+    let timer = setTimeout(hideAnimation, showAnimationDuration);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showAnimation]);
+
 
   const { t } = useTranslation();
   const languageFromStore = useStore((state: any) => state.language);
@@ -49,7 +135,6 @@ const OrderHistory = ({ navigation }: any) => {
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.thirdGreen} />
       <Header />
-
       {showAnimation ? (
         <PopUpAnimation
           style={styles.LottieAnimation}
@@ -59,6 +144,7 @@ const OrderHistory = ({ navigation }: any) => {
         <></>
       )}
 
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
@@ -66,7 +152,7 @@ const OrderHistory = ({ navigation }: any) => {
           style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
             {OrderHistoryList.length == 0 ? (
-              <EmptyListAnimation title={'No Order History'} />
+              <Text>No Order History</Text>
             ) : (
               <View style={styles.ListItemContainer}>
                 {OrderHistoryList.map((data: any, index: any) => (
@@ -87,7 +173,7 @@ const OrderHistory = ({ navigation }: any) => {
               onPress={() => {
                 buttonPressHandler();
               }}>
-              <Text style={styles.ButtonText}>Download</Text>
+              <Text style={styles.ButtonText}>{t('download')}</Text>
             </TouchableOpacity>
           ) : (
             <></>
@@ -102,9 +188,6 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-  },
-  LottieAnimation: {
-    height: 250,
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -129,9 +212,12 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_20,
   },
   ButtonText: {
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: 'Inter-Bold',
     fontSize: FONTSIZE.size_18,
     color: COLORS.primaryDarkHex,
+  },
+  LottieAnimation: {
+    height: 250,
   },
 });
 

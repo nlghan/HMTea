@@ -427,8 +427,8 @@ const TeaData = [
       id: 'C22',
       name: 'Blue Lotus Tea',
       description: `Blue Lotus Tea, also known as Sacred Blue Lily Tea, is an enchanting beverage derived from the flowers of the Blue Lotus (Nymphaea caerulea) plant. This tea holds historical and cultural significance, revered for its calming and euphoric properties.`,
-      imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_lotus_tea.png'),
-      imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png'),
+      imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_tea.png'),
+      imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_tea.png'),
       ingredients: 'Dried Blue Lotus petals',
       special_ingredient: 'Hot',
       prices: [

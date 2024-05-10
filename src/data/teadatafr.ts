@@ -424,8 +424,8 @@ const TeaData = [
         id: 'C22',
         name: 'Thé de Lotus Bleu',
         description: `Le Thé de Lotus Bleu, également connu sous le nom de Thé de Nénuphar Bleu Sacré, est une boisson enchanteresse dérivée des fleurs de la plante de Lotus Bleu (Nymphaea caerulea). Ce thé revêt une importance historique et culturelle, vénéré pour ses propriétés apaisantes et euphorisantes.`,
-        imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_lotus_tea.png'),
-        imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_lotus_tea.png'),
+        imagelink_square: require('../assets/tea_assets/lotus_tea/square/blue_tea.png'),
+        imagelink_portrait: require('../assets/tea_assets/lotus_tea/portrait/blue_tea.png'),
         ingredients: 'Pétales séchés de Lotus Bleu',
         special_ingredient: 'Chaud',
         prices: [
