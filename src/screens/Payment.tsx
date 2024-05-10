@@ -39,10 +39,8 @@ const Payment = ({ navigation }: any) => {
   const buttonPressHandler = () => {
     addToOrderHistoryListFromCart();
     calculateCartPrice();   
-    navigation.push('OrderComplete', { amount: CartPrice });
-    
-   
-    // pushListsToFirestore();
+    navigation.push('OrderComplete', { amount: CartPrice }); 
+    pushListsToFirestore();
   };
 
   const incrementCartItemQuantityHandler = (id: string, size: string) => {

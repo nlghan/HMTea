@@ -186,7 +186,6 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
             <Icon name='logout' size={30} />
             <Text style={styles.myAccountText1}>{t('logout')}</Text>
           </TouchableOpacity>
-
         </ScrollView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
@@ -279,7 +278,6 @@ const styles = StyleSheet.create({
   userInfoText: {
     color: '#ffffff',
     fontSize: 18,
-
   },
   infoContainer: {
     backgroundColor: 'white',
