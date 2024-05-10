@@ -48,7 +48,7 @@ const Header = () => {
                 <Text style={styles.text}>HMTea</Text>
             </View>
             <TouchableOpacity onPress={handleAvatarPress}>
-                <Image style={styles.avt} source={require('../assets/app_images/avt_1.png')} />
+                <Image style={styles.avt} source={require('../assets/app_images/profile.png')} />
             </TouchableOpacity>
 
             {/* Menu items */}
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     avt: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         borderRadius: 25, // Add this for a circular avatar
     },
     categoriesContainer: {

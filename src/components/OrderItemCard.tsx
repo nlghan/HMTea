@@ -40,8 +40,6 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
         i18n.changeLanguage(languageFromStore);
     }, [languageFromStore]);
 
-    
-
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}
@@ -218,7 +216,6 @@ const styles = StyleSheet.create({
         borderRadius: BORDERRADIUS.radius_10,
         
     },
-
     Currency: {
         fontFamily: FONTFAMILY.poppins_semibold,
         fontSize: FONTSIZE.size_18,

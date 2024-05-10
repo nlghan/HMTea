@@ -12,7 +12,6 @@ import PopUpAnimation from '../components/PopUpAnimation';
 
 const OrderHistory = ({ navigation }: any) => {
   const OrderHistoryList = useStore((state: any) => state.OrderListAll);
-
   const tabBarHeight = useBottomTabBarHeight();
   const [showAnimation, setShowAnimation] = useState(false);
   const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
@@ -24,7 +23,6 @@ const OrderHistory = ({ navigation }: any) => {
       type,
     });
   };
-
   const buttonPressHandler = async () => {
     setShowAnimation(true); // Hiển thị hiệu ứng
 
@@ -144,6 +142,14 @@ const OrderHistory = ({ navigation }: any) => {
         <></>
       )}
 
+      {showAnimation ? (
+        <PopUpAnimation
+          style={styles.LottieAnimation}
+          source={require('../lottie/download.json')}
+        />
+      ) : (
+        <></>
+      )}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -219,6 +225,7 @@ const styles = StyleSheet.create({
   LottieAnimation: {
     height: 250,
   },
+
 });
 
 export default OrderHistory;
