@@ -20,32 +20,33 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   useEffect(() => {
     // Load user info if available
     const loadUserInfo = async () => {
-      // Load user info from Firestore if user is logged in
-      if (user) {
-        const db = getFirestore();
-        const userDocRef = doc(db, 'user', user);
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          if (userData && userData[languageFromStore]) {
-            const userLanguageData = userData[languageFromStore];
-            const userInformation = userLanguageData.Information || {};
-            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-            if (userInformation.fullName) {
-              setFullName(userInformation.fullName);
+        // Load user info from Firestore if user is logged in
+        if (user) {
+            const db = getFirestore();
+            const userDocRef = doc(db, 'user', user);
+            const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                if (userData && userData[languageFromStore]) {
+                    const userLanguageData = userData[languageFromStore];
+                    const userInformation = userLanguageData.Information || {};
+                    // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+                    if (userInformation.fullName) {
+                        setFullName(userInformation.fullName);
+                    }
+                    if (userInformation.address) {
+                        setAddress(userInformation.address);
+                    }
+                    if (userInformation.phoneNumber) {
+                        setPhoneNumber(userInformation.phoneNumber);
+                    }
+                }
             }
-            if (userInformation.address) {
-              setAddress(userInformation.address);
-            }
-            if (userInformation.phoneNumber) {
-              setPhoneNumber(userInformation.phoneNumber);
-            }
-          }
         }
-      }
     };
     loadUserInfo();
-  }, [user, languageFromStore]);
+}, [user, languageFromStore]);
+
   
 
   const saveUserInfo = async () => {
