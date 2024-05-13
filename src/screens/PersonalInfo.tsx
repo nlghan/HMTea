@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { ScrollView, View, Text, TextInput, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { useStore } from '../store/store';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -20,32 +20,33 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   useEffect(() => {
     // Load user info if available
     const loadUserInfo = async () => {
-      // Load user info from Firestore if user is logged in
-      if (user) {
-        const db = getFirestore();
-        const userDocRef = doc(db, 'user', user);
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          if (userData && userData[languageFromStore]) {
-            const userLanguageData = userData[languageFromStore];
-            const userInformation = userLanguageData.Information || {};
-            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-            if (userInformation.fullName) {
-              setFullName(userInformation.fullName);
+        // Load user info from Firestore if user is logged in
+        if (user) {
+            const db = getFirestore();
+            const userDocRef = doc(db, 'user', user);
+            const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                if (userData && userData[languageFromStore]) {
+                    const userLanguageData = userData[languageFromStore];
+                    const userInformation = userLanguageData.Information || {};
+                    // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+                    if (userInformation.fullName) {
+                        setFullName(userInformation.fullName);
+                    }
+                    if (userInformation.address) {
+                        setAddress(userInformation.address);
+                    }
+                    if (userInformation.phoneNumber) {
+                        setPhoneNumber(userInformation.phoneNumber);
+                    }
+                }
             }
-            if (userInformation.address) {
-              setAddress(userInformation.address);
-            }
-            if (userInformation.phoneNumber) {
-              setPhoneNumber(userInformation.phoneNumber);
-            }
-          }
         }
-      }
     };
     loadUserInfo();
-  }, [user, languageFromStore]);
+}, [user, languageFromStore]);
+
   
 
   const saveUserInfo = async () => {
@@ -99,26 +100,26 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity onPress={handleHome} >
               <Icon name='chevron-left' size={25} />
             </TouchableOpacity>
-
             <Text style={styles.text}>HMTea</Text>
             <Text style={styles.text}>   </Text>
 
           </View>
           <Text style={styles.myAccountText}>{t('myAccount')}</Text>
-          <View style={styles.accountInfo}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>         
+          <KeyboardAvoidingView style={styles.accountInfo} behavior="padding">
             <View style={styles.profileContainer}>
               <View>
-                <Image style={styles.avt} source={require('../assets/app_images/avt_1.png')} />
+                <Image style={styles.avt} source={require('../assets/app_images/resume.png')} />
               </View>
               <View style={styles.userInfo}>
                 <TextInput
                   style={styles.input}
-                  placeholder={t('fullName')}
+                  placeholder={t('fullName')}                  
                   value={fullName}
                   onChangeText={setFullName}
                 />
@@ -137,12 +138,14 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
                 <TextInput
                   style={styles.input2}
                   placeholder={t('address')}
+                  placeholderTextColor="gray"
                   value={address}
                   onChangeText={setAddress}
                 />
                 <TextInput
                   style={styles.input2}
                   placeholder={t('phone')}
+                  placeholderTextColor="gray"
                   value={phoneNumber}
                   onChangeText={setPhoneNumber}
                 />
@@ -151,9 +154,10 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
                 <Text style={styles.saveText}>{t('save')}</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
 
-          <View style={styles.divider} />
+          <View/>
           <View style={styles.dividerContainer}>
             <Icon name='location-on' size={30} />
             <Text style={styles.myAccountText1}>{t('address')}</Text>
@@ -183,8 +187,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
             <Icon name='logout' size={30} />
             <Text style={styles.myAccountText1}>{t('logout')}</Text>
           </TouchableOpacity>
-
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
 
@@ -224,9 +227,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   avt: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 40,
+    height: 40
   },
   boder: {
     borderRadius: 50,
@@ -255,9 +257,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#4AA366',
     marginTop: '2%',
     padding: '5%',
-    // borderRadius: 0,
     marginHorizontal: '2%',
-    height: '30%',
+    height: 270,
   },
   profileContainer: {
     flexDirection: 'row',
@@ -272,12 +273,12 @@ const styles = StyleSheet.create({
   userInfo: {
     flex: 1,
     marginBottom: 5,
+    marginLeft: 10,
 
   },
   userInfoText: {
     color: '#ffffff',
-    fontSize: 16,
-
+    fontSize: 18,
   },
   infoContainer: {
     backgroundColor: 'white',
@@ -291,13 +292,12 @@ const styles = StyleSheet.create({
     width: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 10
   },
 
   textContainer: {
     flex: 1,
-    marginLeft: 20,
-
-
+    marginLeft: 15,
   },
   change: {
     height: 30,
@@ -307,18 +307,14 @@ const styles = StyleSheet.create({
   },
   textChange: {
     color: 'red',
-    fontSize: 14,
+    fontSize: 18,
   },
   infoText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 5,
-  },
-  divider: {
-    // height: 1,
-    // backgroundColor: '#DADADA',
-    // marginTop: '5%',
-  },
+    marginLeft: 5,
+  },  
   dividerContainer:
   {
     flexDirection: 'row',
@@ -326,6 +322,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#CCCCCC',
     borderBottomWidth: 1,
     marginHorizontal: 15,
+    paddingBottom: 5,
   },
   myAccountText1: {
     fontSize: 18,
@@ -336,11 +333,13 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     marginBottom: 10,
+    fontSize: 18
   },
   input2: {
     height: 40,
     color: 'black',
     marginBottom: 5,
+    fontSize: 18
   },
   saveButton: {
     alignItems: 'center',

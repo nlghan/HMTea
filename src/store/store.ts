@@ -73,8 +73,7 @@ export const useStore = create(
                 address: languageData.Information?.address || '',
                 phoneNumber: languageData.Information?.phoneNumber || '',
                 user: email,
-              };
-      
+              };      
               // Kiểm tra và cập nhật danh sách yêu thích, giỏ hàng, và danh sách đơn hàng chỉ khi ngôn ngữ dữ liệu có sẵn
               if (languageData.TeaList) newState.TeaList = languageData.TeaList;
               if (languageData.FavoriteList) newState.FavoriteList = languageData.FavoriteList;
@@ -86,8 +85,7 @@ export const useStore = create(
               if (languageData.OrderList) newState.OrderList = languageData.OrderList;
               if (languageData.OrderListVi) newState.OrderListVi = languageData.OrderListVi;
               if (languageData.OrderListFr) newState.OrderListFr = languageData.OrderListFr;
-              if (userData.OrderListAll) newState.OrderListAll = userData.OrderListAll; // Lấy OrderListAll từ Firestore
-      
+              if (userData.OrderListAll) newState.OrderListAll = userData.OrderListAll; // Lấy OrderListAll từ Firestore      
               set(newState);
             } else {
               // Xử lý trường hợp không tìm thấy dữ liệu cho ngôn ngữ cụ thể, fallback về ngôn ngữ mặc định
@@ -128,7 +126,7 @@ export const useStore = create(
             };
       
             await setDoc(userDocRef, { ...languageDataMapping }, { merge: true });
-      
+     
             set((state: any) => ({
               ...state,
               language: language,
@@ -315,23 +313,36 @@ export const useStore = create(
         pushListsToFirestore: async () => {
           try {
             const state = get() as State;
+        
             const { user, FavoriteList, FavoriteListVi, FavoriteListFr, CartList, CartListVi, CartListFr, OrderList, OrderListFr, OrderListVi, TeaList, fullName, address, phoneNumber, language, OrderListAll } = state;
+        
             const db = getFirestore();
             const userDocRef = doc(db, 'user', user);
-          
-            const languageDataMapping: any = {
-              en: { TeaList, FavoriteList, CartList, OrderList: OrderListAll },
-              fr: { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListAll },
-              vi: { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListAll }
-            };
-          
-            await setDoc(userDocRef, { [language]: { ...languageDataMapping[language], Information: { fullName, address, phoneNumber } } }, { merge: true });
+        
+            // Tạo một đối tượng dữ liệu mới để lưu thông tin người dùng cho mỗi ngôn ngữ
+            const newData: any = {};
+        
+            // Thêm thông tin người dùng cho mỗi ngôn ngữ vào đối tượng dữ liệu mới
+            newData[language] = { TeaList, FavoriteList, CartList, OrderList: OrderListAll };
+            newData['en'] = { TeaList, FavoriteList, CartList, OrderList: OrderListAll };
+            newData['fr'] = { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListAll };
+            newData['vi'] = { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListAll };
+        
+            // Thêm thông tin cá nhân của người dùng cho mỗi ngôn ngữ
+            newData[language].Information = { fullName, address, phoneNumber };
+            newData['en'].Information = { fullName, address, phoneNumber };
+            newData['fr'].Information = { fullName, address, phoneNumber };
+            newData['vi'].Information = { fullName, address, phoneNumber };
+        
+            // Đẩy dữ liệu lên Firestore
+            await setDoc(userDocRef, newData, { merge: true });
+        
             console.log('Lists and Information pushed to Firestore successfully');
-            
           } catch (error) {
             console.error('Error pushing lists and Information to Firestore:', error);
           }
         },
+                     
         
         addToOrderHistoryListFromCart: async () => {
           try {
@@ -357,6 +368,7 @@ export const useStore = create(
                   cartListPrice = totalPrice.toString();
                 }
         
+
                 // Thêm đơn hàng vào OrderList
                 const newOrder = {
                   OrderDate: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
@@ -372,6 +384,7 @@ export const useStore = create(
                 state.CartList = [];
                 state.CartListFr= [];
                 state.CartListVi=[];
+
               })
             );
           } catch (error) {

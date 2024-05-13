@@ -79,17 +79,55 @@ const Login = ({ navigation }: any) => {
     async function onGoogleButtonPress() {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            const { idToken } = await GoogleSignin.signIn();
+            
+            // Xóa thông tin đăng nhập trước đó từ AsyncStorage
+            await AsyncStorage.removeItem('savedEmail');
+            await AsyncStorage.removeItem('savedPassword');
+            await AsyncStorage.removeItem('savedRememberMe');
+    
+            // Thực hiện đăng nhập bằng Google
+            const { idToken, user } = await GoogleSignin.signIn();
             const googleCredential = GoogleAuthProvider.credential(idToken);
             const auth = getAuth();
             await signInWithCredential(auth, googleCredential);
-            navigation.navigate('Tab')
+    
+            // Lưu email của người dùng đăng nhập bằng Google vào Firestore
+            const db = getFirestore();
+            const userDocRef = doc(db, 'user', user.email);
+    
+            // Kiểm tra xem người dùng đã tồn tại trong Firestore chưa
+            const userDoc = await getDoc(userDocRef);
+    
+            if (userDoc.exists()) {
+                console.log('User already exists in Firestore:', userDoc.data());
+            } else {
+                console.log('User does not exist in Firestore. Adding user...');
+                // Thêm thông tin người dùng vào Firestore
+                const userData = {
+                    email: user.email,
+                    // Các thông tin khác của người dùng nếu có
+                };
+    
+                try {
+                    await setDoc(userDocRef, userData);
+                    console.log('User added to Firestore successfully');
+                } catch (error) {
+                    console.error('Error adding user to Firestore:', error);
+                }
+            }
+            // Cập nhật thông tin người dùng trong store sau khi đăng nhập thành công
+            login(user.email, language);
+    
+            // Nếu đăng nhập thành công, điều hướng người dùng đến màn hình Tab
+            navigation.navigate('Tab');
         } catch (error: any) {
             console.error('Google sign-in failed:', error);
             Alert.alert('Google sign-in failed', error.message);
         }
     }
-
+    
+    
+    
     const handleSignUp = () => {
         navigation.navigate('Register')
     }
@@ -236,9 +274,12 @@ const Login = ({ navigation }: any) => {
                 <View style= {styles.or}>
                 <Text style={styles.text7}>Or</Text>
                 </View>
-                <View style={styles.googleLoginButtonContainer}>
-                    <GoogleSigninButton style={styles.googleLoginButton} onPress={onGoogleButtonPress} />
-                </View>
+                <TouchableOpacity style={styles.googleLoginButtonContainer} onPress={onGoogleButtonPress}>
+                    <GoogleSigninButton 
+                    style={styles.googleLoginButton}
+                    size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark} />
+                </TouchableOpacity>
                 <View style={styles.line}>
                     <Text style={styles.lineText}>_________________________________________</Text>
                 </View>
