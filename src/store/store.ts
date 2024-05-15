@@ -69,9 +69,9 @@ export const useStore = create(
       
               const newState: any = {
                 language: language,
-                fullName: languageData.Information?.fullName || '',
-                address: languageData.Information?.address || '',
-                phoneNumber: languageData.Information?.phoneNumber || '',
+                fullName: userData.Information?.fullName || '',
+                address: userData.Information?.address || '',
+                phoneNumber: userData.Information?.phoneNumber || '',
                 user: email,
               };      
               // Kiểm tra và cập nhật danh sách yêu thích, giỏ hàng, và danh sách đơn hàng chỉ khi ngôn ngữ dữ liệu có sẵn
@@ -313,35 +313,32 @@ export const useStore = create(
         pushListsToFirestore: async () => {
           try {
             const state = get() as State;
-        
             const { user, FavoriteList, FavoriteListVi, FavoriteListFr, CartList, CartListVi, CartListFr, OrderList, OrderListFr, OrderListVi, TeaList, fullName, address, phoneNumber, language, OrderListAll } = state;
-        
             const db = getFirestore();
             const userDocRef = doc(db, 'user', user);
+          
+            const languageDataMapping: any = {
+              en: { TeaList, FavoriteList, CartList, OrderList: OrderListAll },
+              fr: { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListAll },
+              vi: { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListAll }
+            };
         
-            // Tạo một đối tượng dữ liệu mới để lưu thông tin người dùng cho mỗi ngôn ngữ
-            const newData: any = {};
+            // Tạo object để lưu thông tin người dùng và dữ liệu ngôn ngữ
+            const userData: any = {
+              [language]: { ...languageDataMapping[language] },
+              Information: { fullName, address, phoneNumber } // Thêm trường Information vào object userData
+            };
         
-            // Thêm thông tin người dùng cho mỗi ngôn ngữ vào đối tượng dữ liệu mới
-            newData[language] = { TeaList, FavoriteList, CartList, OrderList: OrderListAll };
-            newData['en'] = { TeaList, FavoriteList, CartList, OrderList: OrderListAll };
-            newData['fr'] = { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListAll };
-            newData['vi'] = { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListAll };
-        
-            // Thêm thông tin cá nhân của người dùng cho mỗi ngôn ngữ
-            newData[language].Information = { fullName, address, phoneNumber };
-            newData['en'].Information = { fullName, address, phoneNumber };
-            newData['fr'].Information = { fullName, address, phoneNumber };
-            newData['vi'].Information = { fullName, address, phoneNumber };
-        
-            // Đẩy dữ liệu lên Firestore
-            await setDoc(userDocRef, newData, { merge: true });
+            // Cập nhật dữ liệu vào Firestore
+            await setDoc(userDocRef, userData, { merge: true });
         
             console.log('Lists and Information pushed to Firestore successfully');
+            
           } catch (error) {
             console.error('Error pushing lists and Information to Firestore:', error);
           }
         },
+        
                      
         
         addToOrderHistoryListFromCart: async () => {

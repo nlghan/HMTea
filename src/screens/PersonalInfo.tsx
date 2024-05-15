@@ -19,35 +19,34 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
   useEffect(() => {
     // Load user info if available
+    // Load user info if available
     const loadUserInfo = async () => {
-        // Load user info from Firestore if user is logged in
-        if (user) {
-            const db = getFirestore();
-            const userDocRef = doc(db, 'user', user);
-            const docSnap = await getDoc(userDocRef);
-            if (docSnap.exists()) {
-                const userData = docSnap.data();
-                if (userData && userData[languageFromStore]) {
-                    const userLanguageData = userData[languageFromStore];
-                    const userInformation = userLanguageData.Information || {};
-                    // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-                    if (userInformation.fullName) {
-                        setFullName(userInformation.fullName);
-                    }
-                    if (userInformation.address) {
-                        setAddress(userInformation.address);
-                    }
-                    if (userInformation.phoneNumber) {
-                        setPhoneNumber(userInformation.phoneNumber);
-                    }
-                }
+      // Load user info from Firestore if user is logged in
+      if (user) {
+        const db = getFirestore();
+        const userDocRef = doc(db, 'user', user);
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data()?.Information;
+          if (userData) {
+            // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
+            if (userData.fullName) {
+              setFullName(userData.fullName);
             }
+            if (userData.address) {
+              setAddress(userData.address);
+            }
+            if (userData.phoneNumber) {
+              setPhoneNumber(userData.phoneNumber);
+            }
+          }
         }
+      }
     };
     loadUserInfo();
-}, [user, languageFromStore]);
+  }, [user, languageFromStore]);
 
-  
+
 
   const saveUserInfo = async () => {
     // Update user info in the store and push to Firestore
@@ -58,15 +57,22 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   const handleHome = () => {
     navigation.navigate('Tab');
   };
+
+  const handeAddress = () => {
+    navigation.push('Infor')
+  }
   const handleCart = () => {
     navigation.navigate('Cart');
-    
+
   };
   const handleFavorites = () => {
     navigation.navigate('Favorite');
   };
   const handleLogin = () => {
     navigation.navigate('Login');
+  };
+  const handleHistory = () => {
+    navigation.navigate('History');
   };
 
   const handleLogout = async () => {
@@ -91,7 +97,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
 
   const { t } = useTranslation(); // Use useTranslation hook
-  
+
 
   useEffect(() => {
     i18n.changeLanguage(languageFromStore);
@@ -110,79 +116,80 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
           </View>
           <Text style={styles.myAccountText}>{t('myAccount')}</Text>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>         
-          <KeyboardAvoidingView style={styles.accountInfo} behavior="padding">
-            <View style={styles.profileContainer}>
-              <View>
-                <Image style={styles.avt} source={require('../assets/app_images/resume.png')} />
-              </View>
-              <View style={styles.userInfo}>
-                <TextInput
-                  style={styles.input}
-                  placeholder={t('fullName')}                  
-                  value={fullName}
-                  onChangeText={setFullName}
-                />
-                <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView style={styles.accountInfo} behavior="padding">
+              <View style={styles.profileContainer}>
+                <View>
+                  <Image style={styles.avt} source={require('../assets/app_images/resume.png')} />
+                </View>
+                <View style={styles.userInfo}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder={t('fullName')}
+                    value={fullName}
+                    onChangeText={setFullName}
+                  />
+                  <Text style={styles.infoText}>Email: {user || 'Not logged in'}</Text>
 
+                </View>
+                <View style={styles.iconContainer}>
+                  <Icon name='edit-square' size={25} color={'white'} />
+                </View>
               </View>
-              <View style={styles.iconContainer}>
-                <Icon name='edit-square' size={25} color={'white'} />
+              <View style={styles.infoContainer}>
+                <View style={styles.iconContainer}>
+                  <Icon name='location-on' size={30} color={'lightgreen'} />
+                </View>
+                <View style={styles.textContainer}>
+                  <TextInput
+                    style={styles.input2}
+                    placeholder={t('address')}
+                    placeholderTextColor="gray"
+                    value={address}
+                    onChangeText={setAddress}
+                  />
+                  <TextInput
+                    style={styles.input2}
+                    placeholder={t('phone')}
+                    placeholderTextColor="gray"
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                  />
+                </View>
+                <TouchableOpacity style={styles.saveButton} onPress={saveUserInfo}>
+                  <Text style={styles.saveText}>{t('save')}</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            <View style={styles.infoContainer}>
-              <View style={styles.iconContainer}>
-                <Icon name='location-on' size={30} color={'lightgreen'} />
-              </View>
-              <View style={styles.textContainer}>
-                <TextInput
-                  style={styles.input2}
-                  placeholder={t('address')}
-                  placeholderTextColor="gray"
-                  value={address}
-                  onChangeText={setAddress}
-                />
-                <TextInput
-                  style={styles.input2}
-                  placeholder={t('phone')}
-                  placeholderTextColor="gray"
-                  value={phoneNumber}
-                  onChangeText={setPhoneNumber}
-                />
-              </View>
-              <TouchableOpacity style={styles.saveButton} onPress={saveUserInfo}>
-                <Text style={styles.saveText}>{t('save')}</Text>
-              </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
           </TouchableWithoutFeedback>
 
-          <View/>
-          <View style={styles.dividerContainer}>
-            <Icon name='location-on' size={30} />
-            <Text style={styles.myAccountText1}>{t('address')}</Text>
-          </View>
-          <View style={styles.dividerContainer}>
-            <Icon name='notifications' size={30} />
-            <Text style={styles.myAccountText1}>{t('noti')}</Text>
-          </View>
+          <View />
+          <TouchableOpacity onPress={handeAddress}>
+            <View style={styles.dividerContainer}>
+              <Icon name='location-on' size={30} />
+              <Text style={styles.myAccountText1}>{t('address')}</Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={handleOrder}>
-          <View style={styles.dividerContainer}>
-            <Icon name='shopping-cart' size={30} />
-            <Text style={styles.myAccountText1}>{t('order')}</Text>
-          </View>
-          </TouchableOpacity>        
+            <View style={styles.dividerContainer}>
+              <Icon name='shopping-cart' size={30} />
+              <Text style={styles.myAccountText1}>{t('order')}</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleFavorite}>
             <View style={styles.dividerContainer}>
               <Icon name='favorite' size={30} />
               <Text style={styles.myAccountText1}>{t('favor')}</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleHistory}>
+            <View style={styles.dividerContainer}>
+              <Icon name='notifications' size={30} />
+              <Text style={styles.myAccountText1}>{t('noti')}</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.dividerContainer}>
-            <Icon name='settings' size={30} />
-            <Text style={styles.myAccountText1}>{t('setting')}</Text>
-          </View>
           <TouchableOpacity style={styles.dividerContainer} onPress={handleLogout}>
             <Icon name='logout' size={30} />
             <Text style={styles.myAccountText1}>{t('logout')}</Text>
@@ -314,7 +321,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 5,
     marginLeft: 5,
-  },  
+  },
   dividerContainer:
   {
     flexDirection: 'row',

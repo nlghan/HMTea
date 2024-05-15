@@ -66,36 +66,33 @@ const Payment = ({ navigation }: any) => {
 
   useEffect(() => {
     // Load user info if available
-    const loadUserInfo = async () => {
+     // Load user info if available
+     const loadUserInfo = async () => {
       // Load user info from Firestore if user is logged in
       if (user) {
         const db = getFirestore();
         const userDocRef = doc(db, 'user', user);
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data();
-          if (userData && userData[languageFromStore]) {
-            const userLanguageData = userData[languageFromStore];
-            const userInformation = userLanguageData.Information || {};
+          const userData = docSnap.data()?.Information;
+          if (userData) {
             // Kiểm tra xem các trường thông tin đã được định nghĩa trong userData không
-            if (userInformation.fullName) {
-              setFullName(userInformation.fullName);
+            if (userData.fullName) {
+              setFullName(userData.fullName);
             }
-            if (userInformation.address) {
-              setAddress(userInformation.address);
+            if (userData.address) {
+              setAddress(userData.address);
             }
-            if (userInformation.phoneNumber) {
-              setPhoneNumber(userInformation.phoneNumber);
+            if (userData.phoneNumber) {
+              setPhoneNumber(userData.phoneNumber);
             }
           }
         }
       }
     };
     loadUserInfo();
-  }, [user, languageFromStore]);
-  
-  
-  
+}, [user, languageFromStore]);
+
   useEffect(() => {    
      // Gọi hàm pushListsToFirestore khi có sự thay đổi trong CartList
     pushListsToFirestore();
