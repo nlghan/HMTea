@@ -68,14 +68,12 @@
 		4C21BFBA305743FFB67B24A4 /* masala_tea_cheese.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */; };
 		FE3C6F79FF91472C9123FFF7 /* iced_oolong_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */; };
 		EB84E0ACBB1D478DBB689ABA /* olong_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 34C1F794809B4DC5A92B941D /* olong_tea.jpg */; };
-		68B0C05DBD4B4166AF7BCC67 /* iconapp.png in Resources */ = {isa = PBXBuildFile; fileRef = E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */; };
 		C245EE133A8A4ABBBAC65C48 /* pomegranate_green_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */; };
 		6E7B91C4FF974C35B29DA786 /* masala_chai.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAF1B13600764DF68B00CE54 /* masala_chai.jpg */; };
 		EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A565055749A344628B4495F5 /* masala_chai_ice.jpg */; };
 		508FE9389FC94C84A1B0ACBF /* oolong_fresh_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 698FA94B40964EDF8B228469 /* oolong_fresh_tea.jpg */; };
 		1FB40DC6EBAE48EE90539AA0 /* screenshot_2024_03_14_200800.png in Resources */ = {isa = PBXBuildFile; fileRef = 57EFC654E9464463A8881E0B /* screenshot_2024_03_14_200800.png */; };
 		959C9464C63C4FBBBBF527D5 /* slide.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3C5C6341DE48E4A3200380 /* slide.png */; };
-		09FF0E0CD71E431AB787C70A /* iconapp.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B50826204464DA5A292C3 /* iconapp.png */; };
 		25172C890D034B39A4E889B5 /* angle_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E613319677A462C9141B466 /* angle_left.png */; };
 		2C4B7BBE7B3D4D6A87D4BB2B /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3AD14FC73B41CCBE579481 /* cart.png */; };
 		B2D038CDC17B46C589895A94 /* cowbell.png in Resources */ = {isa = PBXBuildFile; fileRef = B3295D914E8B4666BEEE3394 /* cowbell.png */; };
@@ -86,6 +84,8 @@
 		7029187FABEB4E6A9B279D65 /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = D838EFAC7EB1443AB9B1E817 /* pencil.png */; };
 		EF15328789AD430089FE36F8 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DE5B41E1BE4691B970B624 /* settings.png */; };
 		0A087DBF31084046949FCE2B /* blue_tea.png in Resources */ = {isa = PBXBuildFile; fileRef = 5210A1AC7A734204BAD89E97 /* blue_tea.png */; };
+		777035CCA55445FBA1E47847 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 91F27B0123044172AA831380 /* profile.png */; };
+		5537028991C9400DB3B9A08C /* resume.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6C6E80784F4CEEBD348274 /* resume.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,7 +170,6 @@
 		1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */ = {isa = PBXFileReference; name = "masala_tea_cheese.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_tea_cheese.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */ = {isa = PBXFileReference; name = "iced_oolong_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/iced_oolong_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		34C1F794809B4DC5A92B941D /* olong_tea.jpg */ = {isa = PBXFileReference; name = "olong_tea.jpg"; path = "../src/assets/tea_assets/oolong_tea/portrait/olong_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */ = {isa = PBXFileReference; name = "iconapp.png"; path = "../src/assets/app_images/iconapp.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */ = {isa = PBXFileReference; name = "pomegranate_green_tea.jpg"; path = "../src/assets/tea_assets/green_tea/portrait/pomegranate_green_tea.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EAF1B13600764DF68B00CE54 /* masala_chai.jpg */ = {isa = PBXFileReference; name = "masala_chai.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_chai.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A565055749A344628B4495F5 /* masala_chai_ice.jpg */ = {isa = PBXFileReference; name = "masala_chai_ice.jpg"; path = "../src/assets/tea_assets/masala_tea/portrait/masala_chai_ice.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -188,6 +187,8 @@
 		D838EFAC7EB1443AB9B1E817 /* pencil.png */ = {isa = PBXFileReference; name = "pencil.png"; path = "../src/assets/app_images/pencil.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D9DE5B41E1BE4691B970B624 /* settings.png */ = {isa = PBXFileReference; name = "settings.png"; path = "../src/assets/app_images/settings.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5210A1AC7A734204BAD89E97 /* blue_tea.png */ = {isa = PBXFileReference; name = "blue_tea.png"; path = "../src/assets/tea_assets/lotus_tea/portrait/blue_tea.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		91F27B0123044172AA831380 /* profile.png */ = {isa = PBXFileReference; name = "profile.png"; path = "../src/assets/app_images/profile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EB6C6E80784F4CEEBD348274 /* resume.png */ = {isa = PBXFileReference; name = "resume.png"; path = "../src/assets/app_images/resume.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,7 +351,6 @@
 				1B503D48BC2548FB86703E30 /* masala_tea_cheese.jpg */,
 				1342072A27FF4649A1F53D66 /* iced_oolong_tea.jpg */,
 				34C1F794809B4DC5A92B941D /* olong_tea.jpg */,
-				E2FB8A7FC8DC4261BE4EEB95 /* iconapp.png */,
 				A06F6DFAC8F94CB38848D49F /* pomegranate_green_tea.jpg */,
 				EAF1B13600764DF68B00CE54 /* masala_chai.jpg */,
 				A565055749A344628B4495F5 /* masala_chai_ice.jpg */,
@@ -368,6 +368,8 @@
 				D838EFAC7EB1443AB9B1E817 /* pencil.png */,
 				D9DE5B41E1BE4691B970B624 /* settings.png */,
 				5210A1AC7A734204BAD89E97 /* blue_tea.png */,
+				91F27B0123044172AA831380 /* profile.png */,
+				EB6C6E80784F4CEEBD348274 /* resume.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -522,7 +524,6 @@
 				4C21BFBA305743FFB67B24A4 /* masala_tea_cheese.jpg in Resources */,
 				FE3C6F79FF91472C9123FFF7 /* iced_oolong_tea.jpg in Resources */,
 				EB84E0ACBB1D478DBB689ABA /* olong_tea.jpg in Resources */,
-				68B0C05DBD4B4166AF7BCC67 /* iconapp.png in Resources */,
 				C245EE133A8A4ABBBAC65C48 /* pomegranate_green_tea.jpg in Resources */,
 				6E7B91C4FF974C35B29DA786 /* masala_chai.jpg in Resources */,
 				EB6327C1095A46BCBE207494 /* masala_chai_ice.jpg in Resources */,
@@ -540,6 +541,8 @@
 				7029187FABEB4E6A9B279D65 /* pencil.png in Resources */,
 				EF15328789AD430089FE36F8 /* settings.png in Resources */,
 				0A087DBF31084046949FCE2B /* blue_tea.png in Resources */,
+				777035CCA55445FBA1E47847 /* profile.png in Resources */,
+				5537028991C9400DB3B9A08C /* resume.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

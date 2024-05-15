@@ -66,6 +66,14 @@
       "sha1": "d951d916cd0053a6e6873a47e0ebb7acb7fe6157"
     },
     {
+      "path": "src/assets/app_images/profile.png",
+      "sha1": "349c4bda7e98efb531cbe5505b46af9a556f5dda"
+    },
+    {
+      "path": "src/assets/app_images/resume.png",
+      "sha1": "cc89a5c4438814506159d38d17ee5564c40ff120"
+    },
+    {
       "path": "src/assets/app_images/screenshot_2024_03_14_200800.png",
       "sha1": "763cd2a19a4f967d9fdd421a50e17c03233443a0"
     },

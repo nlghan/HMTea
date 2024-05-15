@@ -9,6 +9,7 @@ import { useStore } from '../store/store';
 import { COLORS, SPACING, FONTFAMILY, FONTSIZE, BORDERRADIUS } from '../theme/theme';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import PopUpAnimation from '../components/PopUpAnimation';
+import EmptyListAnimation from '../components/EmptyListAnimation';
 
 const OrderHistory = ({ navigation }: any) => {
   const OrderHistoryList = useStore((state: any) => state.OrderListAll);
@@ -92,7 +93,7 @@ const OrderHistory = ({ navigation }: any) => {
 
       const pdf = await RNHTMLtoPDF.convert(options);
       //setShowAnimation(false); // Tắt hiệu ứng sau khi tạo và lưu PDF thành công
-      //Alert.alert('PDF Saved', pdf.filePath);
+      Alert.alert('PDF Saved', pdf.filePath);
     } catch (error) {
       console.error('Error creating PDF:', error);
       setShowAnimation(false); // Tắt hiệu ứng nếu có lỗi xảy ra
@@ -142,15 +143,6 @@ const OrderHistory = ({ navigation }: any) => {
         <></>
       )}
 
-      {showAnimation ? (
-        <PopUpAnimation
-          style={styles.LottieAnimation}
-          source={require('../lottie/download.json')}
-        />
-      ) : (
-        <></>
-      )}
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
@@ -158,7 +150,8 @@ const OrderHistory = ({ navigation }: any) => {
           style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
             {OrderHistoryList.length == 0 ? (
-              <Text>No Order History</Text>
+              <EmptyListAnimation title={'No Order History'} />
+
             ) : (
               <View style={styles.ListItemContainer}>
                 {OrderHistoryList.map((data: any, index: any) => (
