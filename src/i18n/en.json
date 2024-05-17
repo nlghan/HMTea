@@ -43,7 +43,10 @@
     "complete": "Thank you for your order!",
     "total": "Total Amount",
     "orderTime": "Order Time",
-    "download": "Download"
+    "download": "Download",
+    "method": "Cash on delivery",
+    "option": "Payment Option "
+    
 
 
   }

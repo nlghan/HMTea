@@ -43,5 +43,7 @@
     "complete": "Merci pour votre commande !",
     "total": "Montant Total",
     "orderTime": "Heure de la commande",
-    "download": "Télécharger"
+    "download": "Télécharger",
+    "method": "Paiement à la livraison",
+    "option": "Modalité de paiement"
 }

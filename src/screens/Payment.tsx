@@ -130,7 +130,7 @@ const Payment = ({ navigation }: any) => {
             <Text style={styles.infoText}>Email: {user}</Text>
             <Text style={styles.infoText}>{t('phone')}: {phoneNumber}</Text>
             <Text style={styles.infoText}>{t('address')}: {address}</Text>
-          </View>   
+          </View> 
         </View>
         <View
           style={[styles.ScrollViewInnerView , { marginBottom: 10 }]}>
@@ -164,6 +164,14 @@ const Payment = ({ navigation }: any) => {
                 ))}
               </View>
             )}
+          </View>
+
+          <View style={styles.option}>
+            <View style={styles.pay}>
+            <Icon  style={styles.icon} name='paid' size={25} color={COLORS.primaryGreenHex}/>
+            <Text style={styles.textPay}>{t('option')}</Text>
+            </View>
+            <Text style={styles.textPay}>{t('method')}</Text>
           </View>
 
           {CartList.length != 0 ? (
@@ -253,6 +261,26 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: -15,
+  },
+  note:{
+    fontSize: 14,
+    color: 'red'
+  },
+  pay:{
+    flexDirection: 'row',
+    alignItems:'center'
+  },
+  option:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent: 'space-between',
+    paddingHorizontal:25,
+    paddingVertical:25
+
+  },
+  textPay:{
+    fontSize: 15,
+    color: 'black'
   }
 })
 

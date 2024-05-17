@@ -15,12 +15,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import PersonalInfo from './src/screens/PersonalInfo';
-import Cart from './src/screens/Cart';
-import Favorites from './src/screens/Favorites';
-// import Information from './src/screens/InformationEx';
 import Header from './src/components/Header';
 import OrderComplete from './src/screens/OrderComplete';
-import OrderHistory from './src/screens/OrderHistory';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +26,6 @@ const App = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={Login} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="Register" component={Register} options={{ animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="Home" component={Home} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="Header" component={Header} options={{ animation: 'slide_from_bottom' }} />     
         <Stack.Screen name="Tab" component={TabNavigator} options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="Details" component={Details} options={{ animation: 'slide_from_bottom' }} />

@@ -18,8 +18,7 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
 
 
   useEffect(() => {
-    // Load user info if available
-    // Load user info if available
+
     const loadUserInfo = async () => {
       // Load user info from Firestore if user is logged in
       if (user) {
@@ -55,19 +54,13 @@ const Information = ({ navigation, route }: { navigation: any, route: any }) => 
   };
 
   const handleHome = () => {
-    navigation.navigate('Tab');
+    navigation.navigate('Home');
   };
 
   const handeAddress = () => {
     navigation.push('Infor')
   }
-  const handleCart = () => {
-    navigation.navigate('Cart');
 
-  };
-  const handleFavorites = () => {
-    navigation.navigate('Favorite');
-  };
   const handleLogin = () => {
     navigation.navigate('Login');
   };

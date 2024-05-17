@@ -24,6 +24,8 @@ const OrderHistory = ({ navigation }: any) => {
       type,
     });
   };
+
+
   const buttonPressHandler = async () => {
     setShowAnimation(true); // Hiển thị hiệu ứng
 
@@ -35,7 +37,7 @@ const OrderHistory = ({ navigation }: any) => {
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
-            font-size: 25;
+            font-size: 16px;
           }
           .header {
             background-color: #2C683F;
@@ -52,14 +54,14 @@ const OrderHistory = ({ navigation }: any) => {
           .order-date {
             font-weight: bold;
             margin-bottom: 10px;
-            font-size: 20;
+            font-size: 20px;
           }
           .order-item {
             margin-bottom: 5px;
-            font-size: 20;
+            font-size: 16px;
           }
           .special-ingredient {
-            font-size: 20; /* Kích thước chữ mới cho thành phần đặc biệt */
+            font-size: 16px;
           }
         </style>
         <div class="header">
@@ -68,19 +70,22 @@ const OrderHistory = ({ navigation }: any) => {
       `;
 
       OrderHistoryList.forEach((data: any) => {
+        const currency = data.CartList[0]?.prices[0]?.currency || '';
+        const user = data.CartList[0]?.user || '';
         htmlContent += `
           <div class="order">
             <div class="order-date">Date: ${data.OrderDate}</div>
-            <div class="order-item">Total Amount: ${data.CartListPrice}</div>
+            <div class="order-item">Customer: ${user}</div>
+            <div class="order-item">Total Amount: ${data.CartListPrice}${currency} </div>
             <div class="order-item">Products: 
               <ul>
                 ${data.CartList.map((product: any) => `<li>${product.name} - ${product.ItemPrice} ${product.prices[0].currency}</li>`).join('')}
               </ul>
             </div>
             <div class="order-item special-ingredient">Special Ingredients:</div>
-          <ul>
-               ${data.CartList.map((product: any) => `<li class="special-ingredient">${product.special_ingredient}</li>`).join('')}
-          </ul>
+            <ul>
+              ${data.CartList.map((product: any) => `<li class="special-ingredient">${product.special_ingredient}</li>`).join('')}
+            </ul>
           </div>
         `;
       });
@@ -90,6 +95,7 @@ const OrderHistory = ({ navigation }: any) => {
         fileName: 'OrderHistory',
         directory: 'Documents',
       };
+
 
       const pdf = await RNHTMLtoPDF.convert(options);
       //setShowAnimation(false); // Tắt hiệu ứng sau khi tạo và lưu PDF thành công

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
@@ -7,6 +7,7 @@ import CustomIcon from '../components/CustomIcon';
 import LanguageSwitch from '../components/LanguageSwitch';
 import i18n from '../i18n/i18n';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../theme/theme';
 
 // Initialize Firebase with your Firebase configuration
 const firebaseConfig = {
@@ -23,7 +24,7 @@ if (!firebaseApp) {
     firebaseApp = initializeApp(firebaseConfig);
 }
 
-const Register = ({navigation}:any) => {
+const Register = ({ navigation, route }: any) => {
     const { t, i18n } = useTranslation(); // Use useTranslation hook
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,15 +33,12 @@ const Register = ({navigation}:any) => {
     const [showPassword2, setShowPassword2] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [language, setLanguage] = useState('en');
+    const { language, setLanguage } = route.params;
 
+    const handleLogin = () => {
+        navigation.navigate('Login');
+    };
 
-    // const handlePersonalInfo = () =>{
-    //     navigation.navigate('PersonalInfo')
-    // }
-    const handleLogin = () =>{
-        navigation.navigate('Login')
-    }
     const handleRegister = () => {
         if (password !== confirmPassword) {
             Alert.alert('Error', 'Passwords do not match');
@@ -98,7 +96,6 @@ const Register = ({navigation}:any) => {
                 console.error('Error checking email:', error.message);
                 Alert.alert('Error', 'An error occurred while checking email.');
             });
-        navigation.navigate('Login')
     };
 
     // Function to toggle password visibility for the first input
@@ -117,9 +114,9 @@ const Register = ({navigation}:any) => {
     };
 
     return (
-        <>
         <View style={styles.container}>
-        <LanguageSwitch language={language} changeLanguage={changeLanguage} />
+            <StatusBar backgroundColor={COLORS.thirdGreen} />
+            
             <View style={styles.title}>
                 <Text style={styles.text1}>HMTea</Text>
                 <Text style={styles.text2}>{t('create')}</Text>
@@ -166,15 +163,15 @@ const Register = ({navigation}:any) => {
                 <Text style={styles.registerText}>{t('signUp')}</Text>
             </TouchableOpacity>
             <View style={styles.line}>
-            <Text style={styles.lineText}>_________________________________________</Text>
+                <Text style={styles.lineText}>_________________________________________</Text>
             </View>
             <View style={styles.footer}>
                 <Text style={styles.text5}>{t('advice')}</Text>
                 <TouchableOpacity style={styles.login} onPress={handleLogin}>
-                <Text style={styles.text6}>{t('login')}</Text>
-            </TouchableOpacity>
+                    <Text style={styles.text6}>{t('login')}</Text>
+                </TouchableOpacity>
             </View>
-        </View></>
+        </View>
     );
 };
 

@@ -6,13 +6,9 @@ import Header from '../components/Header';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from '../components/CustomIcon';
 import TeaCard from '../components/TeaCard';
-
 import { useTranslation } from 'react-i18next'; // Import hook useTranslation
 import i18n from '../i18n/i18n';
-import TeaData from '../data/teadata';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import VoiceTest from '../components/VoiceTest';
-import Voice from "@react-native-voice/voice"
 
 
 const getCategoriesFromData = (data: any, currentLanguage: string) => {
@@ -62,7 +58,6 @@ const Home = ({ navigation }: any) => {
   const [sortedTea, setSortedTea] = useState(getTeaList(categoriesIndex.category, TeaList));
   const [showVoiceTab, setShowVoiceTab] = useState(false);
   const tabBarHeight = useBottomTabBarHeight();
-  // console.log('categories =', categories)
   const { t } = useTranslation(); // Use useTranslation hook
   const languageFromStore = useStore((state: any) => state.language); // Get language from useStore
 
@@ -70,11 +65,6 @@ const Home = ({ navigation }: any) => {
     // Update i18n language to match language from useStore
     i18n.changeLanguage(languageFromStore);
   }, [languageFromStore]);
-
-
-
-
-
 
   const ListRef: any = useRef<FlatList>();
 
@@ -131,7 +121,6 @@ const Home = ({ navigation }: any) => {
     );
   };
 
-
   useEffect(() => {
     setCategories(getCategoriesFromData(TeaList, language));
     const filteredTea = getTeaList(categoriesIndex.category, TeaList);
@@ -149,9 +138,6 @@ const Home = ({ navigation }: any) => {
   const handleVoiceSearch = () => {
     setShowVoiceTab(true);
   };
-
-
-
 
   return (
     <View style={styles.container}>
@@ -200,16 +186,6 @@ const Home = ({ navigation }: any) => {
           <TouchableOpacity onPress={handleVoiceSearch}>
             <Icon name='keyboard-voice' size={25}/>
           </TouchableOpacity>
-          {showVoiceTab && (
-            <VoiceTest
-              onVoiceSearch={(text) => {
-                setSearchText(text);
-                setShowVoiceTab(false);
-              }}
-              onChangeText={(text) => setSearchText(text)}
-              startListening={handleVoiceSearch} // Pass the startListening function here
-            />
-          )}
         </View>       
         <ScrollView
           horizontal

@@ -68,7 +68,7 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
                                     styles.SizeText,
                                     {
                                         fontSize:
-                                            type == 'Bean' ? FONTSIZE.size_12 : FONTSIZE.size_12,
+                                             FONTSIZE.size_14,
                                     },
                                 ]}>
                                 {data.size}
@@ -77,7 +77,7 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
                         <View style={styles.PriceBoxRight}>
                             <Text style={styles.PriceCurrency}>
 
-                                <Text style={styles.Price1}> {data.price} {data.currency}</Text>
+                                <Text style={styles.Price1}> {data.price}{data.currency}</Text>
                             </Text>
                         </View>
                     </View>
@@ -86,12 +86,13 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
                         <Text style={styles.CardQuantityPriceText}>
                             X <Text style={styles.Price}>{data.quantity} </Text>
                         </Text>
-                        {languageFromStore !== 'vi' && (
+                        
+                        {data.currency !== 'VND' && (
                             <Text style={styles.CardQuantityPriceText1}>
                                 {(data.quantity * data.price).toFixed(2).toString()}{data.currency}
                             </Text>
                         )}
-                        {languageFromStore === 'vi' && (
+                        {data.currency === 'VND' && (
                             <Text style={styles.CardQuantityPriceText1}>
                                 {data.quantity * data.price}{data.currency}
                             </Text>
@@ -187,20 +188,20 @@ const styles = StyleSheet.create({
     },
     Price: {
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: FONTSIZE.size_16,
+        fontSize: FONTSIZE.size_18,
         color: COLORS.primaryDarkHex,
         paddingLeft: 15
     },
     Price1: {
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: 11,
+        fontSize: 14,
         color: COLORS.primaryLightHex,
         paddingLeft: 15
     },
     CardQuantityPriceText: {
         width:40,
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: 15.5,
+        fontSize: 18,
         color: COLORS.primaryOrangeHex,
         //backgroundColor:'lightyellow',
         paddingLeft:10
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     CardQuantityPriceText1: {
         width: 'auto',
         fontFamily: FONTFAMILY.poppins_bold,
-        fontSize: 15.5,
+        fontSize: 18,
         color: COLORS.primaryOrangeHex,
         paddingHorizontal: 10, // Thêm khoảng cách ngang để tạo độ rộng linh hoạt
         paddingVertical: 5, // Thêm khoảng cách dọc để tạo độ cao linh hoạt

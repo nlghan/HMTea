@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, StatusBar, ActivityIndicator, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { getAuth, signInWithCredential, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
@@ -11,9 +11,9 @@ import { getFirestore, collection, addDoc, setDoc, getDoc, doc } from 'firebase/
 import LanguageSwitch from '../components/LanguageSwitch';
 import { useTranslation } from 'react-i18next'; // Import hook useTranslation
 import { LogBox } from 'react-native';
+import { COLORS } from '../theme/theme';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
-LogBox.ignoreAllLogs(); 
-
+LogBox.ignoreAllLogs();
 
 // Initialize Firebase with your Firebase configuration
 const firebaseConfig = {
@@ -22,21 +22,18 @@ const firebaseConfig = {
     storageBucket: "hmtea-82dc0.appspot.com",
     messagingSenderId: "916037871147",
     appId: "1:916037871147:android:d40830a41ae50f4282ec6e",
-
 };
 
 // Check if Firebase app is already initialized
 let firebaseApp: FirebaseApp | undefined;
 
 const initializeFirebaseApp = () => {
-
     if (!firebaseApp) {
         firebaseApp = initializeApp(firebaseConfig, 'HMTEA');
         GoogleSignin.configure({
             webClientId: '916037871147-pkjb846hn759hllqd0e7mu02oc0s6nlk.apps.googleusercontent.com',
         });
     }
-
 };
 
 // Call this once when the app starts
@@ -50,10 +47,9 @@ const Login = ({ navigation }: any) => {
     const [rememberMe, setRememberMe] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state
     const login = useStore((state: any) => state.login);
     const [language, setLanguage] = useState('en');
-    const clear = useStore((state: any) => state.clearListsOnLogin);
-    const pushListsToFirestore = useStore((state: any) => state.pushListsToFirestore);
 
     useEffect(() => {
         const loadSavedLoginCredentials = async () => {
@@ -72,32 +68,32 @@ const Login = ({ navigation }: any) => {
             }
         };
 
-
         loadSavedLoginCredentials();
-    }, [])
+    }, []);
 
     async function onGoogleButtonPress() {
         try {
+            setLoading(true); // Start loading
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            
+
             // Xóa thông tin đăng nhập trước đó từ AsyncStorage
             await AsyncStorage.removeItem('savedEmail');
             await AsyncStorage.removeItem('savedPassword');
             await AsyncStorage.removeItem('savedRememberMe');
-    
+
             // Thực hiện đăng nhập bằng Google
             const { idToken, user } = await GoogleSignin.signIn();
             const googleCredential = GoogleAuthProvider.credential(idToken);
             const auth = getAuth();
             await signInWithCredential(auth, googleCredential);
-    
+
             // Lưu email của người dùng đăng nhập bằng Google vào Firestore
             const db = getFirestore();
             const userDocRef = doc(db, 'user', user.email);
-    
+
             // Kiểm tra xem người dùng đã tồn tại trong Firestore chưa
             const userDoc = await getDoc(userDocRef);
-    
+
             if (userDoc.exists()) {
                 console.log('User already exists in Firestore:', userDoc.data());
             } else {
@@ -107,7 +103,7 @@ const Login = ({ navigation }: any) => {
                     email: user.email,
                     // Các thông tin khác của người dùng nếu có
                 };
-    
+
                 try {
                     await setDoc(userDocRef, userData);
                     console.log('User added to Firestore successfully');
@@ -117,21 +113,25 @@ const Login = ({ navigation }: any) => {
             }
             // Cập nhật thông tin người dùng trong store sau khi đăng nhập thành công
             login(user.email, language);
-    
-            // Nếu đăng nhập thành công, điều hướng người dùng đến màn hình Tab
+
+            Alert.alert('Login Successful');
             navigation.navigate('Tab');
         } catch (error: any) {
             console.error('Google sign-in failed:', error);
             Alert.alert('Google sign-in failed', error.message);
+        } finally {
+            setLoading(false); // End loading
         }
     }
-    
-    
-    
+
     const handleSignUp = () => {
-        navigation.navigate('Register')
-    }
+        navigation.navigate('Register', {
+          language,
+          setLanguage,
+        });
+      };
     const handleLogin = async () => {
+        setLoading(true); // Start loading
         const auth = getAuth(firebaseApp);
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -142,21 +142,22 @@ const Login = ({ navigation }: any) => {
         // Check if email is empty or not valid
         if (!email || !emailRegex.test(email)) {
             setEmailError('Please enter a valid email address.');
+            setLoading(false); // End loading
             return;
         }
 
         // Check if password is empty
         if (!password) {
             setPasswordError('Please enter your password.');
+            setLoading(false); // End loading
             return;
         }
 
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
-
                 if (userCredential.user) {
                     console.log('Login Successful:', userCredential.user.email);
-                    Alert.alert('Login Successful');
+                    //Alert.alert('Login Successful');
                     // Save login credentials if "Remember Me" is checked
                     if (rememberMe) {
                         saveLoginCredentials();
@@ -183,19 +184,20 @@ const Login = ({ navigation }: any) => {
                             console.error('Error adding user to Firestore:', error);
                         }
                     }
-                    login(userCredential.user.email, language)
-                    navigation.navigate('Tab', { userEmail: userCredential.user.email })
+                    login(userCredential.user.email, language);
+                    navigation.navigate('Tab', { userEmail: userCredential.user.email });
                 } else {
                     console.error('Login Failed: User does not exist');
                     Alert.alert('Login Failed', 'User does not exist');
                 }
-            
             })
             .catch((error) => {
                 console.error('Login Failed:', error.message);
                 Alert.alert('Login Failed', error.message);
+            })
+            .finally(() => {
+                setLoading(false); // End loading
             });
-        
     };
 
     const changeLanguage = (lang: string) => {
@@ -224,6 +226,7 @@ const Login = ({ navigation }: any) => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <StatusBar backgroundColor={COLORS.thirdGreen} />
                 <LanguageSwitch language={language} changeLanguage={changeLanguage} />
 
                 <View style={styles.title}>
@@ -265,20 +268,20 @@ const Login = ({ navigation }: any) => {
                         ) : (
                             <Icon name="check-box-outline-blank" size={24} color="#2C683F" />
                         )}
-
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                     <Text style={styles.loginText}>{t('login')}</Text>
                 </TouchableOpacity>
-                <View style= {styles.or}>
-                <Text style={styles.text7}>Or</Text>
+                <View style={styles.or}>
+                    <Text style={styles.text7}>Or</Text>
                 </View>
                 <TouchableOpacity style={styles.googleLoginButtonContainer} onPress={onGoogleButtonPress}>
-                    <GoogleSigninButton 
-                    style={styles.googleLoginButton}
-                    size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark} />
+                    <GoogleSigninButton
+                        style={styles.googleLoginButton}
+                        size={GoogleSigninButton.Size.Wide}
+                        color={GoogleSigninButton.Color.Dark}
+                    />
                 </TouchableOpacity>
                 <View style={styles.line}>
                     <Text style={styles.lineText}>_________________________________________</Text>
@@ -289,7 +292,14 @@ const Login = ({ navigation }: any) => {
                         <Text style={styles.text6}>{t('signUp')}</Text>
                     </TouchableOpacity>
                 </View>
+
+                {loading && (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="green" />
+                    </View>
+                )}
             </KeyboardAvoidingView>
+
         </TouchableWithoutFeedback>
     );
 };
@@ -298,7 +308,8 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        margin: 15,
+        padding: 15
+        
     },
     title: {
         marginTop: 80,
@@ -359,7 +370,7 @@ const styles = StyleSheet.create({
         color: '#2C683F',
         fontSize: 16,
         paddingLeft: 10,
-        paddingRight:20
+        paddingRight: 20
     },
     text4: {
         color: '#4D5661',
@@ -416,15 +427,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingBottom: 10
     },
-    signup: {
-
-    },
+    signup: {},
     googleLoginButtonContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 10,
         width: '98%',
-       
     },
     googleLoginButton: {
         backgroundColor: '#FFFFFF',
@@ -456,19 +464,28 @@ const styles = StyleSheet.create({
     activeLanguage: {
         fontWeight: 'bold',
     },
-    or:{
+    or: {
         width: '100%',
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
     },
-    text7:{
+    text7: {
         fontSize: 15,
         paddingTop: 10,
         color: '#2C683F',
         justifyContent: 'center',
-        alignItems:'center'
-
-    }
+        alignItems: 'center'
+    },
+    loadingContainer: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        flex: 1,
+        zIndex: 1,
+        width: '110%',
+        height: '110%'
+    },
 
 });
 

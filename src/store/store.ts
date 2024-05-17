@@ -44,16 +44,7 @@ export const useStore = create(
       fullName: '', // Thêm các trường thông tin mới
       address: '',
       phoneNumber: '',
-      clearListsOnLogin: (email: any, language: string) => set(
-        produce(state => {
-          if (state.language !== language) {
-            state.FavoriteList = [];
-            state.CartList = [];
-            state.language = language;
-            state.TeaList = language === 'vi' ? TeaDataVi : language === 'fr' ? TeaDataFr : TeaData; // Kiểm tra ngôn ngữ tiếng Pháp
-          }
-        })
-      ),
+
       login: async (email: string, language: string) => {
         const db = getFirestore();
         const userDocRef = doc(db, 'user', email);
@@ -313,31 +304,34 @@ export const useStore = create(
         pushListsToFirestore: async () => {
           try {
             const state = get() as State;
-            const { user, FavoriteList, FavoriteListVi, FavoriteListFr, CartList, CartListVi, CartListFr, OrderList, OrderListFr, OrderListVi, TeaList, fullName, address, phoneNumber, language, OrderListAll } = state;
+            const { user, language, fullName, address, phoneNumber } = state;
             const db = getFirestore();
             const userDocRef = doc(db, 'user', user);
-          
-            const languageDataMapping: any = {
-              en: { TeaList, FavoriteList, CartList, OrderList: OrderListAll },
-              fr: { TeaList: TeaDataFr, FavoriteList: FavoriteListFr, CartList: CartListFr, OrderList: OrderListAll },
-              vi: { TeaList: TeaDataVi, FavoriteList: FavoriteListVi, CartList: CartListVi, OrderList: OrderListAll }
-            };
         
             // Tạo object để lưu thông tin người dùng và dữ liệu ngôn ngữ
             const userData: any = {
-              [language]: { ...languageDataMapping[language] },
-              Information: { fullName, address, phoneNumber } // Thêm trường Information vào object userData
+              [language]: {
+                TeaList: state.TeaList,
+                FavoriteList: state.FavoriteList,
+                CartList: state.CartList,
+                OrderList: state.OrderList,
+              },
+              Information: {
+                fullName,
+                address,
+                phoneNumber,
+              },
             };
         
             // Cập nhật dữ liệu vào Firestore
             await setDoc(userDocRef, userData, { merge: true });
         
             console.log('Lists and Information pushed to Firestore successfully');
-            
           } catch (error) {
             console.error('Error pushing lists and Information to Firestore:', error);
           }
         },
+        
         
                      
         
@@ -345,7 +339,7 @@ export const useStore = create(
           try {
             set(
               produce((state: State) => {
-                const { language, CartList, OrderListAll } = state;
+                const { language, CartList, OrderListAll, user } = state;
         
                 // Kiểm tra xem CartList có phần tử không
                 if (CartList.length === 0) {
@@ -365,7 +359,6 @@ export const useStore = create(
                   cartListPrice = totalPrice.toString();
                 }
         
-
                 // Thêm đơn hàng vào OrderList
                 const newOrder = {
                   OrderDate: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
@@ -373,21 +366,37 @@ export const useStore = create(
                   CartListPrice: cartListPrice,
                 };
         
-                // Cập nhật OrderList
+                // Cập nhật OrderList của người dùng hiện tại
                 state.OrderList = [newOrder, ...state.OrderList];
-                state.OrderListAll = [newOrder, ...OrderListAll]; // Thêm đơn hàng vào OrderListAll
+        
+                // Cập nhật OrderListAll của người dùng hiện tại
+                state.OrderListAll = [newOrder, ...OrderListAll];
+        
+                // Đưa thông tin đơn hàng vào Firestore
+                const db = getFirestore();
+                const userDocRef = doc(db, 'user', user);
+        
+                setDoc(
+                  userDocRef,
+                  {
+                    
+                    OrderListAll: state.OrderListAll,
+                  },
+                  { merge: true }
+                );
         
                 // Reset CartList
                 state.CartList = [];
-                state.CartListFr= [];
-                state.CartListVi=[];
-
+                state.CartListFr = [];
+                state.CartListVi = [];
+        
               })
             );
           } catch (error) {
             console.error('Error adding order to history:', error);
           }
-        }
+        },
+        
         
     }),
     {

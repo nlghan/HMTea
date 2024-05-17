@@ -30,6 +30,8 @@ import i18n from '../i18n/i18n';
     useEffect(() => {
         i18n.changeLanguage(languageFromStore);
     }, [languageFromStore]);
+
+    const currency = CartList.length > 0 ? CartList[0].prices[0].currency : '';
     
     return (
       <View style={styles.CardContainer}>
@@ -40,7 +42,7 @@ import i18n from '../i18n/i18n';
           </View>
           <View style={styles.PriceContainer}>
             <Text style={styles.HeaderTitle}>{t('total')}</Text>
-            <Text style={styles.HeaderPrice}>{CartListPrice}</Text>
+            <Text style={styles.HeaderPrice}>{`${CartListPrice}${currency}`}</Text>
           </View>
         </View>
         <View style={styles.ListContainer}>
